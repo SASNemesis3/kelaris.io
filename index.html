@@ -1,31 +1,749 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kelaris</title>
+  <meta name="description" content="Kelaris official website — a sci-fi survival colony game in development." />
   <style>
+    :root {
+      --bg: #050816;
+      --bg-soft: #0b1126;
+      --panel: rgba(255,255,255,0.06);
+      --panel-strong: rgba(255,255,255,0.1);
+      --text: #f4f7fb;
+      --muted: #a9b4c7;
+      --line: rgba(255,255,255,0.12);
+      --accent: #88a8ff;
+      --accent-2: #7df0d2;
+      --max: 1180px;
+      --radius: 22px;
+      --shadow: 0 24px 80px rgba(0,0,0,0.45);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b0f1a;
-      color: white;
-      text-align: center;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(136,168,255,0.15), transparent 26%),
+        radial-gradient(circle at 80% 10%, rgba(125,240,210,0.12), transparent 20%),
+        radial-gradient(circle at 50% 80%, rgba(76,104,194,0.20), transparent 35%),
+        linear-gradient(180deg, #050816 0%, #081022 45%, #050816 100%);
+      min-height: 100vh;
     }
-    .container {
-      margin-top: 20%;
+
+    a { color: inherit; text-decoration: none; }
+
+    .stars,
+    .stars::before,
+    .stars::after {
+      position: fixed;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+      background-image:
+        radial-gradient(2px 2px at 15% 20%, rgba(255,255,255,0.7) 50%, transparent 52%),
+        radial-gradient(1.5px 1.5px at 70% 35%, rgba(255,255,255,0.6) 50%, transparent 52%),
+        radial-gradient(1.5px 1.5px at 40% 75%, rgba(255,255,255,0.5) 50%, transparent 52%),
+        radial-gradient(2px 2px at 85% 60%, rgba(255,255,255,0.65) 50%, transparent 52%),
+        radial-gradient(1.5px 1.5px at 25% 55%, rgba(255,255,255,0.55) 50%, transparent 52%);
+      opacity: 0.5;
+      animation: drift 22s linear infinite;
     }
+
+    .stars::before { opacity: 0.35; transform: scale(1.15); animation-duration: 32s; }
+    .stars::after { opacity: 0.25; transform: scale(1.3); animation-duration: 45s; }
+
+    @keyframes drift {
+      from { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+      to { transform: translateY(0); }
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(5,8,22,0.62);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 24px rgba(136,168,255,0.9);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 0.97rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus { color: var(--text); }
+
+    .hero {
+      padding: 86px 0 56px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-card,
+    .panel,
+    .shot,
+    .feature,
+    .timeline-item,
+    .footer-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      padding: 42px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      right: -60px;
+      top: -80px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(136,168,255,0.18) 0%, transparent 68%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
     h1 {
-      font-size: 3rem;
+      margin: 0 0 16px;
+      font-size: clamp(2.8rem, 7vw, 5.6rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
     }
-    p {
-      color: #aaa;
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
+      max-width: 58ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+      font-weight: 700;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .button:hover,
+    .button:focus {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .button.primary {
+      background: linear-gradient(135deg, rgba(136,168,255,0.22), rgba(125,240,210,0.18));
+      border-color: rgba(136,168,255,0.35);
+    }
+
+    .hero-card {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-visual {
+      height: 320px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        radial-gradient(circle at 50% 45%, rgba(157,190,255,0.35), transparent 18%),
+        radial-gradient(circle at 50% 48%, rgba(125,240,210,0.16), transparent 28%),
+        linear-gradient(180deg, rgba(13,24,54,0.8), rgba(6,12,30,0.95)),
+        linear-gradient(135deg, rgba(255,255,255,0.03), transparent 40%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .planet {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      right: 22px;
+      top: 22px;
+      background: radial-gradient(circle at 35% 35%, #c6d5ff 0%, #6f88d4 38%, #1b2854 72%, #111b3d 100%);
+      box-shadow: inset -24px -22px 40px rgba(0,0,0,0.35), 0 0 80px rgba(136,168,255,0.22);
+      animation: floaty 6s ease-in-out infinite;
+    }
+
+    .ring {
+      position: absolute;
+      width: 260px;
+      height: 64px;
+      right: -10px;
+      top: 90px;
+      border: 2px solid rgba(184,208,255,0.36);
+      border-radius: 50%;
+      transform: rotate(-12deg);
+      opacity: 0.7;
+    }
+
+    .surface {
+      position: absolute;
+      inset: auto -10% -18% -10%;
+      height: 48%;
+      border-radius: 50% 50% 0 0;
+      background:
+        linear-gradient(180deg, rgba(17,24,49,0.3), rgba(9,12,23,0.95)),
+        linear-gradient(90deg, rgba(120,140,255,0.08), rgba(125,240,210,0.05));
+      box-shadow: inset 0 20px 40px rgba(255,255,255,0.03);
+    }
+
+    .beacon {
+      position: absolute;
+      bottom: 24%;
+      left: 18%;
+      width: 4px;
+      height: 90px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.55));
+    }
+
+    .beacon::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: -10px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 22px rgba(125,240,210,0.85);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes floaty {
+      0%,100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes pulse {
+      0%,100% { transform: translateX(-50%) scale(1); opacity: 1; }
+      50% { transform: translateX(-50%) scale(1.28); opacity: 0.65; }
+    }
+
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .meta-box {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .meta-label {
+      display: block;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .meta-value {
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+
+    section {
+      padding: 22px 0 12px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      letter-spacing: -0.03em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 60ch;
+      line-height: 1.7;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feature { padding: 24px; }
+    .feature h3 { margin: 0 0 10px; font-size: 1.18rem; }
+    .feature p { margin: 0; color: var(--muted); line-height: 1.75; }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .shot {
+      min-height: 220px;
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shot::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.02), transparent 35%),
+        radial-gradient(circle at 70% 20%, rgba(136,168,255,0.12), transparent 25%),
+        linear-gradient(135deg, rgba(15,23,51,0.96), rgba(7,13,30,0.96));
+    }
+
+    .shot:nth-child(2)::before {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), transparent 35%),
+        radial-gradient(circle at 30% 15%, rgba(125,240,210,0.12), transparent 25%),
+        linear-gradient(135deg, rgba(12,28,40,0.96), rgba(8,12,24,0.96));
+    }
+
+    .shot:nth-child(3)::before {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), transparent 35%),
+        radial-gradient(circle at 55% 20%, rgba(159,126,255,0.14), transparent 24%),
+        linear-gradient(135deg, rgba(21,17,46,0.96), rgba(8,10,22,0.96));
+    }
+
+    .shot-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      height: 100%;
+      flex-direction: column;
+      justify-content: end;
+      gap: 8px;
+    }
+
+    .shot small {
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 700;
+    }
+
+    .shot strong { font-size: 1.2rem; }
+    .shot span { color: var(--muted); line-height: 1.65; }
+
+    .panel {
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-top: 18px;
+    }
+
+    .list {
+      display: grid;
+      gap: 14px;
+      color: var(--muted);
+    }
+
+    .list-item {
+      padding: 16px 18px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .list-item strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 16px;
+    }
+
+    .timeline-item { padding: 20px; }
+    .timeline-item strong { display: block; font-size: 1rem; margin-bottom: 8px; }
+    .timeline-item p { margin: 0; color: var(--muted); line-height: 1.7; }
+
+    footer {
+      padding: 28px 0 54px;
+    }
+
+    .footer-card {
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .footer-copy h3 {
+      margin: 0 0 10px;
+      font-size: 1.8rem;
+      letter-spacing: -0.03em;
+    }
+
+    .footer-copy p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 56ch;
+    }
+
+    .footer-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .footnote {
+      text-align: center;
+      color: var(--muted);
+      margin-top: 22px;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .panel,
+      .footer-card,
+      .grid-3,
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy,
+      .hero-card,
+      .panel,
+      .footer-card {
+        padding: 24px;
+      }
+
+      .hero-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .footer-actions { justify-content: flex-start; }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { width: min(var(--max), calc(100% - 20px)); }
+      .nav { align-items: start; flex-direction: column; }
+      .nav-links { gap: 14px; justify-content: flex-start; }
+      .hero { padding-top: 42px; }
+      h1 { font-size: 2.6rem; }
+      .lead { font-size: 1rem; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>KELARIS</h1>
-    <p>Coming Soon!</p>
-  </div>
+  <div class="stars"></div>
+
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="Kelaris home">
+        <span class="brand-mark"></span>
+        <span>Kelaris</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#about">About</a>
+        <a href="#features">Features</a>
+        <a href="#media">Media</a>
+        <a href="#devlog">Devlog</a>
+        <a href="#links">Links</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top" class="wrap">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Sci-fi colony survival</div>
+        <h1>Kelaris</h1>
+        <p class="lead">
+          Build, expand, and defend a remote colony on a hostile alien world. Kelaris is a systems-driven survival strategy game focused on growth, automation, exploration, and hard decisions under pressure.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="#links">Wishlist / Follow</a>
+          <a class="button" href="#media">View Media</a>
+          <a class="button" href="#devlog">Read Devlog</a>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="Kelaris preview card">
+        <div class="hero-visual">
+          <div class="planet"></div>
+          <div class="ring"></div>
+          <div class="beacon"></div>
+          <div class="surface"></div>
+        </div>
+        <div class="hero-meta">
+          <div class="meta-box">
+            <span class="meta-label">Genre</span>
+            <span class="meta-value">Colony Survival</span>
+          </div>
+          <div class="meta-box">
+            <span class="meta-label">Focus</span>
+            <span class="meta-value">Strategy + Simulation</span>
+          </div>
+          <div class="meta-box">
+            <span class="meta-label">Status</span>
+            <span class="meta-value">In Development</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="about">
+      <div class="section-head">
+        <div>
+          <h2>What is Kelaris?</h2>
+        </div>
+        <p>
+          Kelaris is built around emergent gameplay: gather resources, establish production, manage colonists, defend your outpost, and push deeper into an unpredictable frontier where every expansion creates new risks.
+        </p>
+      </div>
+      <div class="grid-3">
+        <article class="feature">
+          <h3>Build a living colony</h3>
+          <p>Lay out structures, create efficient production flow, assign priorities, and shape a settlement that grows from a fragile foothold into a self-sustaining base.</p>
+        </article>
+        <article class="feature">
+          <h3>Survive a hostile world</h3>
+          <p>Face environmental pressure, logistical strain, limited resources, and external threats that force adaptation instead of passive expansion.</p>
+        </article>
+        <article class="feature">
+          <h3>Scale through systems</h3>
+          <p>Kelaris is about layering mechanics together: exploration, automation, crafting, defense, and long-term colony planning all feed into one another.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="section-head">
+        <div>
+          <h2>Core pillars</h2>
+        </div>
+        <p>
+          The game is centered on depth, readability, and long-session progression. These sections can be updated as development evolves.
+        </p>
+      </div>
+      <div class="panel">
+        <div class="list">
+          <div class="list-item">
+            <strong>Colony management</strong>
+            Oversee workers, priorities, and expansion planning while balancing immediate survival needs with long-term growth.
+          </div>
+          <div class="list-item">
+            <strong>Resource and production loops</strong>
+            Gather raw materials, refine them, power your infrastructure, and build efficient chains that support a growing population.
+          </div>
+          <div class="list-item">
+            <strong>Defense and pressure</strong>
+            Prepare for threats, strengthen your perimeter, and respond to danger without collapsing your internal economy.
+          </div>
+        </div>
+        <div class="list">
+          <div class="list-item">
+            <strong>Exploration</strong>
+            Push outward into the unknown, uncover terrain, discover opportunities, and adapt your strategy to the world around you.
+          </div>
+          <div class="list-item">
+            <strong>Systems-driven gameplay</strong>
+            Expect interacting mechanics instead of isolated features, letting your choices create the story of each playthrough.
+          </div>
+          <div class="list-item">
+            <strong>Long-form progression</strong>
+            Move from fragile beginnings to high-complexity colony operations with meaningful milestones along the way.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="media">
+      <div class="section-head">
+        <div>
+          <h2>Media</h2>
+        </div>
+        <p>
+          Replace these placeholder cards with real screenshots, trailers, GIFs, or feature callouts as soon as you have media ready.
+        </p>
+      </div>
+      <div class="gallery">
+        <article class="shot">
+          <div class="shot-content">
+            <small>Screenshot slot</small>
+            <strong>Frontier landing zone</strong>
+            <span>Use this area for your first polished gameplay screenshot or concept art.</span>
+          </div>
+        </article>
+        <article class="shot">
+          <div class="shot-content">
+            <small>Screenshot slot</small>
+            <strong>Base growth and layout</strong>
+            <span>Show automation, construction flow, or colonist activity once your in-game scenes are ready.</span>
+          </div>
+        </article>
+        <article class="shot">
+          <div class="shot-content">
+            <small>Screenshot slot</small>
+            <strong>Defense and expansion</strong>
+            <span>Highlight world scale, combat pressure, or a late-game colony snapshot.</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="devlog">
+      <div class="section-head">
+        <div>
+          <h2>Development updates</h2>
+        </div>
+        <p>
+          This section works great for posting milestone snapshots, upcoming goals, and public-facing progress notes.
+        </p>
+      </div>
+      <div class="timeline">
+        <article class="timeline-item">
+          <strong>Update 01 — Foundation</strong>
+          <p>Website launched, branding established, and public-facing home base created for Kelaris.</p>
+        </article>
+        <article class="timeline-item">
+          <strong>Update 02 — Systems in progress</strong>
+          <p>Add your next playable milestone here: world systems, colony simulation, performance work, UI passes, or content expansion.</p>
+        </article>
+        <article class="timeline-item">
+          <strong>Update 03 — Wishlist push</strong>
+          <p>When you are ready for promotion, swap this copy with your Steam page announcement or trailer launch update.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer id="links">
+    <div class="wrap">
+      <div class="footer-card">
+        <div class="footer-copy">
+          <h3>Follow Kelaris</h3>
+          <p>
+            Plug in your real links here when you are ready: Steam, Discord, YouTube, X, email, press kit, or development updates.
+          </p>
+        </div>
+        <div class="footer-actions">
+          <a class="button primary" href="#">Steam</a>
+          <a class="button" href="#">Discord</a>
+          <a class="button" href="#">YouTube</a>
+          <a class="button" href="#">Contact</a>
+        </div>
+      </div>
+      <div class="footnote">© <span id="year"></span> Kelaris. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
