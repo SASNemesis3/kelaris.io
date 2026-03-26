@@ -70,25 +70,54 @@ function setSignedInUi(user) {
   signedInOnlyEls.forEach((el) => el.classList.remove("hidden"));
   signedOutOnlyEls.forEach((el) => el.classList.add("hidden"));
 
-  if (profileBox) profileBox.classList.add("visible");
-  if (profileEmail) profileEmail.textContent = user?.email || "—";
-  if (profileId) profileId.textContent = user?.id || "—";
+  if (profileBox) {
+    profileBox.classList.add("visible");
+  }
 
-  if (profileMenu) profileMenu.classList.add("visible");
-  if (dropdownEmail) dropdownEmail.textContent = user?.email || "Signed in";
+  if (profileEmail) {
+    profileEmail.textContent = user?.email || "—";
+  }
+
+  if (profileId) {
+    profileId.textContent = user?.id || "—";
+  }
+
+  if (profileMenu) {
+    profileMenu.classList.add("visible");
+  }
+
+  if (dropdownEmail) {
+    dropdownEmail.textContent = user?.email || "Signed in";
+  }
 }
 
 function setSignedOutUi() {
   signedInOnlyEls.forEach((el) => el.classList.add("hidden"));
   signedOutOnlyEls.forEach((el) => el.classList.remove("hidden"));
 
-  if (profileBox) profileBox.classList.remove("visible");
-  if (profileEmail) profileEmail.textContent = "—";
-  if (profileId) profileId.textContent = "—";
+  if (profileBox) {
+    profileBox.classList.remove("visible");
+  }
 
-  if (profileMenu) profileMenu.classList.remove("visible");
-  if (profileDropdown) profileDropdown.classList.remove("open");
-  if (dropdownEmail) dropdownEmail.textContent = "Signed out";
+  if (profileEmail) {
+    profileEmail.textContent = "—";
+  }
+
+  if (profileId) {
+    profileId.textContent = "—";
+  }
+
+  if (profileMenu) {
+    profileMenu.classList.remove("visible");
+  }
+
+  if (profileDropdown) {
+    profileDropdown.classList.remove("open");
+  }
+
+  if (dropdownEmail) {
+    dropdownEmail.textContent = "Signed out";
+  }
 }
 
 function renderUser(user) {
@@ -99,52 +128,82 @@ function renderUser(user) {
   }
 }
 
+function getSafeRedirectTarget() {
+  const params = new URLSearchParams(window.location.search);
+  const redirect = params.get("redirect");
+
+  if (!redirect) {
+    return null;
+  }
+
+  if (
+    redirect.includes("http") ||
+    redirect.includes("//") ||
+    redirect.includes("\\") ||
+    redirect.startsWith("/")
+  ) {
+    return null;
+  }
+
+  return redirect;
+}
+
 async function loadUser() {
-  const { data, error } = await supabaseClient.auth.getUser();
+  try {
+    const { data, error } = await supabaseClient.auth.getUser();
 
-  if (error) {
-    const ignored = [
-      "Auth session missing",
-      "Invalid Refresh Token",
-      "Refresh Token Not Found"
-    ];
+    if (error) {
+      const ignoredErrors = [
+        "Auth session missing",
+        "Invalid Refresh Token",
+        "Refresh Token Not Found"
+      ];
 
-    const shouldIgnore = ignored.some((text) => error.message?.includes(text));
+      const shouldIgnore = ignoredErrors.some((text) =>
+        error.message?.includes(text)
+      );
 
-    if (shouldIgnore) {
-      clearMessage();
+      if (shouldIgnore) {
+        clearMessage();
+        renderUser(null);
+        return null;
+      }
+
+      setMessage(error.message, "error");
       renderUser(null);
       return null;
     }
 
-    setMessage(error.message, "error");
+    const user = data?.user || null;
+    renderUser(user);
+    return user;
+  } catch (err) {
+    setMessage("Could not load account session.", "error");
     renderUser(null);
     return null;
   }
-
-  const user = data.user || null;
-  renderUser(user);
-  return user;
 }
 
 async function requireAuth() {
   const user = await loadUser();
+
   if (!user) {
-    const current = encodeURIComponent(window.location.pathname.split("/").pop() || "members.html");
-    window.location.href = `auth.html?redirect=${current}`;
+    const currentPage =
+      window.location.pathname.split("/").pop() || "members.html";
+    const safePage = encodeURIComponent(currentPage);
+    window.location.href = `auth.html?redirect=${safePage}`;
   }
 }
 
 async function goToPostLoginDestination() {
-  const params = new URLSearchParams(window.location.search);
-  const redirect = params.get("redirect");
+  const redirect = getSafeRedirectTarget();
 
-  if (redirect && !redirect.includes("http") && !redirect.includes("//")) {
-    window.location.href = redirect;
-    return true;
+  if (!redirect) {
+    return false;
   }
 
-  return false;
+  window.location.href = redirect;
+  return true;
 }
 
 tabButtons.forEach((button) => {
@@ -191,14 +250,17 @@ signupForm?.addEventListener("submit", async (e) => {
   }
 
   if (data.user && !data.session) {
-    setMessage("Account created. Check your email to confirm your account.", "success");
+    setMessage(
+      "Account created. Check your email to confirm your account.",
+      "success"
+    );
   } else {
     setMessage("Account created and signed in.", "success");
+    await loadUser();
     await goToPostLoginDestination();
   }
 
   signupForm.reset();
-  await loadUser();
 });
 
 loginForm?.addEventListener("submit", async (e) => {
@@ -271,7 +333,9 @@ logoutBtn?.addEventListener("click", doLogout);
 dropdownLogout?.addEventListener("click", doLogout);
 
 profileTrigger?.addEventListener("click", () => {
-  profileDropdown?.classList.toggle("open");
+  if (profileDropdown) {
+    profileDropdown.classList.toggle("open");
+  }
 });
 
 document.addEventListener("click", (e) => {
