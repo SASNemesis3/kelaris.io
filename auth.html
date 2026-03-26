@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Kelaris Account</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
       --bg: #050816;
@@ -12,6 +11,12 @@
       --muted: #a9b4c7;
       --accent: #88a8ff;
       --accent-2: #7df0d2;
+      --line: rgba(255,255,255,0.12);
+      --panel: rgba(255,255,255,0.06);
+      --panel-strong: rgba(255,255,255,0.10);
+      --danger: #ff8f8f;
+      --success: #7df0d2;
+      --info: #a9b4c7;
     }
 
     * { box-sizing: border-box; }
@@ -21,7 +26,6 @@
       font-family: Inter, Arial, sans-serif;
       color: var(--text);
       min-height: 100vh;
-
       background:
         url("BackgroundCrash.png") center center / cover no-repeat fixed,
         radial-gradient(circle at 50% -10%, rgba(104,132,255,0.18), transparent 22%),
@@ -30,7 +34,8 @@
         linear-gradient(180deg, #010307 0%, #030814 28%, #050b18 58%, #040710 100%);
     }
 
-    /* STAR LAYERS (same as main site) */
+    a { color: inherit; text-decoration: none; }
+
     .stars,
     .stars::before,
     .stars::after {
@@ -44,148 +49,537 @@
     .stars {
       background-image:
         radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.42) 99%, transparent 100%),
-        radial-gradient(1px 1px at 75% 65%, rgba(255,255,255,0.35) 99%, transparent 100%);
-      background-size: 512px 512px;
+        radial-gradient(1px 1px at 75% 65%, rgba(255,255,255,0.35) 99%, transparent 100%),
+        radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.38) 99%, transparent 100%),
+        radial-gradient(1px 1px at 10% 60%, rgba(255,255,255,0.30) 99%, transparent 100%),
+        radial-gradient(1px 1px at 55% 35%, rgba(255,255,255,0.34) 99%, transparent 100%);
+      background-size: 512px 512px, 480px 480px, 520px 520px, 560px 560px, 600px 600px;
+      background-repeat: repeat;
+      opacity: 0.55;
       animation: starsScrollFar 80s linear infinite;
+      mix-blend-mode: screen;
     }
 
     .stars::before {
       background-image:
-        radial-gradient(1.5px 1.5px at 20% 15%, rgba(255,255,255,0.60) 99%, transparent 100%);
-      background-size: 400px 400px;
+        radial-gradient(1.5px 1.5px at 20% 15%, rgba(255,255,255,0.60) 99%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 60% 45%, rgba(255,255,255,0.55) 99%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 85% 70%, rgba(255,255,255,0.58) 99%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 35% 85%, rgba(255,255,255,0.52) 99%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 5% 35%, rgba(255,255,255,0.50) 99%, transparent 100%);
+      background-size: 384px 384px, 420px 420px, 400px 400px, 440px 440px, 460px 460px;
+      background-repeat: repeat;
+      opacity: 0.75;
       animation: starsScrollMid 45s linear infinite;
     }
 
     .stars::after {
       background-image:
-        radial-gradient(2px 2px at 30% 20%, rgba(255,255,255,0.95) 99%, transparent 100%);
-      background-size: 320px 320px;
+        radial-gradient(2px 2px at 30% 20%, rgba(255,255,255,0.95) 99%, transparent 100%),
+        radial-gradient(2px 2px at 70% 55%, rgba(255,255,255,0.90) 99%, transparent 100%),
+        radial-gradient(2px 2px at 15% 80%, rgba(255,255,255,0.92) 99%, transparent 100%),
+        radial-gradient(2px 2px at 90% 30%, rgba(255,255,255,0.88) 99%, transparent 100%),
+        radial-gradient(2px 2px at 50% 10%, rgba(255,255,255,0.90) 99%, transparent 100%);
+      background-size: 320px 320px, 340px 340px, 360px 360px, 380px 380px, 400px 400px;
+      background-repeat: repeat;
+      opacity: 0.88;
+      filter: drop-shadow(0 0 2px rgba(255,255,255,0.5));
       animation: starsScrollNear 22s linear infinite;
     }
 
     @keyframes starsScrollFar {
-      0% { background-position: 0 0; }
-      100% { background-position: -20px -1024px; }
+      0%   { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: -20px -1024px, -8px -960px, -14px -1040px, -6px -1120px, -10px -1200px; }
     }
-
     @keyframes starsScrollMid {
-      0% { background-position: 0 0; }
-      100% { background-position: -40px -768px; }
+      0%   { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: -40px -768px, -22px -840px, -28px -800px, -18px -880px, -24px -920px; }
     }
-
     @keyframes starsScrollNear {
-      0% { background-position: 0 0; }
-      100% { background-position: -80px -640px; }
+      0%   { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: -80px -640px, -60px -680px, -72px -720px, -54px -760px, -66px -800px; }
     }
 
-    /* CONTENT */
-    .container {
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(16px);
+      background: rgba(5,8,22,0.62);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .header-inner {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
       position: relative;
       z-index: 1;
-      max-width: 520px;
-      margin: 80px auto;
-      padding: 30px;
-      border-radius: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 24px rgba(136,168,255,0.9);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header-link {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .header-link:hover {
+      color: var(--text);
+    }
+
+    .profile-menu {
+      position: relative;
+      display: none;
+    }
+
+    .profile-menu.visible {
+      display: block;
+    }
+
+    .profile-trigger {
+      min-height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
       background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .profile-trigger:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: 260px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(8,12,28,0.92);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+      padding: 14px;
+      display: none;
+    }
+
+    .profile-dropdown.open {
+      display: block;
+    }
+
+    .profile-email-row {
+      color: var(--muted);
+      font-size: 0.92rem;
+      word-break: break-word;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 12px;
+    }
+
+    .dropdown-link,
+    .dropdown-button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 42px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      padding: 0 12px;
+      font-size: 0.97rem;
+      text-align: left;
+    }
+
+    .dropdown-link:hover,
+    .dropdown-button:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.06);
+    }
+
+    .auth-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 42px 0 70px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .auth-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.035));
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 22px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.55);
       backdrop-filter: blur(12px);
+      padding: 28px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+      letter-spacing: -0.03em;
     }
 
     h1 {
-      text-align: center;
-      margin-bottom: 30px;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      margin-bottom: 14px;
     }
 
-    h2 {
-      margin-top: 25px;
+    p {
+      color: var(--muted);
+      line-height: 1.72;
+    }
+
+    .stack {
+      display: grid;
+      gap: 16px;
+    }
+
+    .info-row {
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .info-row strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .tab-btn,
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .tab-btn:hover,
+    .button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .tab-btn.active,
+    .button.primary {
+      background: linear-gradient(135deg, rgba(136,168,255,0.22), rgba(125,240,210,0.18));
+      border-color: rgba(136,168,255,0.35);
+    }
+
+    .form-panel { display: none; }
+    .form-panel.active { display: block; }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    label {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--text);
     }
 
     input {
       width: 100%;
-      padding: 12px;
-      margin: 6px 0;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.05);
-      color: white;
+      min-height: 50px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      padding: 0 14px;
+      font-size: 1rem;
+      outline: none;
     }
 
-    button {
-      padding: 10px 16px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #000;
-      font-weight: bold;
+    input:focus {
+      border-color: rgba(136,168,255,0.65);
+      box-shadow: 0 0 0 3px rgba(136,168,255,0.12);
     }
 
-    #message {
-      margin-top: 15px;
-      font-weight: bold;
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 4px;
     }
 
-    .error { color: #ff6b6b; }
-    .success { color: #7df0d2; }
-    .info { color: #a9b4c7; }
+    .message {
+      margin-top: 16px;
+      min-height: 24px;
+      font-weight: 600;
+    }
 
-    #profile {
-      margin-top: 25px;
-      padding: 15px;
-      border: 1px solid rgba(255,255,255,0.1);
+    .message.error { color: var(--danger); }
+    .message.success { color: var(--success); }
+    .message.info { color: var(--info); }
+
+    .profile-box {
       display: none;
-      border-radius: 10px;
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .profile-box.visible {
+      display: block;
+    }
+
+    .profile-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .profile-item {
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .profile-item span {
+      display: block;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .signed-out-only.hidden,
+    .signed-in-only.hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 980px) {
+      .auth-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .header-inner,
+      .auth-shell {
+        width: min(1180px, calc(100% - 20px));
+      }
+
+      .header-inner {
+        min-height: 70px;
+      }
+
+      .card {
+        padding: 22px;
+      }
     }
   </style>
 </head>
-
 <body>
+  <div class="stars"></div>
 
-<div class="stars"></div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Kelaris home">
+        <span class="brand-mark"></span>
+        <span>Kelaris</span>
+      </a>
 
-<div class="container">
+      <div class="header-right">
+        <a class="header-link" href="index.html">Home</a>
+        <a class="header-link signed-in-only hidden" href="members.html">Members</a>
 
-  <h1>Kelaris Account</h1>
+        <div id="profile-menu" class="profile-menu">
+          <button id="profile-trigger" class="profile-trigger" type="button">Account ▾</button>
+          <div id="profile-dropdown" class="profile-dropdown">
+            <div id="dropdown-email" class="profile-email-row">Signed in</div>
+            <a class="dropdown-link" href="members.html">Member Area</a>
+            <button id="dropdown-logout" class="dropdown-button" type="button">Log Out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 
-  <!-- SIGN UP -->
-  <h2>Sign Up</h2>
-  <form id="signup-form">
-    <input id="signup-email" type="email" placeholder="Email" required>
-    <input id="signup-password" type="password" placeholder="Password" required>
-    <input id="signup-confirm" type="password" placeholder="Confirm Password" required>
-    <button type="submit">Create Account</button>
-  </form>
+  <main class="auth-shell">
+    <div class="auth-grid">
+      <section class="card">
+        <div class="eyebrow">Kelaris account</div>
+        <h1>Create and manage your account</h1>
+        <p>
+          Sign up, log in, and access member-only areas for Kelaris.
+          This page is tied directly to your live Supabase authentication setup.
+        </p>
 
-  <!-- LOGIN -->
-  <h2>Login</h2>
-  <form id="login-form">
-    <input id="login-email" type="email" placeholder="Email" required>
-    <input id="login-password" type="password" placeholder="Password" required>
-    <button type="submit">Login</button>
-  </form>
+        <div class="stack">
+          <div class="info-row">
+            <strong>What signed-in users can access</strong>
+            Protected pages, tester areas, and member-only site sections.
+          </div>
+          <div class="info-row">
+            <strong>What this is good for</strong>
+            Closed alpha signups, member pages, and user account access on the Kelaris site.
+          </div>
+          <div class="info-row">
+            <strong>Important limit on GitHub Pages</strong>
+            UI/page protection works, but direct secret file protection still needs a real backend.
+          </div>
+        </div>
+      </section>
 
-  <!-- RESET -->
-  <h2>Reset Password</h2>
-  <form id="reset-form">
-    <input id="reset-email" type="email" placeholder="Email" required>
-    <button type="submit">Send Reset</button>
-  </form>
+      <section class="card">
+        <div class="tabs signed-out-only">
+          <button class="tab-btn active" type="button" data-tab="signup">Sign Up</button>
+          <button class="tab-btn" type="button" data-tab="login">Log In</button>
+          <button class="tab-btn" type="button" data-tab="reset">Reset Password</button>
+        </div>
 
-  <!-- MESSAGE -->
-  <div id="message"></div>
+        <div id="signup-panel" class="form-panel active signed-out-only">
+          <h2>Sign up</h2>
+          <form id="signup-form">
+            <div class="field">
+              <label for="signup-email">Email</label>
+              <input id="signup-email" type="email" placeholder="you@example.com" required />
+            </div>
+            <div class="field">
+              <label for="signup-password">Password</label>
+              <input id="signup-password" type="password" placeholder="Minimum 8 characters" required />
+            </div>
+            <div class="field">
+              <label for="signup-confirm">Confirm password</label>
+              <input id="signup-confirm" type="password" placeholder="Confirm password" required />
+            </div>
+            <div class="button-row">
+              <button class="button primary" type="submit">Create Account</button>
+            </div>
+          </form>
+        </div>
 
-  <!-- PROFILE -->
-  <div id="profile">
-    <h3>Logged in as:</h3>
-    <p id="profile-email"></p>
-    <button id="logout">Logout</button>
-  </div>
+        <div id="login-panel" class="form-panel signed-out-only">
+          <h2>Log in</h2>
+          <form id="login-form">
+            <div class="field">
+              <label for="login-email">Email</label>
+              <input id="login-email" type="email" placeholder="you@example.com" required />
+            </div>
+            <div class="field">
+              <label for="login-password">Password</label>
+              <input id="login-password" type="password" placeholder="Your password" required />
+            </div>
+            <div class="button-row">
+              <button class="button primary" type="submit">Log In</button>
+            </div>
+          </form>
+        </div>
 
-</div>
+        <div id="reset-panel" class="form-panel signed-out-only">
+          <h2>Reset password</h2>
+          <form id="reset-form">
+            <div class="field">
+              <label for="reset-email">Email</label>
+              <input id="reset-email" type="email" placeholder="you@example.com" required />
+            </div>
+            <div class="button-row">
+              <button class="button primary" type="submit">Send Reset Email</button>
+            </div>
+          </form>
+        </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="account.js"></script>
+        <div id="message" class="message" aria-live="polite"></div>
 
+        <div id="profile-box" class="profile-box signed-in-only hidden">
+          <h3>Your account</h3>
+          <div class="profile-grid">
+            <div class="profile-item">
+              <span>Email</span>
+              <strong id="profile-email">—</strong>
+            </div>
+            <div class="profile-item">
+              <span>User ID</span>
+              <strong id="profile-id">—</strong>
+            </div>
+          </div>
+          <div class="button-row" style="margin-top:16px;">
+            <a class="button" href="members.html">Go To Member Area</a>
+            <button id="logout-btn" class="button" type="button">Log Out</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="account.js"></script>
 </body>
 </html>
