@@ -37,7 +37,6 @@
       overflow: visible;
     }
 
-    /* FIXED HEADER STACKING */
     .topbar {
       display: flex;
       align-items: center;
@@ -96,7 +95,6 @@
       background: linear-gradient(135deg, rgba(136,168,255,0.22), rgba(125,240,210,0.18));
     }
 
-    /* PROFILE DROPDOWN FIX */
     .profile-menu {
       position: relative;
       display: none;
@@ -108,21 +106,46 @@
     }
 
     .profile-trigger {
-      min-height: 42px;
-      padding: 0 14px;
+      min-height: 46px;
+      padding: 6px 14px 6px 8px;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,0.12);
       background: rgba(255,255,255,0.05);
       color: var(--text);
       cursor: pointer;
       font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .profile-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #08101f;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 18px rgba(136,168,255,0.28);
+      flex: 0 0 30px;
+    }
+
+    .profile-trigger-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .profile-dropdown {
       position: absolute;
       top: calc(100% + 10px);
       right: 0;
-      width: 260px;
+      width: 280px;
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,0.12);
       background: rgba(8,12,28,0.96);
@@ -137,18 +160,41 @@
       display: block;
     }
 
+    .profile-summary {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .profile-summary .profile-avatar {
+      width: 40px;
+      height: 40px;
+      flex: 0 0 40px;
+      font-size: 0.95rem;
+    }
+
     .profile-email-row {
       color: var(--muted);
       font-size: 0.9rem;
-      margin-bottom: 10px;
+      line-height: 1.4;
+      word-break: break-word;
     }
 
     .dropdown-link,
     .dropdown-button {
       display: block;
-      padding: 10px;
+      width: 100%;
+      padding: 10px 12px;
       border-radius: 10px;
       cursor: pointer;
+      text-align: left;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font: inherit;
     }
 
     .dropdown-link:hover,
@@ -156,7 +202,6 @@
       background: rgba(255,255,255,0.06);
     }
 
-    /* FIXED CARD STACKING */
     .card {
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.12);
@@ -204,7 +249,6 @@
   </style>
 </head>
 <body>
-
 <div class="shell">
   <div class="topbar">
     <div class="brand">
@@ -217,11 +261,18 @@
       <a class="button" href="auth.html">Account</a>
 
       <div id="profile-menu" class="profile-menu">
-        <button id="profile-trigger" class="profile-trigger">Account ▾</button>
+        <button id="profile-trigger" class="profile-trigger" type="button">
+          <span id="trigger-avatar" class="profile-avatar">U</span>
+          <span id="trigger-label" class="profile-trigger-label">Account ▾</span>
+        </button>
+
         <div id="profile-dropdown" class="profile-dropdown">
-          <div id="dropdown-email" class="profile-email-row">Signed in</div>
+          <div class="profile-summary">
+            <span id="dropdown-avatar" class="profile-avatar">U</span>
+            <div id="dropdown-email" class="profile-email-row">Signed in</div>
+          </div>
           <a class="dropdown-link" href="auth.html">Account Page</a>
-          <button id="dropdown-logout" class="dropdown-button">Log Out</button>
+          <button id="dropdown-logout" class="dropdown-button" type="button">Log Out</button>
         </div>
       </div>
     </div>
@@ -249,7 +300,6 @@
       </div>
     </div>
   </div>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -257,6 +307,5 @@
 <script>
   window.kelarisRequireAuth();
 </script>
-
 </body>
 </html>
