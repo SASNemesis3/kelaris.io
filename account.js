@@ -1,12 +1,6 @@
-// ==============================
-// SUPABASE CONFIG (REPLACE THESE)
-// ==============================
 const SUPABASE_URL = "https://wuobmtoskxqiiaejyrax.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_MzNTtCgbH6gkTVts8myt2w_qyMztjIy";
 
-// ==============================
-// INIT
-// ==============================
 const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_ANON_KEY,
@@ -19,70 +13,89 @@ const supabaseClient = window.supabase.createClient(
   }
 );
 
-// ==============================
-// ELEMENTS
-// ==============================
 const msg = document.getElementById("message");
-
 const signupForm = document.getElementById("signup-form");
 const loginForm = document.getElementById("login-form");
 const resetForm = document.getElementById("reset-form");
-
 const profileBox = document.getElementById("profile");
 const profileEmail = document.getElementById("profile-email");
-
 const logoutBtn = document.getElementById("logout");
 
-// ==============================
-// HELPERS
-// ==============================
 function setMessage(text, type = "") {
+  if (!msg) return;
   msg.textContent = text;
   msg.className = type;
 }
 
 function clearMessage() {
+  if (!msg) return;
   msg.textContent = "";
   msg.className = "";
 }
 
 function showProfile(user) {
+  if (!profileBox) return;
+
   if (!user) {
     profileBox.style.display = "none";
+    if (profileEmail) profileEmail.textContent = "";
     return;
   }
 
   profileBox.style.display = "block";
-  profileEmail.textContent = user.email;
+  if (profileEmail) profileEmail.textContent = user.email || "";
 }
 
-// ==============================
-// LOAD USER
-// ==============================
 async function loadUser() {
-  const { data, error } = await supabaseClient.auth.getUser();
+  try {
+    const { data, error } = await supabaseClient.auth.getUser();
 
-  if (error) {
-    setMessage(error.message, "error");
-    return;
+    if (error) {
+      const ignoredErrors = [
+        "Auth session missing",
+        "Invalid Refresh Token",
+        "Refresh Token Not Found"
+      ];
+
+      const shouldIgnore = ignoredErrors.some((text) =>
+        error.message?.includes(text)
+      );
+
+      if (!shouldIgnore) {
+        setMessage(error.message, "error");
+      }
+
+      showProfile(null);
+      return;
+    }
+
+    showProfile(data.user || null);
+  } catch (err) {
+    setMessage("Could not load account session.", "error");
+    showProfile(null);
   }
-
-  showProfile(data.user);
 }
 
-// ==============================
-// SIGN UP
-// ==============================
 signupForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
   clearMessage();
 
-  const email = document.getElementById("signup-email").value;
-  const password = document.getElementById("signup-password").value;
-  const confirm = document.getElementById("signup-confirm").value;
+  const email = document.getElementById("signup-email")?.value.trim();
+  const password = document.getElementById("signup-password")?.value;
+  const confirm = document.getElementById("signup-confirm")?.value;
+
+  if (!email || !password || !confirm) {
+    setMessage("Please fill out all sign up fields.", "error");
+    return;
+  }
 
   if (password !== confirm) {
-    setMessage("Passwords do not match", "error");
+    setMessage("Passwords do not match.", "error");
+    return;
+  }
+
+  if (password.length < 8) {
+    setMessage("Password must be at least 8 characters.", "error");
     return;
   }
 
@@ -90,7 +103,7 @@ signupForm?.addEventListener("submit", async (e) => {
     email,
     password,
     options: {
-      emailRedirectTo: window.location.href
+      emailRedirectTo: "https://kelaris.io/auth.html"
     }
   });
 
@@ -99,19 +112,27 @@ signupForm?.addEventListener("submit", async (e) => {
     return;
   }
 
-  setMessage("Account created. Check your email.", "success");
+  if (data.user && !data.session) {
+    setMessage("Account created. Check your email to confirm your account.", "success");
+  } else {
+    setMessage("Account created and signed in.", "success");
+  }
+
   signupForm.reset();
+  loadUser();
 });
 
-// ==============================
-// LOGIN
-// ==============================
 loginForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
   clearMessage();
 
-  const email = document.getElementById("login-email").value;
-  const password = document.getElementById("login-password").value;
+  const email = document.getElementById("login-email")?.value.trim();
+  const password = document.getElementById("login-password")?.value;
+
+  if (!email || !password) {
+    setMessage("Please enter your email and password.", "error");
+    return;
+  }
 
   const { error } = await supabaseClient.auth.signInWithPassword({
     email,
@@ -123,22 +144,24 @@ loginForm?.addEventListener("submit", async (e) => {
     return;
   }
 
-  setMessage("Logged in!", "success");
+  setMessage("Logged in successfully.", "success");
   loginForm.reset();
   loadUser();
 });
 
-// ==============================
-// RESET PASSWORD
-// ==============================
 resetForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
   clearMessage();
 
-  const email = document.getElementById("reset-email").value;
+  const email = document.getElementById("reset-email")?.value.trim();
+
+  if (!email) {
+    setMessage("Please enter your email.", "error");
+    return;
+  }
 
   const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.href
+    redirectTo: "https://kelaris.io/auth.html"
   });
 
   if (error) {
@@ -146,26 +169,26 @@ resetForm?.addEventListener("submit", async (e) => {
     return;
   }
 
-  setMessage("Reset email sent", "success");
+  setMessage("Password reset email sent.", "success");
+  resetForm.reset();
 });
 
-// ==============================
-// LOGOUT
-// ==============================
 logoutBtn?.addEventListener("click", async () => {
-  await supabaseClient.auth.signOut();
-  setMessage("Logged out", "success");
+  clearMessage();
+
+  const { error } = await supabaseClient.auth.signOut();
+
+  if (error) {
+    setMessage(error.message, "error");
+    return;
+  }
+
   showProfile(null);
+  setMessage("Logged out.", "success");
 });
 
-// ==============================
-// AUTH STATE LISTENER
-// ==============================
 supabaseClient.auth.onAuthStateChange((_event, session) => {
   showProfile(session?.user || null);
 });
 
-// ==============================
-// INIT LOAD
-// ==============================
 loadUser();
