@@ -20,104 +20,105 @@
       --radius: 22px;
       --shadow: 0 24px 80px rgba(0,0,0,0.45);
     }
+
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    
-body {
-  margin: 0;
-  font-family: Inter, Arial, Helvetica, sans-serif;
-  color: var(--text);
-  /* 👇 your image as the background */
-  background: 
-    url("BackgroundCrash.png") center center / cover no-repeat fixed,
-    radial-gradient(circle at 50% -10%, rgba(104,132,255,0.18), transparent 22%),
-    radial-gradient(circle at 20% 18%, rgba(136,168,255,0.10), transparent 24%),
-    radial-gradient(circle at 82% 12%, rgba(125,240,210,0.06), transparent 18%),
-    linear-gradient(180deg, #010307 0%, #030814 28%, #050b18 58%, #040710 100%);
-  min-height: 100vh;
-}
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        url("BackgroundCrash.png") center center / cover no-repeat fixed,
+        radial-gradient(circle at 50% -10%, rgba(104,132,255,0.18), transparent 22%),
+        radial-gradient(circle at 20% 18%, rgba(136,168,255,0.10), transparent 24%),
+        radial-gradient(circle at 82% 12%, rgba(125,240,210,0.06), transparent 18%),
+        linear-gradient(180deg, #010307 0%, #030814 28%, #050b18 58%, #040710 100%);
+      min-height: 100vh;
+    }
+
     a { color: inherit; text-decoration: none; }
-    
-/* ===== New starfield (tileable + seamless) ===== */
-.stars,
-.stars::before,
-.stars::after {
-  position: fixed;
-  inset: 0;
-  content: "";
-  pointer-events: none;
-  z-index: 0;
-}
-/* Far layer: small, faint, slow (deep background) */
-.stars {
-  /* Two tiling textures mixed for organic distribution */
-  background-image:
-    radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.42) 99%, transparent 100%),
-    radial-gradient(1px 1px at 75% 65%, rgba(255,255,255,0.35) 99%, transparent 100%),
-    radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.38) 99%, transparent 100%),
-    radial-gradient(1px 1px at 10% 60%, rgba(255,255,255,0.30) 99%, transparent 100%),
-    radial-gradient(1px 1px at 55% 35%, rgba(255,255,255,0.34) 99%, transparent 100%);
-  background-size: 512px 512px, 480px 480px, 520px 520px, 560px 560px, 600px 600px;
-  background-repeat: repeat;
-  opacity: 0.55;
-  animation: starsScrollFar 80s linear infinite;
-  will-change: background-position;
-  mix-blend-mode: screen; /* gentle lift over bg gradients */
-}
-/* Mid layer: brighter, a touch bigger, medium speed */
-.stars::before {
-  background-image:
-    radial-gradient(1.5px 1.5px at 20% 15%, rgba(255,255,255,0.60) 99%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 60% 45%, rgba(255,255,255,0.55) 99%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 85% 70%, rgba(255,255,255,0.58) 99%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 35% 85%, rgba(255,255,255,0.52) 99%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 5% 35%, rgba(255,255,255,0.50) 99%, transparent 100%);
-  background-size: 384px 384px, 420px 420px, 400px 400px, 440px 440px, 460px 460px;
-  background-repeat: repeat;
-  opacity: 0.75;
-  animation: starsScrollMid 45s linear infinite;
-  will-change: background-position;
-}
-/* Near layer: biggest, brightest, fastest, with a soft streak to mimic forward travel */
-.stars::after {
-  /* Combine bright points with subtle vertical blur (streak effect) */
-  background-image:
-    radial-gradient(2px 2px at 30% 20%, rgba(255,255,255,0.95) 99%, transparent 100%),
-    radial-gradient(2px 2px at 70% 55%, rgba(255,255,255,0.90) 99%, transparent 100%),
-    radial-gradient(2px 2px at 15% 80%, rgba(255,255,255,0.92) 99%, transparent 100%),
-    radial-gradient(2px 2px at 90% 30%, rgba(255,255,255,0.88) 99%, transparent 100%),
-    radial-gradient(2px 2px at 50% 10%, rgba(255,255,255,0.90) 99%, transparent 100%),
-    /* soft streaks aligned vertically */
-    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.04));
-  background-size:
-    320px 320px, 340px 340px, 360px 360px, 380px 380px, 400px 400px,
-    2px 60px; /* streak size: narrow and tall */
-  background-repeat: repeat;
-  background-blend-mode: screen;
-  opacity: 0.88;
-  filter: drop-shadow(0 0 2px rgba(255,255,255,0.5));
-  animation: starsScrollNear 22s linear infinite;
-  will-change: background-position;
-}
-/* Optional: slight horizontal drift for natural feel */
-@keyframes starsScrollFar {
-  0%   { background-position:   0px    0px,  0px    0px,  0px    0px,  0px    0px,  0px    0px; }
-  100% { background-position: -20px -1024px, -8px -960px, -14px -1040px, -6px -1120px, -10px -1200px; }
-}
-@keyframes starsScrollMid {
-  0%   { background-position:   0px    0px,  0px    0px,  0px    0px,  0px    0px,  0px    0px; }
-  100% { background-position: -40px -768px, -22px -840px, -28px -800px, -18px -880px, -24px -920px; }
-}
-@keyframes starsScrollNear {
-  0%   { background-position:   0px    0px,  0px    0px,  0px    0px,  0px    0px,  0px    0px,  0px   0px; }
-  100% { background-position: -80px -640px, -60px -680px, -72px -720px, -54px -760px, -66px -800px, -2px -1800px; }
-}
+
+    .stars,
+    .stars::before,
+    .stars::after {
+      position: fixed;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .stars {
+      background-image:
+        radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.42) 99%, transparent 100%),
+        radial-gradient(1px 1px at 75% 65%, rgba(255,255,255,0.35) 99%, transparent 100%),
+        radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.38) 99%, transparent 100%),
+        radial-gradient(1px 1px at 10% 60%, rgba(255,255,255,0.30) 99%, transparent 100%),
+        radial-gradient(1px 1px at 55% 35%, rgba(255,255,255,0.34) 99%, transparent 100%);
+      background-size: 512px 512px, 480px 480px, 520px 520px, 560px 560px, 600px 600px;
+      background-repeat: repeat;
+      opacity: 0.55;
+      animation: starsScrollFar 80s linear infinite;
+      will-change: background-position;
+      mix-blend-mode: screen;
+    }
+
+    .stars::before {
+      background-image:
+        radial-gradient(1.5px 1.5px at 20% 15%, rgba(255,255,255,0.60) 99%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 60% 45%, rgba(255,255,255,0.55) 99%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 85% 70%, rgba(255,255,255,0.58) 99%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 35% 85%, rgba(255,255,255,0.52) 99%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 5% 35%, rgba(255,255,255,0.50) 99%, transparent 100%);
+      background-size: 384px 384px, 420px 420px, 400px 400px, 440px 440px, 460px 460px;
+      background-repeat: repeat;
+      opacity: 0.75;
+      animation: starsScrollMid 45s linear infinite;
+      will-change: background-position;
+    }
+
+    .stars::after {
+      background-image:
+        radial-gradient(2px 2px at 30% 20%, rgba(255,255,255,0.95) 99%, transparent 100%),
+        radial-gradient(2px 2px at 70% 55%, rgba(255,255,255,0.90) 99%, transparent 100%),
+        radial-gradient(2px 2px at 15% 80%, rgba(255,255,255,0.92) 99%, transparent 100%),
+        radial-gradient(2px 2px at 90% 30%, rgba(255,255,255,0.88) 99%, transparent 100%),
+        radial-gradient(2px 2px at 50% 10%, rgba(255,255,255,0.90) 99%, transparent 100%),
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.04));
+      background-size:
+        320px 320px, 340px 340px, 360px 360px, 380px 380px, 400px 400px,
+        2px 60px;
+      background-repeat: repeat;
+      background-blend-mode: screen;
+      opacity: 0.88;
+      filter: drop-shadow(0 0 2px rgba(255,255,255,0.5));
+      animation: starsScrollNear 22s linear infinite;
+      will-change: background-position;
+    }
+
+    @keyframes starsScrollFar {
+      0%   { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: -20px -1024px, -8px -960px, -14px -1040px, -6px -1120px, -10px -1200px; }
+    }
+
+    @keyframes starsScrollMid {
+      0%   { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: -40px -768px, -22px -840px, -28px -800px, -18px -880px, -24px -920px; }
+    }
+
+    @keyframes starsScrollNear {
+      0%   { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: -80px -640px, -60px -680px, -72px -720px, -54px -760px, -66px -800px, -2px -1800px; }
+    }
+
     .wrap {
       width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
       position: relative;
       z-index: 1;
     }
+
     header {
       position: sticky;
       top: 0;
@@ -126,6 +127,7 @@ body {
       background: rgba(5,8,22,0.62);
       border-bottom: 1px solid rgba(255,255,255,0.07);
     }
+
     .nav {
       display: flex;
       align-items: center;
@@ -133,6 +135,7 @@ body {
       gap: 16px;
       padding: 18px 0;
     }
+
     .brand {
       display: flex;
       align-items: center;
@@ -141,6 +144,7 @@ body {
       letter-spacing: 0.14em;
       text-transform: uppercase;
     }
+
     .brand-mark {
       width: 14px;
       height: 14px;
@@ -148,6 +152,13 @@ body {
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       box-shadow: 0 0 24px rgba(136,168,255,0.9);
     }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
     .nav-links {
       display: flex;
       gap: 22px;
@@ -156,8 +167,87 @@ body {
       flex-wrap: wrap;
       justify-content: flex-end;
     }
+
     .nav-links a:hover,
-    .nav-links a:focus { color: var(--text); }
+    .nav-links a:focus {
+      color: var(--text);
+    }
+
+    .profile-menu {
+      position: relative;
+      display: none;
+    }
+
+    .profile-menu.visible {
+      display: block;
+    }
+
+    .profile-trigger {
+      min-height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: #f4f7fb;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .profile-trigger:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: 260px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(8,12,28,0.92);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+      padding: 14px;
+      display: none;
+      z-index: 50;
+    }
+
+    .profile-dropdown.open {
+      display: block;
+    }
+
+    .profile-email-row {
+      color: #a9b4c7;
+      font-size: 0.92rem;
+      word-break: break-word;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 12px;
+    }
+
+    .dropdown-link,
+    .dropdown-button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 42px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #f4f7fb;
+      cursor: pointer;
+      padding: 0 12px;
+      font-size: 0.97rem;
+      text-align: left;
+    }
+
+    .dropdown-link:hover,
+    .dropdown-button:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.06);
+    }
+
     .hero {
       padding: 86px 0 56px;
       display: grid;
@@ -165,24 +255,28 @@ body {
       gap: 28px;
       align-items: stretch;
     }
+
     .hero-copy,
-.hero-card,
-.panel,
-.shot,
-.feature,
-.timeline-item,
-.footer-card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.035));
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: var(--radius);
-  box-shadow: 0 24px 80px rgba(0,0,0,0.55);
-  backdrop-filter: blur(12px);
-}
+    .hero-card,
+    .panel,
+    .shot,
+    .feature,
+    .timeline-item,
+    .footer-card,
+    .member-panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.035));
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+      backdrop-filter: blur(12px);
+    }
+
     .hero-copy {
       padding: 42px;
       position: relative;
       overflow: hidden;
     }
+
     .hero-copy::before {
       content: "";
       position: absolute;
@@ -196,10 +290,12 @@ body {
       z-index: 0;
       pointer-events: none;
     }
+
     .hero-copy > * {
       position: relative;
       z-index: 1;
     }
+
     .hero-copy::after {
       content: "";
       position: absolute;
@@ -212,18 +308,20 @@ body {
       filter: blur(20px);
       pointer-events: none;
     }
+
     .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--accent-2);
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 0.78rem;
-  font-weight: 800;
-  margin-bottom: 18px;
-  text-shadow: 0 0 18px rgba(125,240,210,0.28);
-}
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 18px;
+      text-shadow: 0 0 18px rgba(125,240,210,0.28);
+    }
+
     h1 {
       margin: 0 0 16px;
       font-size: clamp(2.8rem, 7vw, 5.6rem);
@@ -233,6 +331,7 @@ body {
         0 0 18px rgba(136,168,255,0.34),
         0 0 44px rgba(125,240,210,0.14);
     }
+
     .lead {
       margin: 0;
       color: var(--muted);
@@ -240,12 +339,14 @@ body {
       line-height: 1.75;
       max-width: 58ch;
     }
+
     .hero-actions {
       display: flex;
       gap: 14px;
       flex-wrap: wrap;
       margin-top: 30px;
     }
+
     .button {
       display: inline-flex;
       align-items: center;
@@ -259,27 +360,32 @@ body {
       font-weight: 700;
       transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
     }
+
     .button:hover,
     .button:focus {
       transform: translateY(-1px);
       border-color: rgba(255,255,255,0.25);
       background: rgba(255,255,255,0.08);
     }
+
     .button.primary {
       background: linear-gradient(135deg, rgba(136,168,255,0.22), rgba(125,240,210,0.18));
       border-color: rgba(136,168,255,0.35);
     }
+
     .button.discord {
       background: linear-gradient(135deg, rgba(88,101,242,0.30), rgba(125,240,210,0.14));
       border-color: rgba(88,101,242,0.55);
       box-shadow: 0 0 0 rgba(88,101,242,0);
     }
+
     .button.discord:hover,
     .button.discord:focus {
       background: linear-gradient(135deg, rgba(88,101,242,0.42), rgba(125,240,210,0.20));
       border-color: rgba(125,240,210,0.65);
       box-shadow: 0 0 22px rgba(88,101,242,0.28);
     }
+
     .hero-card {
       padding: 24px;
       display: flex;
@@ -289,6 +395,7 @@ body {
       overflow: hidden;
       position: relative;
     }
+
     .hero-visual {
       height: 320px;
       border-radius: 18px;
@@ -301,6 +408,7 @@ body {
       position: relative;
       overflow: hidden;
     }
+
     .planet {
       position: absolute;
       width: 180px;
@@ -312,6 +420,7 @@ body {
       box-shadow: inset -24px -22px 40px rgba(0,0,0,0.35), 0 0 80px rgba(136,168,255,0.22);
       animation: floaty 6s ease-in-out infinite;
     }
+
     .ring {
       position: absolute;
       width: 260px;
@@ -323,6 +432,7 @@ body {
       transform: rotate(-12deg);
       opacity: 0.7;
     }
+
     .surface {
       position: absolute;
       inset: auto -10% -18% -10%;
@@ -333,6 +443,7 @@ body {
         linear-gradient(90deg, rgba(120,140,255,0.08), rgba(125,240,210,0.05));
       box-shadow: inset 0 20px 40px rgba(255,255,255,0.03);
     }
+
     .beacon {
       position: absolute;
       bottom: 24%;
@@ -341,6 +452,7 @@ body {
       height: 90px;
       background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.55));
     }
+
     .beacon::after {
       content: "";
       position: absolute;
@@ -354,26 +466,31 @@ body {
       box-shadow: 0 0 22px rgba(125,240,210,0.85);
       animation: pulse 2s ease-in-out infinite;
     }
+
     @keyframes floaty {
       0%,100% { transform: translateY(0px); }
       50% { transform: translateY(-8px); }
     }
+
     @keyframes pulse {
       0%,100% { transform: translateX(-50%) scale(1); opacity: 1; }
       50% { transform: translateX(-50%) scale(1.28); opacity: 0.65; }
     }
+
     .hero-meta {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       margin-top: 18px;
     }
+
     .meta-box {
       padding: 14px;
       border-radius: 16px;
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
     }
+
     .meta-label {
       display: block;
       font-size: 0.76rem;
@@ -382,13 +499,16 @@ body {
       color: var(--muted);
       margin-bottom: 8px;
     }
+
     .meta-value {
       font-size: 0.98rem;
       font-weight: 700;
     }
+
     section {
       padding: 22px 0 12px;
     }
+
     .section-head {
       display: flex;
       align-items: end;
@@ -396,36 +516,54 @@ body {
       gap: 18px;
       margin-bottom: 18px;
     }
+
     .section-head h2 {
       margin: 0;
       font-size: clamp(1.6rem, 3vw, 2.4rem);
       letter-spacing: -0.03em;
     }
+
     .section-head p {
       margin: 0;
       color: var(--muted);
       max-width: 60ch;
       line-height: 1.7;
     }
+
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 18px;
     }
-    .feature { padding: 24px; }
-    .feature h3 { margin: 0 0 10px; font-size: 1.18rem; }
-    .feature p { margin: 0; color: var(--muted); line-height: 1.75; }
+
+    .feature {
+      padding: 24px;
+    }
+
+    .feature h3 {
+      margin: 0 0 10px;
+      font-size: 1.18rem;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
     .gallery {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 18px;
     }
+
     .shot {
       min-height: 220px;
       padding: 18px;
       position: relative;
       overflow: hidden;
     }
+
     .shot::before {
       content: "";
       position: absolute;
@@ -435,18 +573,21 @@ body {
         radial-gradient(circle at 70% 20%, rgba(136,168,255,0.12), transparent 25%),
         linear-gradient(135deg, rgba(15,23,51,0.96), rgba(7,13,30,0.96));
     }
+
     .shot:nth-child(2)::before {
       background:
         linear-gradient(180deg, rgba(255,255,255,0.03), transparent 35%),
         radial-gradient(circle at 30% 15%, rgba(125,240,210,0.12), transparent 25%),
         linear-gradient(135deg, rgba(12,28,40,0.96), rgba(8,12,24,0.96));
     }
+
     .shot:nth-child(3)::before {
       background:
         linear-gradient(180deg, rgba(255,255,255,0.03), transparent 35%),
         radial-gradient(circle at 55% 20%, rgba(159,126,255,0.14), transparent 24%),
         linear-gradient(135deg, rgba(21,17,46,0.96), rgba(8,10,22,0.96));
     }
+
     .shot-content {
       position: relative;
       z-index: 1;
@@ -456,14 +597,23 @@ body {
       justify-content: end;
       gap: 8px;
     }
+
     .shot small {
       color: var(--accent-2);
       text-transform: uppercase;
       letter-spacing: 0.14em;
       font-weight: 700;
     }
-    .shot strong { font-size: 1.2rem; }
-    .shot span { color: var(--muted); line-height: 1.65; }
+
+    .shot strong {
+      font-size: 1.2rem;
+    }
+
+    .shot span {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
     .panel {
       padding: 28px;
       display: grid;
@@ -471,32 +621,64 @@ body {
       gap: 22px;
       margin-top: 18px;
     }
+
     .list {
       display: grid;
       gap: 14px;
       color: var(--muted);
     }
+
     .list-item {
       padding: 16px 18px;
       background: rgba(255,255,255,0.04);
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,0.08);
     }
+
     .list-item strong {
       display: block;
       color: var(--text);
       margin-bottom: 8px;
     }
+
+    .member-panel {
+      padding: 28px;
+      display: grid;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .member-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
     .timeline {
       display: grid;
       gap: 16px;
     }
-    .timeline-item { padding: 20px; }
-    .timeline-item strong { display: block; font-size: 1rem; margin-bottom: 8px; }
-    .timeline-item p { margin: 0; color: var(--muted); line-height: 1.7; }
+
+    .timeline-item {
+      padding: 20px;
+    }
+
+    .timeline-item strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .timeline-item p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
     footer {
       padding: 28px 0 54px;
     }
+
     .footer-card {
       padding: 28px;
       display: grid;
@@ -504,29 +686,39 @@ body {
       gap: 20px;
       align-items: center;
     }
+
     .footer-copy h3 {
       margin: 0 0 10px;
       font-size: 1.8rem;
       letter-spacing: -0.03em;
     }
+
     .footer-copy p {
       margin: 0;
       color: var(--muted);
       line-height: 1.75;
       max-width: 56ch;
     }
+
     .footer-actions {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
       justify-content: flex-end;
     }
+
     .footnote {
       text-align: center;
       color: var(--muted);
       margin-top: 22px;
       font-size: 0.95rem;
     }
+
+    .signed-in-only.hidden,
+    .signed-out-only.hidden {
+      display: none !important;
+    }
+
     @media (max-width: 980px) {
       .hero,
       .panel,
@@ -535,50 +727,101 @@ body {
       .gallery {
         grid-template-columns: 1fr;
       }
+
       .hero-copy,
       .hero-card,
       .panel,
-      .footer-card {
+      .footer-card,
+      .member-panel {
         padding: 24px;
       }
+
       .hero-meta {
         grid-template-columns: 1fr;
       }
+
       .section-head {
         align-items: start;
         flex-direction: column;
       }
-      .footer-actions { justify-content: flex-start; }
+
+      .footer-actions {
+        justify-content: flex-start;
+      }
     }
+
+    @media (max-width: 768px) {
+      .header-right {
+        width: 100%;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
     @media (max-width: 640px) {
-      .wrap { width: min(var(--max), calc(100% - 20px)); }
-      .nav { align-items: start; flex-direction: column; }
-      .nav-links { gap: 14px; justify-content: flex-start; }
-      .hero { padding-top: 42px; }
-      h1 { font-size: 2.6rem; }
-      .lead { font-size: 1rem; }
+      .wrap {
+        width: min(var(--max), calc(100% - 20px));
+      }
+
+      .nav {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        gap: 14px;
+        justify-content: flex-start;
+      }
+
+      .hero {
+        padding-top: 42px;
+      }
+
+      h1 {
+        font-size: 2.6rem;
+      }
+
+      .lead {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
   <div class="stars"></div>
+
   <header>
     <div class="wrap nav">
       <a class="brand" href="#top" aria-label="Kelaris home">
         <span class="brand-mark"></span>
         <span>Kelaris</span>
       </a>
-      <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#about">About</a>
-        <a href="#features">Features</a>
-        <a href="#about-game">Game</a>
-        <a href="#media">Media</a>
-        <a href="#devlog">Devlog</a>
-        <a href="#links">Links</a>
-        <a href="auth.html">Account</a>
-      </nav>
+
+      <div class="header-right">
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="#about">About</a>
+          <a href="#features">Features</a>
+          <a href="#about-game">Game</a>
+          <a href="#media">Media</a>
+          <a href="#devlog">Devlog</a>
+          <a href="#links">Links</a>
+          <a href="auth.html">Account</a>
+          <a class="signed-in-only hidden" href="members.html">Members</a>
+        </nav>
+
+        <div id="profile-menu" class="profile-menu">
+          <button id="profile-trigger" class="profile-trigger" type="button">Account ▾</button>
+          <div id="profile-dropdown" class="profile-dropdown">
+            <div id="dropdown-email" class="profile-email-row">Signed in</div>
+            <a class="dropdown-link" href="auth.html">Account Page</a>
+            <a class="dropdown-link" href="members.html">Member Area</a>
+            <button id="dropdown-logout" class="dropdown-button" type="button">Log Out</button>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
+
   <main id="top" class="wrap">
     <section class="hero">
       <div class="hero-copy">
@@ -594,6 +837,7 @@ body {
           <a class="button" href="#devlog">Read Devlog</a>
         </div>
       </div>
+
       <aside class="hero-card" aria-label="Kelaris preview card">
         <div class="hero-visual">
           <div class="planet"></div>
@@ -617,12 +861,45 @@ body {
         </div>
       </aside>
     </section>
+
+    <section>
+      <div class="member-panel signed-in-only hidden">
+        <div class="section-head" style="margin-bottom:0;">
+          <div>
+            <h2>Member Access</h2>
+          </div>
+        </div>
+        <p>
+          Welcome back. Your Kelaris account is signed in. Open the member area for tester pages, member-only announcements, and future account-linked features.
+        </p>
+        <div class="member-actions">
+          <a class="button primary" href="members.html">Open Member Area</a>
+          <a class="button" href="auth.html">Manage Account</a>
+        </div>
+      </div>
+
+      <div class="member-panel signed-out-only">
+        <div class="section-head" style="margin-bottom:0;">
+          <div>
+            <h2>Members Only</h2>
+          </div>
+        </div>
+        <p>
+          Sign in to access member pages, tester updates, and future Kelaris account features as they go live.
+        </p>
+        <div class="member-actions">
+          <a class="button primary" href="auth.html">Sign In</a>
+        </div>
+      </div>
+    </section>
+
     <section id="about">
       <div class="section-head">
         <div>
           <h2>What is Kelaris?</h2>
-        </div>      
+        </div>
       </div>
+
       <div class="grid-3">
         <article class="feature">
           <h3>Build a living colony</h3>
@@ -638,12 +915,14 @@ body {
         </article>
       </div>
     </section>
+
     <section id="features">
       <div class="section-head">
         <div>
           <h2>Core pillars</h2>
-        </div>        
+        </div>
       </div>
+
       <div class="panel">
         <div class="list">
           <div class="list-item">
@@ -659,6 +938,7 @@ body {
             Prepare for threats, strengthen your perimeter, and respond to danger without collapsing your internal economy.
           </div>
         </div>
+
         <div class="list">
           <div class="list-item">
             <strong>Exploration</strong>
@@ -675,49 +955,52 @@ body {
         </div>
       </div>
     </section>
+
     <section id="about-game">
-  <div class="section-head">
-    <div>
-      <h2>About This Game</h2>
-    </div>   
-  </div>
-  <div class="panel" style="grid-template-columns: 1fr;">
-    <div class="list">
-      <div class="list-item">
-        <strong>Establish humanity’s foothold on a hostile alien world.</strong>
-        Build a living colony, automate complex systems, and defend against escalating threats as every expansion pushes you deeper into the unknown.
-        <br><br>
-        <strong>Kelaris is a colony survival game about pressure, growth, and control.</strong>
+      <div class="section-head">
+        <div>
+          <h2>About This Game</h2>
+        </div>
       </div>
-      <div class="list-item">
-        <strong>Build a living colony</strong>
-        Start with a fragile outpost and grow it into a self-sustaining stronghold. Plan efficient layouts, manage priorities, and expand without letting complexity break your colony.
+
+      <div class="panel" style="grid-template-columns: 1fr;">
+        <div class="list">
+          <div class="list-item">
+            <strong>Establish humanity’s foothold on a hostile alien world.</strong>
+            Build a living colony, automate complex systems, and defend against escalating threats as every expansion pushes you deeper into the unknown.
+            <br><br>
+            <strong>Kelaris is a colony survival game about pressure, growth, and control.</strong>
+          </div>
+          <div class="list-item">
+            <strong>Build a living colony</strong>
+            Start with a fragile outpost and grow it into a self-sustaining stronghold. Plan efficient layouts, manage priorities, and expand without letting complexity break your colony.
+          </div>
+          <div class="list-item">
+            <strong>Automate everything</strong>
+            Turn manual survival into industrial momentum. Build layered production chains, process raw resources, and scale your infrastructure into a machine that can run under pressure.
+          </div>
+          <div class="list-item">
+            <strong>Explore a dangerous world</strong>
+            Push into unknown territory, secure new resources, and adapt to the terrain around you. Expansion creates opportunity — but it also creates risk.
+          </div>
+          <div class="list-item">
+            <strong>Defend under pressure</strong>
+            Growth attracts danger. Build defenses, respond to threats, and keep your colony functioning when the world starts pushing back.
+          </div>
+          <div class="list-item">
+            <strong>Systems that interact</strong>
+            Logistics, production, power, survival, and expansion all feed into one another. Small mistakes grow into major problems, and smart planning creates long-term stability.
+          </div>
+          <div class="list-item">
+            <strong>From outpost to machine</strong>
+            Begin with survival. End with mastery. Build a colony that can scale, adapt, and endure.
+            <br><br>
+            <strong>Survival is expected. Mastery is earned.</strong>
+          </div>
+        </div>
       </div>
-      <div class="list-item">
-        <strong>Automate everything</strong>
-        Turn manual survival into industrial momentum. Build layered production chains, process raw resources, and scale your infrastructure into a machine that can run under pressure.
-      </div>
-      <div class="list-item">
-        <strong>Explore a dangerous world</strong>
-        Push into unknown territory, secure new resources, and adapt to the terrain around you. Expansion creates opportunity — but it also creates risk.
-      </div>
-      <div class="list-item">
-        <strong>Defend under pressure</strong>
-        Growth attracts danger. Build defenses, respond to threats, and keep your colony functioning when the world starts pushing back.
-      </div>
-      <div class="list-item">
-        <strong>Systems that interact</strong>
-        Logistics, production, power, survival, and expansion all feed into one another. Small mistakes grow into major problems, and smart planning creates long-term stability.
-      </div>
-      <div class="list-item">
-        <strong>From outpost to machine</strong>
-        Begin with survival. End with mastery. Build a colony that can scale, adapt, and endure.
-        <br><br>
-        <strong>Survival is expected. Mastery is earned.</strong>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
+
     <section id="media">
       <div class="section-head">
         <div>
@@ -727,6 +1010,7 @@ body {
           Replace these placeholder cards with real screenshots, trailers, GIFs, or feature callouts as soon as you have media ready.
         </p>
       </div>
+
       <div class="gallery">
         <article class="shot">
           <div class="shot-content">
@@ -751,12 +1035,14 @@ body {
         </article>
       </div>
     </section>
+
     <section id="devlog">
       <div class="section-head">
         <div>
           <h2>Development updates</h2>
-        </div>        
+        </div>
       </div>
+
       <div class="timeline">
         <article class="timeline-item">
           <strong>Update 01 — Project Foundation</strong>
@@ -781,27 +1067,35 @@ body {
       </div>
     </section>
   </main>
+
   <footer id="links">
     <div class="wrap">
       <div class="footer-card">
         <div class="footer-copy">
           <h3>Follow Kelaris</h3>
           <p>
-             Join the Kelaris community and follow development as the game grows. Use these links for Discord, future store pages, videos, and official updates.
+            Join the Kelaris community and follow development as the game grows. Use these links for Discord, future store pages, videos, and official updates.
           </p>
         </div>
+
         <div class="footer-actions">
           <a class="button primary" href="#">Steam</a>
           <a class="button discord" href="https://discord.gg/9HEBafkKgs" target="_blank" rel="noopener noreferrer">Join Discord</a>
           <a class="button" href="#">YouTube</a>
-          <a class="button" href="#">Contact</a>         
+          <a class="button" href="#">Contact</a>
+          <a class="button" href="auth.html">Account</a>
+          <a class="button signed-in-only hidden" href="members.html">Members</a>
         </div>
       </div>
+
       <div class="footnote">© <span id="year"></span> Kelaris. All rights reserved.</div>
     </div>
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="account.js"></script>
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
