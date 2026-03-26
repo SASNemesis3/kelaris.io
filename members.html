@@ -11,6 +11,7 @@
       --accent: #88a8ff;
       --accent-2: #7df0d2;
       --line: rgba(255,255,255,0.12);
+      --success: #7df0d2;
     }
 
     * { box-sizing: border-box; }
@@ -28,6 +29,8 @@
         linear-gradient(180deg, #010307 0%, #030814 28%, #050b18 58%, #040710 100%);
     }
 
+    a { color: inherit; text-decoration: none; }
+
     .stars,
     .stars::before,
     .stars::after {
@@ -41,10 +44,57 @@
     .stars {
       background-image:
         radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.42) 99%, transparent 100%),
-        radial-gradient(1px 1px at 75% 65%, rgba(255,255,255,0.35) 99%, transparent 100%);
-      background-size: 512px 512px, 480px 480px;
+        radial-gradient(1px 1px at 75% 65%, rgba(255,255,255,0.35) 99%, transparent 100%),
+        radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.38) 99%, transparent 100%),
+        radial-gradient(1px 1px at 10% 60%, rgba(255,255,255,0.30) 99%, transparent 100%),
+        radial-gradient(1px 1px at 55% 35%, rgba(255,255,255,0.34) 99%, transparent 100%);
+      background-size: 512px 512px, 480px 480px, 520px 520px, 560px 560px, 600px 600px;
       background-repeat: repeat;
       opacity: 0.55;
+      animation: starsScrollFar 80s linear infinite;
+      mix-blend-mode: screen;
+    }
+
+    .stars::before {
+      background-image:
+        radial-gradient(1.5px 1.5px at 20% 15%, rgba(255,255,255,0.60) 99%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 60% 45%, rgba(255,255,255,0.55) 99%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 85% 70%, rgba(255,255,255,0.58) 99%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 35% 85%, rgba(255,255,255,0.52) 99%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 5% 35%, rgba(255,255,255,0.50) 99%, transparent 100%);
+      background-size: 384px 384px, 420px 420px, 400px 400px, 440px 440px, 460px 460px;
+      background-repeat: repeat;
+      opacity: 0.75;
+      animation: starsScrollMid 45s linear infinite;
+    }
+
+    .stars::after {
+      background-image:
+        radial-gradient(2px 2px at 30% 20%, rgba(255,255,255,0.95) 99%, transparent 100%),
+        radial-gradient(2px 2px at 70% 55%, rgba(255,255,255,0.90) 99%, transparent 100%),
+        radial-gradient(2px 2px at 15% 80%, rgba(255,255,255,0.92) 99%, transparent 100%),
+        radial-gradient(2px 2px at 90% 30%, rgba(255,255,255,0.88) 99%, transparent 100%),
+        radial-gradient(2px 2px at 50% 10%, rgba(255,255,255,0.90) 99%, transparent 100%);
+      background-size: 320px 320px, 340px 340px, 360px 360px, 380px 380px, 400px 400px;
+      background-repeat: repeat;
+      opacity: 0.88;
+      filter: drop-shadow(0 0 2px rgba(255,255,255,0.5));
+      animation: starsScrollNear 22s linear infinite;
+    }
+
+    @keyframes starsScrollFar {
+      0%   { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: -20px -1024px, -8px -960px, -14px -1040px, -6px -1120px, -10px -1200px; }
+    }
+
+    @keyframes starsScrollMid {
+      0%   { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: -40px -768px, -22px -840px, -28px -800px, -18px -880px, -24px -920px; }
+    }
+
+    @keyframes starsScrollNear {
+      0%   { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: -80px -640px, -60px -680px, -72px -720px, -54px -760px, -66px -800px; }
     }
 
     .shell {
@@ -61,6 +111,9 @@
       justify-content: space-between;
       gap: 16px;
       margin-bottom: 24px;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      backdrop-filter: blur(16px);
     }
 
     .brand {
@@ -70,7 +123,6 @@
       font-weight: 800;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      text-decoration: none;
       color: var(--text);
     }
 
@@ -86,6 +138,7 @@
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
+      align-items: center;
     }
 
     .button {
@@ -99,8 +152,94 @@
       color: var(--text);
       background: rgba(255,255,255,0.04);
       font-weight: 700;
-      text-decoration: none;
       cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .button.primary {
+      background: linear-gradient(135deg, rgba(136,168,255,0.22), rgba(125,240,210,0.18));
+      border-color: rgba(136,168,255,0.35);
+    }
+
+    .profile-menu {
+      position: relative;
+      display: none;
+    }
+
+    .profile-menu.visible {
+      display: block;
+    }
+
+    .profile-trigger {
+      min-height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .profile-trigger:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: 260px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(8,12,28,0.92);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+      padding: 14px;
+      display: none;
+      z-index: 50;
+    }
+
+    .profile-dropdown.open {
+      display: block;
+    }
+
+    .profile-email-row {
+      color: var(--muted);
+      font-size: 0.92rem;
+      word-break: break-word;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 12px;
+    }
+
+    .dropdown-link,
+    .dropdown-button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 42px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      padding: 0 12px;
+      font-size: 0.97rem;
+      text-align: left;
+    }
+
+    .dropdown-link:hover,
+    .dropdown-button:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.06);
     }
 
     .card {
@@ -113,8 +252,32 @@
       margin-bottom: 20px;
     }
 
-    h1, h2 { margin-top: 0; }
-    p { color: var(--muted); line-height: 1.7; }
+    h1, h2, h3 {
+      margin-top: 0;
+      letter-spacing: -0.03em;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      margin-bottom: 14px;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
 
     .grid {
       display: grid;
@@ -132,11 +295,88 @@
     .tile strong {
       display: block;
       margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 18px rgba(125,240,210,0.65);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .info-box {
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .info-box span {
+      display: block;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .info-box strong {
+      font-size: 1rem;
+      word-break: break-word;
     }
 
     @media (max-width: 900px) {
-      .grid {
+      .grid,
+      .info-grid {
         grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(1100px, calc(100% - 20px));
+      }
+
+      .card {
+        padding: 22px;
+      }
+
+      .actions {
+        width: 100%;
       }
     }
   </style>
@@ -146,7 +386,7 @@
 
   <div class="shell">
     <div class="topbar">
-      <a class="brand" href="index.html">
+      <a class="brand" href="index.html" aria-label="Kelaris home">
         <span class="brand-mark"></span>
         <span>Kelaris</span>
       </a>
@@ -154,14 +394,47 @@
       <div class="actions">
         <a class="button" href="index.html">Home</a>
         <a class="button" href="auth.html">Account</a>
+
+        <div id="profile-menu" class="profile-menu">
+          <button id="profile-trigger" class="profile-trigger" type="button">Account ▾</button>
+          <div id="profile-dropdown" class="profile-dropdown">
+            <div id="dropdown-email" class="profile-email-row">Signed in</div>
+            <a class="dropdown-link" href="auth.html">Account Page</a>
+            <a class="dropdown-link" href="members.html">Member Area</a>
+            <button id="dropdown-logout" class="dropdown-button" type="button">Log Out</button>
+          </div>
+        </div>
       </div>
     </div>
 
     <section class="card">
+      <div class="eyebrow">Kelaris members</div>
       <h1>Member Area</h1>
       <p>
-        This page is protected by login. Signed-out visitors should be redirected to the Kelaris account page.
+        This page is protected by login. Signed-in users can access member-only pages, tester areas, and future account-linked features for Kelaris.
       </p>
+
+      <div class="status-row">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          <span>Signed-in access verified</span>
+        </div>
+        <a class="button primary" href="auth.html">Manage Account</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Your Access</h2>
+      <div class="info-grid">
+        <div class="info-box">
+          <span>Email</span>
+          <strong id="profile-email">Loading...</strong>
+        </div>
+        <div class="info-box">
+          <span>User ID</span>
+          <strong id="profile-id">Loading...</strong>
+        </div>
+      </div>
     </section>
 
     <section class="card">
@@ -169,17 +442,24 @@
       <div class="grid">
         <div class="tile">
           <strong>Closed alpha updates</strong>
-          Tester notes, patch previews, and sign-up info.
+          Tester notes, patch previews, private announcements, and rollout information for early players.
         </div>
         <div class="tile">
           <strong>Member-only announcements</strong>
-          Private dev notes for early supporters or testers.
+          Private dev updates, future supporter perks, and account-linked site content.
         </div>
         <div class="tile">
           <strong>Future account features</strong>
-          Profiles, launcher access, or account-linked game progress.
+          Profiles, launcher access, game-linked saves, and tester access control as Kelaris grows.
         </div>
       </div>
+    </section>
+
+    <section class="card">
+      <h2>Next steps</h2>
+      <p>
+        This page is now ready to become your real protected member hub. The next strong upgrade would be adding a testers list, private patch notes, closed alpha signups, or account-linked game access.
+      </p>
     </section>
   </div>
 
@@ -187,6 +467,33 @@
   <script src="account.js"></script>
   <script>
     window.kelarisRequireAuth();
+
+    function fillMemberProfileFromSession() {
+      try {
+        const raw = localStorage.getItem("sb-wuobmtoskxqiiaejyrax-auth-token");
+        if (!raw) return;
+
+        const parsed = JSON.parse(raw);
+        const user = parsed?.user;
+
+        if (!user) return;
+
+        const emailEl = document.getElementById("profile-email");
+        const idEl = document.getElementById("profile-id");
+
+        if (emailEl) {
+          emailEl.textContent = user.email || "—";
+        }
+
+        if (idEl) {
+          idEl.textContent = user.id || "—";
+        }
+      } catch (err) {
+        // no-op
+      }
+    }
+
+    fillMemberProfileFromSession();
   </script>
 </body>
 </html>
