@@ -30,6 +30,10 @@ const profileDropdown = document.getElementById("profile-dropdown");
 const dropdownEmail = document.getElementById("dropdown-email");
 const dropdownLogout = document.getElementById("dropdown-logout");
 
+const dropdownAvatar = document.getElementById("dropdown-avatar");
+const triggerAvatar = document.getElementById("trigger-avatar");
+const triggerLabel = document.getElementById("trigger-label");
+
 const tabButtons = document.querySelectorAll(".tab-btn");
 const formPanels = {
   signup: document.getElementById("signup-panel"),
@@ -66,7 +70,39 @@ function showTab(tabName) {
   });
 }
 
+function getUserDisplayText(user) {
+  return user?.email || "Signed in";
+}
+
+function getInitialsFromUser(user) {
+  const email = user?.email?.trim();
+  if (!email) return "U";
+
+  const localPart = email.split("@")[0];
+  if (!localPart) return "U";
+
+  const cleaned = localPart.replace(/[^a-zA-Z0-9._-]/g, "");
+  const splitParts = cleaned.split(/[._-]+/).filter(Boolean);
+
+  if (splitParts.length >= 2) {
+    return (
+      (splitParts[0][0] || "") +
+      (splitParts[1][0] || "")
+    ).toUpperCase();
+  }
+
+  return cleaned.slice(0, 2).toUpperCase();
+}
+
+function fillAvatar(el, initials) {
+  if (!el) return;
+  el.textContent = initials;
+}
+
 function fillSharedProfileFields(user) {
+  const emailText = getUserDisplayText(user);
+  const initials = getInitialsFromUser(user);
+
   if (profileEmail) {
     profileEmail.textContent = user?.email || "—";
   }
@@ -76,7 +112,35 @@ function fillSharedProfileFields(user) {
   }
 
   if (dropdownEmail) {
-    dropdownEmail.textContent = user?.email || "Signed in";
+    dropdownEmail.textContent = emailText;
+  }
+
+  fillAvatar(dropdownAvatar, initials);
+  fillAvatar(triggerAvatar, initials);
+
+  if (triggerLabel) {
+    triggerLabel.textContent = "Account";
+  }
+}
+
+function clearSharedProfileFields() {
+  if (profileEmail) {
+    profileEmail.textContent = "—";
+  }
+
+  if (profileId) {
+    profileId.textContent = "—";
+  }
+
+  if (dropdownEmail) {
+    dropdownEmail.textContent = "Signed out";
+  }
+
+  fillAvatar(dropdownAvatar, "U");
+  fillAvatar(triggerAvatar, "U");
+
+  if (triggerLabel) {
+    triggerLabel.textContent = "Account";
   }
 }
 
@@ -111,17 +175,7 @@ function setSignedOutUi() {
     profileDropdown.classList.remove("open");
   }
 
-  if (profileEmail) {
-    profileEmail.textContent = "—";
-  }
-
-  if (profileId) {
-    profileId.textContent = "—";
-  }
-
-  if (dropdownEmail) {
-    dropdownEmail.textContent = "Signed out";
-  }
+  clearSharedProfileFields();
 }
 
 function renderUser(user) {
