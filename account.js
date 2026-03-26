@@ -66,14 +66,7 @@ function showTab(tabName) {
   });
 }
 
-function setSignedInUi(user) {
-  signedInOnlyEls.forEach((el) => el.classList.remove("hidden"));
-  signedOutOnlyEls.forEach((el) => el.classList.add("hidden"));
-
-  if (profileBox) {
-    profileBox.classList.add("visible");
-  }
-
+function fillSharedProfileFields(user) {
   if (profileEmail) {
     profileEmail.textContent = user?.email || "—";
   }
@@ -82,13 +75,24 @@ function setSignedInUi(user) {
     profileId.textContent = user?.id || "—";
   }
 
+  if (dropdownEmail) {
+    dropdownEmail.textContent = user?.email || "Signed in";
+  }
+}
+
+function setSignedInUi(user) {
+  signedInOnlyEls.forEach((el) => el.classList.remove("hidden"));
+  signedOutOnlyEls.forEach((el) => el.classList.add("hidden"));
+
+  if (profileBox) {
+    profileBox.classList.add("visible");
+  }
+
   if (profileMenu) {
     profileMenu.classList.add("visible");
   }
 
-  if (dropdownEmail) {
-    dropdownEmail.textContent = user?.email || "Signed in";
-  }
+  fillSharedProfileFields(user);
 }
 
 function setSignedOutUi() {
@@ -99,20 +103,20 @@ function setSignedOutUi() {
     profileBox.classList.remove("visible");
   }
 
-  if (profileEmail) {
-    profileEmail.textContent = "—";
-  }
-
-  if (profileId) {
-    profileId.textContent = "—";
-  }
-
   if (profileMenu) {
     profileMenu.classList.remove("visible");
   }
 
   if (profileDropdown) {
     profileDropdown.classList.remove("open");
+  }
+
+  if (profileEmail) {
+    profileEmail.textContent = "—";
+  }
+
+  if (profileId) {
+    profileId.textContent = "—";
   }
 
   if (dropdownEmail) {
@@ -177,7 +181,7 @@ async function loadUser() {
     const user = data?.user || null;
     renderUser(user);
     return user;
-  } catch (err) {
+  } catch (_err) {
     setMessage("Could not load account session.", "error");
     renderUser(null);
     return null;
@@ -327,6 +331,10 @@ async function doLogout() {
 
   renderUser(null);
   setMessage("Logged out.", "success");
+
+  if (window.location.pathname.endsWith("members.html")) {
+    window.location.href = "auth.html";
+  }
 }
 
 logoutBtn?.addEventListener("click", doLogout);
