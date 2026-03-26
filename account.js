@@ -2,7 +2,7 @@
 // SUPABASE CONFIG (REPLACE THESE)
 // ==============================
 const SUPABASE_URL = "https://wuobmtoskxqiiaejyrax.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_XXXXXXXXXXXXXXXX";
+const SUPABASE_ANON_KEY = "sb_publishable_MzNTtCgbH6gkTVts8myt2w_qyMztjIy";
 
 // ==============================
 // INIT
