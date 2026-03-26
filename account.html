@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+          <button class="tab-btn active" type="button" data-tab="signup">Sign Up</button>
+          <button class="tab-btn" type="button" data-tab="login">Log In</button>
+          <button class="tab-btn" type="button" data-tab="reset">Reset Password</button>
+        </div>
 
+        <div id="signup-panel" class="form-panel active">
+          <h2>Sign up</h2>
+          <form id="signup-form">
+            <div class="field">
+              <label for="signup-display-name">Display name</label>
+              <input id="signup-display-name" name="displayName" type="text" maxlength="40" placeholder="Your name" />
+            </div>
+            <div class="field">
+              <label for="signup-email">Email</label>
+              <input id="signup-email" name="email" type="email" required placeholder="you@example.com" />
+            </div>
+            <div class="field">
+              <label for="signup-password">Password</label>
+              <input id="signup-password" name="password" type="password" required minlength="8" placeholder="Minimum 8 characters" />
+            </div>
+            <div class="field">
+              <label for="signup-confirm-password">Confirm password</label>
+              <input id="signup-confirm-password" name="confirmPassword" type="password" required minlength="8" placeholder="Confirm password" />
+            </div>
+            <div class="button-row">
+              <button class="button primary" type="submit">Create Account</button>
+            </div>
+          </form>
+        </div>
+
+        <div id="login-panel" class="form-panel">
+          <h2>Log in</h2>
+          <form id="login-form">
+            <div class="field">
+              <label for="login-email">Email</label>
+              <input id="login-email" name="email" type="email" required placeholder="you@example.com" />
+            </div>
+            <div class="field">
+              <label for="login-password">Password</label>
+              <input id="login-password" name="password" type="password" required placeholder="Your password" />
+            </div>
+            <div class="button-row">
+              <button class="button primary" type="submit">Log In</button>
+            </div>
+          </form>
+        </div>
+
+        <div id="reset-panel" class="form-panel">
+          <h2>Reset password</h2>
+          <form id="reset-form">
+            <div class="field">
+              <label for="reset-email">Email</label>
+              <input id="reset-email" name="email" type="email" required placeholder="you@example.com" />
+            </div>
+            <div class="button-row">
+              <button class="button primary" type="submit">Send Reset Email</button>
+            </div>
+          </form>
+        </div>
+
+        <div id="auth-message" class="message" aria-live="polite"></div>
+
+        <div id="profile-box" class="profile-box">
+          <h3>Your account</h3>
+          <div class="profile-grid">
+            <div class="profile-item">
+              <span>Email</span>
+              <strong id="profile-email">—</strong>
+            </div>
+            <div class="profile-item">
+              <span>User ID</span>
+              <strong id="profile-id">—</strong>
+            </div>
+            <div class="profile-item">
+              <span>Display name</span>
+              <strong id="profile-name">—</strong>
+            </div>
+          </div>
+          <div class="button-row" style="margin-top:16px;">
+            <button id="logout-btn" class="button" type="button">Log Out</button>
+          </div>
+        </div>
+
+        <p class="fine" style="margin-top:18px;">
+          Before this page works, add your Supabase URL and anon key in <code>auth.js</code>.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth.js"></script>
+</body>
+</html>
