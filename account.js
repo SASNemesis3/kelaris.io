@@ -47,32 +47,34 @@ function showProfile(user) {
 }
 
 async function loadUser() {
-  try {
-    const { data, error } = await supabaseClient.auth.getUser();
+  const { data, error } = await supabaseClient.auth.getUser();
 
-    if (error) {
-      const ignoredErrors = [
-        "Auth session missing",
-        "Invalid Refresh Token",
-        "Refresh Token Not Found"
-      ];
-
-      const shouldIgnore = ignoredErrors.some((text) =>
-        error.message?.includes(text)
-      );
-
-      if (!shouldIgnore) {
-        setMessage(error.message, "error");
-      }
+  // No session (normal case)
+  if (error) {
+    if (
+      error.message?.includes("Auth session missing") ||
+      error.message?.includes("Invalid Refresh Token") ||
+      error.message?.includes("Refresh Token Not Found")
+    ) {
+      // 👇 PUT IT RIGHT HERE
+      setMessage("Not logged in", "info");
 
       showProfile(null);
       return;
     }
 
-    showProfile(data.user || null);
-  } catch (err) {
-    setMessage("Could not load account session.", "error");
+    // Real error
+    setMessage(error.message, "error");
     showProfile(null);
+    return;
+  }
+
+  // User is logged in
+  showProfile(data.user || null);
+
+  // Optional: clear message when logged in
+  if (data.user) {
+    setMessage("");
   }
 }
 
