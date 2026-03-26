@@ -13,70 +13,146 @@ const supabaseClient = window.supabase.createClient(
   }
 );
 
-const msg = document.getElementById("message");
+const messageEl = document.getElementById("message");
+
 const signupForm = document.getElementById("signup-form");
 const loginForm = document.getElementById("login-form");
 const resetForm = document.getElementById("reset-form");
-const profileBox = document.getElementById("profile");
+
+const profileBox = document.getElementById("profile-box");
 const profileEmail = document.getElementById("profile-email");
-const logoutBtn = document.getElementById("logout");
+const profileId = document.getElementById("profile-id");
+const logoutBtn = document.getElementById("logout-btn");
+
+const profileMenu = document.getElementById("profile-menu");
+const profileTrigger = document.getElementById("profile-trigger");
+const profileDropdown = document.getElementById("profile-dropdown");
+const dropdownEmail = document.getElementById("dropdown-email");
+const dropdownLogout = document.getElementById("dropdown-logout");
+
+const tabButtons = document.querySelectorAll(".tab-btn");
+const formPanels = {
+  signup: document.getElementById("signup-panel"),
+  login: document.getElementById("login-panel"),
+  reset: document.getElementById("reset-panel")
+};
+
+const signedInOnlyEls = document.querySelectorAll(".signed-in-only");
+const signedOutOnlyEls = document.querySelectorAll(".signed-out-only");
 
 function setMessage(text, type = "") {
-  if (!msg) return;
-  msg.textContent = text;
-  msg.className = type;
+  if (!messageEl) return;
+  messageEl.textContent = text;
+  messageEl.className = "message";
+  if (type) {
+    messageEl.classList.add(type);
+  }
 }
 
 function clearMessage() {
-  if (!msg) return;
-  msg.textContent = "";
-  msg.className = "";
+  if (!messageEl) return;
+  messageEl.textContent = "";
+  messageEl.className = "message";
 }
 
-function showProfile(user) {
-  if (!profileBox) return;
+function showTab(tabName) {
+  tabButtons.forEach((button) => {
+    button.classList.toggle("active", button.dataset.tab === tabName);
+  });
 
-  if (!user) {
-    profileBox.style.display = "none";
-    if (profileEmail) profileEmail.textContent = "";
-    return;
+  Object.entries(formPanels).forEach(([name, panel]) => {
+    if (!panel) return;
+    panel.classList.toggle("active", name === tabName);
+  });
+}
+
+function setSignedInUi(user) {
+  signedInOnlyEls.forEach((el) => el.classList.remove("hidden"));
+  signedOutOnlyEls.forEach((el) => el.classList.add("hidden"));
+
+  if (profileBox) profileBox.classList.add("visible");
+  if (profileEmail) profileEmail.textContent = user?.email || "—";
+  if (profileId) profileId.textContent = user?.id || "—";
+
+  if (profileMenu) profileMenu.classList.add("visible");
+  if (dropdownEmail) dropdownEmail.textContent = user?.email || "Signed in";
+}
+
+function setSignedOutUi() {
+  signedInOnlyEls.forEach((el) => el.classList.add("hidden"));
+  signedOutOnlyEls.forEach((el) => el.classList.remove("hidden"));
+
+  if (profileBox) profileBox.classList.remove("visible");
+  if (profileEmail) profileEmail.textContent = "—";
+  if (profileId) profileId.textContent = "—";
+
+  if (profileMenu) profileMenu.classList.remove("visible");
+  if (profileDropdown) profileDropdown.classList.remove("open");
+  if (dropdownEmail) dropdownEmail.textContent = "Signed out";
+}
+
+function renderUser(user) {
+  if (user) {
+    setSignedInUi(user);
+  } else {
+    setSignedOutUi();
   }
-
-  profileBox.style.display = "block";
-  if (profileEmail) profileEmail.textContent = user.email || "";
 }
 
 async function loadUser() {
   const { data, error } = await supabaseClient.auth.getUser();
 
-  // No session (normal case)
   if (error) {
-    if (
-      error.message?.includes("Auth session missing") ||
-      error.message?.includes("Invalid Refresh Token") ||
-      error.message?.includes("Refresh Token Not Found")
-    ) {
-      // 👇 PUT IT RIGHT HERE
-      setMessage("Not logged in", "info");
+    const ignored = [
+      "Auth session missing",
+      "Invalid Refresh Token",
+      "Refresh Token Not Found"
+    ];
 
-      showProfile(null);
-      return;
+    const shouldIgnore = ignored.some((text) => error.message?.includes(text));
+
+    if (shouldIgnore) {
+      clearMessage();
+      renderUser(null);
+      return null;
     }
 
-    // Real error
     setMessage(error.message, "error");
-    showProfile(null);
-    return;
+    renderUser(null);
+    return null;
   }
 
-  // User is logged in
-  showProfile(data.user || null);
+  const user = data.user || null;
+  renderUser(user);
+  return user;
+}
 
-  // Optional: clear message when logged in
-  if (data.user) {
-    setMessage("");
+async function requireAuth() {
+  const user = await loadUser();
+  if (!user) {
+    const current = encodeURIComponent(window.location.pathname.split("/").pop() || "members.html");
+    window.location.href = `auth.html?redirect=${current}`;
   }
 }
+
+async function goToPostLoginDestination() {
+  const params = new URLSearchParams(window.location.search);
+  const redirect = params.get("redirect");
+
+  if (redirect && !redirect.includes("http") && !redirect.includes("//")) {
+    window.location.href = redirect;
+    return true;
+  }
+
+  return false;
+}
+
+tabButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    clearMessage();
+    showTab(button.dataset.tab);
+  });
+});
 
 signupForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -118,10 +194,11 @@ signupForm?.addEventListener("submit", async (e) => {
     setMessage("Account created. Check your email to confirm your account.", "success");
   } else {
     setMessage("Account created and signed in.", "success");
+    await goToPostLoginDestination();
   }
 
   signupForm.reset();
-  loadUser();
+  await loadUser();
 });
 
 loginForm?.addEventListener("submit", async (e) => {
@@ -148,7 +225,8 @@ loginForm?.addEventListener("submit", async (e) => {
 
   setMessage("Logged in successfully.", "success");
   loginForm.reset();
-  loadUser();
+  await loadUser();
+  await goToPostLoginDestination();
 });
 
 resetForm?.addEventListener("submit", async (e) => {
@@ -175,7 +253,7 @@ resetForm?.addEventListener("submit", async (e) => {
   resetForm.reset();
 });
 
-logoutBtn?.addEventListener("click", async () => {
+async function doLogout() {
   clearMessage();
 
   const { error } = await supabaseClient.auth.signOut();
@@ -185,12 +263,27 @@ logoutBtn?.addEventListener("click", async () => {
     return;
   }
 
-  showProfile(null);
+  renderUser(null);
   setMessage("Logged out.", "success");
+}
+
+logoutBtn?.addEventListener("click", doLogout);
+dropdownLogout?.addEventListener("click", doLogout);
+
+profileTrigger?.addEventListener("click", () => {
+  profileDropdown?.classList.toggle("open");
 });
 
-supabaseClient.auth.onAuthStateChange((_event, session) => {
-  showProfile(session?.user || null);
+document.addEventListener("click", (e) => {
+  if (!profileMenu || !profileDropdown) return;
+  if (!profileMenu.contains(e.target)) {
+    profileDropdown.classList.remove("open");
+  }
+});
+
+supabaseClient.auth.onAuthStateChange(async (_event, session) => {
+  renderUser(session?.user || null);
 });
 
 loadUser();
+window.kelarisRequireAuth = requireAuth;
