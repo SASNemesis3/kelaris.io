@@ -588,6 +588,58 @@
         linear-gradient(135deg, rgba(21,17,46,0.96), rgba(8,10,22,0.96));
     }
 
+    .profile-trigger {
+  min-height: 46px;
+  padding: 6px 14px 6px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05);
+  color: #f4f7fb;
+  cursor: pointer;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #08101f;
+  background: linear-gradient(135deg, #88a8ff, #7df0d2);
+  box-shadow: 0 0 18px rgba(136,168,255,0.28);
+  flex: 0 0 30px;
+}
+
+.profile-trigger-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.profile-summary .profile-avatar {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  font-size: 0.95rem;
+}
+
     .shot-content {
       position: relative;
       z-index: 1;
@@ -810,9 +862,16 @@
         </nav>
 
         <div id="profile-menu" class="profile-menu">
-          <button id="profile-trigger" class="profile-trigger" type="button">Account ▾</button>
-          <div id="profile-dropdown" class="profile-dropdown">
-            <div id="dropdown-email" class="profile-email-row">Signed in</div>
+          <button id="profile-trigger" class="profile-trigger" type="button">
+  <span id="trigger-avatar" class="profile-avatar">U</span>
+  <span id="trigger-label" class="profile-trigger-label">Account ▾</span>
+</button>
+
+<div id="profile-dropdown" class="profile-dropdown">
+  <div class="profile-summary">
+    <span id="dropdown-avatar" class="profile-avatar">U</span>
+    <div id="dropdown-email" class="profile-email-row">Signed in</div>
+  </div>
             <a class="dropdown-link" href="auth.html">Account Page</a>
             <a class="dropdown-link" href="members.html">Member Area</a>
             <button id="dropdown-logout" class="dropdown-button" type="button">Log Out</button>
