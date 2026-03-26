@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kelaris Members</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --text: #f4f7fb;
+      --muted: #a9b4c7;
+      --accent: #88a8ff;
+      --accent-2: #7df0d2;
+      --line: rgba(255,255,255,0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      background:
+        url("BackgroundCrash.png") center center / cover no-repeat fixed,
+        radial-gradient(circle at 50% -10%, rgba(104,132,255,0.18), transparent 22%),
+        radial-gradient(circle at 20% 18%, rgba(136,168,255,0.10), transparent 24%),
+        radial-gradient(circle at 82% 12%, rgba(125,240,210,0.06), transparent 18%),
+        linear-gradient(180deg, #010307 0%, #030814 28%, #050b18 58%, #040710 100%);
+    }
+
+    .stars,
+    .stars::before,
+    .stars::after {
+      position: fixed;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .stars {
+      background-image:
+        radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.42) 99%, transparent 100%),
+        radial-gradient(1px 1px at 75% 65%, rgba(255,255,255,0.35) 99%, transparent 100%);
+      background-size: 512px 512px, 480px 480px;
+      background-repeat: repeat;
+      opacity: 0.55;
+    }
+
+    .shell {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 42px 0 70px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .brand-mark {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 24px rgba(136,168,255,0.9);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.035));
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 22px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+      backdrop-filter: blur(12px);
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+
+    h1, h2 { margin-top: 0; }
+    p { color: var(--muted); line-height: 1.7; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .tile {
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .tile strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <div class="shell">
+    <div class="topbar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark"></span>
+        <span>Kelaris</span>
+      </a>
+
+      <div class="actions">
+        <a class="button" href="index.html">Home</a>
+        <a class="button" href="auth.html">Account</a>
+      </div>
+    </div>
+
+    <section class="card">
+      <h1>Member Area</h1>
+      <p>
+        This page is protected by login. Signed-out visitors should be redirected to the Kelaris account page.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>What you can put here</h2>
+      <div class="grid">
+        <div class="tile">
+          <strong>Closed alpha updates</strong>
+          Tester notes, patch previews, and sign-up info.
+        </div>
+        <div class="tile">
+          <strong>Member-only announcements</strong>
+          Private dev notes for early supporters or testers.
+        </div>
+        <div class="tile">
+          <strong>Future account features</strong>
+          Profiles, launcher access, or account-linked game progress.
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="account.js"></script>
+  <script>
+    window.kelarisRequireAuth();
+  </script>
+</body>
+</html>
