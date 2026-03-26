@@ -465,35 +465,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="account.js"></script>
-  <script>
-    window.kelarisRequireAuth();
-
-    function fillMemberProfileFromSession() {
-      try {
-        const raw = localStorage.getItem("sb-wuobmtoskxqiiaejyrax-auth-token");
-        if (!raw) return;
-
-        const parsed = JSON.parse(raw);
-        const user = parsed?.user;
-
-        if (!user) return;
-
-        const emailEl = document.getElementById("profile-email");
-        const idEl = document.getElementById("profile-id");
-
-        if (emailEl) {
-          emailEl.textContent = user.email || "—";
-        }
-
-        if (idEl) {
-          idEl.textContent = user.id || "—";
-        }
-      } catch (err) {
-        // no-op
-      }
-    }
-
-    fillMemberProfileFromSession();
-  </script>
+ <script>
+  window.kelarisRequireAuth();
+</script>
 </body>
 </html>
