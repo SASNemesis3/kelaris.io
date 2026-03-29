@@ -2,16 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Kelaris Members</title>
+  <title>Kelaris | Members</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     :root {
+      --bg: #050816;
       --text: #f4f7fb;
       --muted: #a9b4c7;
       --accent: #88a8ff;
       --accent-2: #7df0d2;
       --line: rgba(255,255,255,0.12);
-      --success: #7df0d2;
+      --panel: rgba(255,255,255,0.06);
+      --shadow: 0 24px 80px rgba(0,0,0,0.5);
     }
 
     * { box-sizing: border-box; }
@@ -23,32 +25,97 @@
       min-height: 100vh;
       background:
         url("BackgroundCrash.png") center center / cover no-repeat fixed,
+        radial-gradient(circle at 50% -10%, rgba(104,132,255,0.18), transparent 22%),
+        radial-gradient(circle at 20% 18%, rgba(136,168,255,0.10), transparent 24%),
+        radial-gradient(circle at 82% 12%, rgba(125,240,210,0.06), transparent 18%),
         linear-gradient(180deg, #010307 0%, #030814 28%, #050b18 58%, #040710 100%);
     }
 
     a { color: inherit; text-decoration: none; }
 
-    .shell {
-      width: min(1100px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 42px 0 70px;
-      position: relative;
-      z-index: 1;
-      overflow: visible;
+    .stars,
+    .stars::before,
+    .stars::after {
+      position: fixed;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+      z-index: 0;
     }
 
-    .topbar {
+    .stars {
+      background-image:
+        radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.42) 99%, transparent 100%),
+        radial-gradient(1px 1px at 75% 65%, rgba(255,255,255,0.35) 99%, transparent 100%),
+        radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.38) 99%, transparent 100%),
+        radial-gradient(1px 1px at 10% 60%, rgba(255,255,255,0.30) 99%, transparent 100%),
+        radial-gradient(1px 1px at 55% 35%, rgba(255,255,255,0.34) 99%, transparent 100%);
+      background-size: 512px 512px, 480px 480px, 520px 520px, 560px 560px, 600px 600px;
+      background-repeat: repeat;
+      opacity: 0.55;
+      animation: starsScrollFar 80s linear infinite;
+      mix-blend-mode: screen;
+    }
+
+    .stars::before {
+      background-image:
+        radial-gradient(1.5px 1.5px at 20% 15%, rgba(255,255,255,0.60) 99%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 60% 45%, rgba(255,255,255,0.55) 99%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 85% 70%, rgba(255,255,255,0.58) 99%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 35% 85%, rgba(255,255,255,0.52) 99%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 5% 35%, rgba(255,255,255,0.50) 99%, transparent 100%);
+      background-size: 384px 384px, 420px 420px, 400px 400px, 440px 440px, 460px 460px;
+      background-repeat: repeat;
+      opacity: 0.75;
+      animation: starsScrollMid 45s linear infinite;
+    }
+
+    .stars::after {
+      background-image:
+        radial-gradient(2px 2px at 30% 20%, rgba(255,255,255,0.95) 99%, transparent 100%),
+        radial-gradient(2px 2px at 70% 55%, rgba(255,255,255,0.90) 99%, transparent 100%),
+        radial-gradient(2px 2px at 15% 80%, rgba(255,255,255,0.92) 99%, transparent 100%),
+        radial-gradient(2px 2px at 90% 30%, rgba(255,255,255,0.88) 99%, transparent 100%),
+        radial-gradient(2px 2px at 50% 10%, rgba(255,255,255,0.90) 99%, transparent 100%);
+      background-size: 320px 320px, 340px 340px, 360px 360px, 380px 380px, 400px 400px;
+      background-repeat: repeat;
+      opacity: 0.88;
+      filter: drop-shadow(0 0 2px rgba(255,255,255,0.5));
+      animation: starsScrollNear 22s linear infinite;
+    }
+
+    @keyframes starsScrollFar {
+      0%   { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: -20px -1024px, -8px -960px, -14px -1040px, -6px -1120px, -10px -1200px; }
+    }
+    @keyframes starsScrollMid {
+      0%   { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: -40px -768px, -22px -840px, -28px -800px, -18px -880px, -24px -920px; }
+    }
+    @keyframes starsScrollNear {
+      0%   { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+      100% { background-position: -80px -640px, -60px -680px, -72px -720px, -54px -760px, -66px -800px; }
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(16px);
+      background: rgba(5,8,22,0.62);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .header-inner {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      min-height: 78px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 24px;
-      padding: 18px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      backdrop-filter: blur(16px);
+      gap: 20px;
       position: relative;
-      z-index: 1000;
-      overflow: visible;
+      z-index: 1;
     }
 
     .brand {
@@ -65,16 +132,101 @@
       height: 14px;
       border-radius: 999px;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 24px rgba(136,168,255,0.9);
     }
 
-    .actions {
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .header-link {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .header-link:hover {
+      color: var(--text);
+    }
+
+    .members-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 42px 0 70px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-card,
+    .panel,
+    .tile {
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.035));
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-card {
+      padding: 30px;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+      letter-spacing: -0.03em;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      margin-bottom: 12px;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.72;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .tile {
+      padding: 24px;
+    }
+
+    .tile strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .panel {
+      padding: 26px;
+      margin-top: 24px;
+    }
+
+    .button-row {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      align-items: center;
-      position: relative;
-      z-index: 1001;
-      overflow: visible;
+      margin-top: 18px;
     }
 
     .button {
@@ -85,227 +237,136 @@
       padding: 0 16px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.04);
       color: var(--text);
+      background: rgba(255,255,255,0.04);
       font-weight: 700;
       cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.08);
     }
 
     .button.primary {
       background: linear-gradient(135deg, rgba(136,168,255,0.22), rgba(125,240,210,0.18));
+      border-color: rgba(136,168,255,0.35);
     }
 
-    .profile-menu {
-      position: relative;
-      display: none;
-      z-index: 1002;
-    }
-
-    .profile-menu.visible {
-      display: block;
-    }
-
-    .profile-trigger {
-      min-height: 46px;
-      padding: 6px 14px 6px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.05);
-      color: var(--text);
-      cursor: pointer;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .profile-avatar {
-      width: 30px;
-      height: 30px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.82rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      color: #08101f;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 0 18px rgba(136,168,255,0.28);
-      flex: 0 0 30px;
-    }
-
-    .profile-trigger-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .profile-dropdown {
-      position: absolute;
-      top: calc(100% + 10px);
-      right: 0;
-      width: 280px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(8,12,28,0.96);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
-      padding: 14px;
-      display: none;
-      z-index: 9999;
-    }
-
-    .profile-dropdown.open {
-      display: block;
-    }
-
-    .profile-summary {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .profile-summary .profile-avatar {
-      width: 40px;
-      height: 40px;
-      flex: 0 0 40px;
-      font-size: 0.95rem;
-    }
-
-    .profile-email-row {
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.4;
-      word-break: break-word;
-    }
-
-    .dropdown-link,
-    .dropdown-button {
-      display: block;
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      text-align: left;
-      background: transparent;
-      border: none;
-      color: var(--text);
-      font: inherit;
-    }
-
-    .dropdown-link:hover,
-    .dropdown-button:hover {
-      background: rgba(255,255,255,0.06);
-    }
-
-    .card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 22px;
-      padding: 28px;
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 1;
-    }
-
-    h1 { margin: 0 0 10px; font-size: 2.5rem; }
-    h2 { margin-top: 0; }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-    }
-
-    .status-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--success);
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .info-box {
-      padding: 16px;
-      border-radius: 12px;
+    .notice {
+      margin-top: 16px;
+      padding: 16px 18px;
+      border-radius: 16px;
       background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
     }
 
-    @media (max-width: 700px) {
-      .info-grid { grid-template-columns: 1fr; }
+    @media (max-width: 980px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .header-inner,
+      .members-shell {
+        width: min(1180px, calc(100% - 20px));
+      }
+
+      .hero-card,
+      .panel,
+      .tile {
+        padding: 22px;
+      }
     }
   </style>
 </head>
 <body>
-<div class="shell">
-  <div class="topbar">
-    <div class="brand">
-      <div class="brand-mark"></div>
-      KELARIS
-    </div>
+  <div class="stars"></div>
 
-    <div class="actions">
-      <a class="button" href="index.html">Home</a>
-      <a class="button" href="auth.html">Account</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Kelaris home">
+        <span class="brand-mark"></span>
+        <span>Kelaris</span>
+      </a>
 
-      <div id="profile-menu" class="profile-menu">
-        <button id="profile-trigger" class="profile-trigger" type="button">
-          <span id="trigger-avatar" class="profile-avatar">U</span>
-          <span id="trigger-label" class="profile-trigger-label">Account ▾</span>
-        </button>
-
-        <div id="profile-dropdown" class="profile-dropdown">
-          <div class="profile-summary">
-            <span id="dropdown-avatar" class="profile-avatar">U</span>
-            <div id="dropdown-email" class="profile-email-row">Signed in</div>
-          </div>
-          <a class="dropdown-link" href="auth.html">Account Page</a>
-          <button id="dropdown-logout" class="dropdown-button" type="button">Log Out</button>
-        </div>
+      <div class="header-right">
+        <a class="header-link" href="index.html">Home</a>
+        <a class="header-link" href="links.html">Links</a>
+        <a class="header-link" href="contact.html">Contact</a>
+        <a class="header-link" href="auth.html">Account</a>
       </div>
     </div>
-  </div>
+  </header>
 
-  <div class="card">
-    <h1>Member Area</h1>
-    <p>This page is protected by login.</p>
-    <div class="status-pill">
-      <div class="status-dot"></div>
-      Signed-in access verified
-    </div>
-  </div>
+  <main class="members-shell">
+    <section class="hero-card">
+      <div class="eyebrow">Members</div>
+      <h1>Welcome to the member area.</h1>
+      <p>
+        This page is reserved for signed-in Kelaris members. It gives you a real protected destination for future
+        tester updates, private announcements, downloadable builds, closed feedback, or community perks.
+      </p>
 
-  <div class="card">
-    <h2>Your Access</h2>
-    <div class="info-grid">
-      <div class="info-box">
-        <strong>Email</strong>
-        <div id="profile-email">Loading...</div>
+      <div class="button-row">
+        <a class="button primary" href="index.html">Back to Home</a>
+        <a class="button" href="devlog.html">View Devlog</a>
+        <a class="button" href="links.html">Open Links</a>
       </div>
-      <div class="info-box">
-        <strong>User ID</strong>
-        <div id="profile-id">Loading...</div>
-      </div>
-    </div>
-  </div>
-</div>
+    </section>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="account.js"></script>
-<script>
-  window.kelarisRequireAuth();
-</script>
+    <section class="grid">
+      <article class="tile">
+        <strong>Tester announcements</strong>
+        <p>
+          Use this block for closed alpha notes, patch messages, scheduled tests, or direct instructions for members.
+        </p>
+      </article>
+
+      <article class="tile">
+        <strong>Private downloads</strong>
+        <p>
+          This area can later link to member-only builds, feedback forms, or gated resources once you add a true backend delivery flow.
+        </p>
+      </article>
+
+      <article class="tile">
+        <strong>Community perks</strong>
+        <p>
+          Reserve space here for supporter rewards, early access news, or other benefits tied to account access.
+        </p>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>What this page is for</h2>
+      <p>
+        Right now, this page proves out the account flow and gives the Kelaris site a professional member destination
+        instead of an empty placeholder. Later, it can become the center for closed testing and protected project updates.
+      </p>
+
+      <div class="notice">
+        This page expects signed-in access. If a visitor is not authenticated, your account script should send them back to the account page first.
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="account.js"></script>
+  <script>
+    if (window.kelarisRequireAuth) {
+      window.kelarisRequireAuth();
+    } else {
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.kelarisRequireAuth) {
+          window.kelarisRequireAuth();
+        }
+      });
+    }
+  </script>
 </body>
 </html>
