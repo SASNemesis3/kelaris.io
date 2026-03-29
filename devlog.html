@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelaris Devlog | Official Website</title>
+  <meta name="description" content="Read development updates and public progress notes for Kelaris." />
+  <meta name="theme-color" content="#050816" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body data-page="devlog">
+  <div class="stars"></div>
+  
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="Kelaris home">
+      <span class="brand-mark"></span>
+      <span>Kelaris</span>
+    </a>
+
+    <div class="header-right">
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="index.html" data-nav="home">Home</a>
+        <a href="about.html" data-nav="about">About</a>
+        <a href="features.html" data-nav="features">Features</a>
+        <a href="game.html" data-nav="game">Game</a>
+        <a href="media.html" data-nav="media">Media</a>
+        <a href="devlog.html" data-nav="devlog">Devlog</a>
+        <a href="links.html" data-nav="links">Links</a>
+        <a href="contact.html" data-nav="contact">Contact</a>
+        <a href="auth.html">Account</a>
+        <a class="signed-in-only hidden" href="members.html">Members</a>
+      </nav>
+
+      <div id="profile-menu" class="profile-menu">
+        <button id="profile-trigger" class="profile-trigger" type="button">
+          <span id="trigger-avatar" class="profile-avatar">U</span>
+          <span id="trigger-label" class="profile-trigger-label">Account ▾</span>
+        </button>
+
+        <div id="profile-dropdown" class="profile-dropdown">
+          <div class="profile-summary">
+            <span id="dropdown-avatar" class="profile-avatar">U</span>
+            <div id="dropdown-email" class="profile-email-row">Signed in</div>
+          </div>
+          <a class="dropdown-link" href="auth.html">Account Page</a>
+          <a class="dropdown-link" href="members.html">Member Area</a>
+          <button id="dropdown-logout" class="dropdown-button" type="button">Log Out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <main class="wrap">
+    
+<section class="page-hero compact">
+  <div>
+    <div class="eyebrow">Devlog</div>
+    <h1>Public development updates for Kelaris.</h1>
+    <p class="lead">
+      This page gives the project a professional update trail instead of a placeholder section. It works as a foundation for public milestones now and for fuller dev posts later.
+    </p>
+  </div>
+</section>
+
+<section class="timeline section-block">
+  <article class="timeline-item">
+    <div class="date">Update 01</div>
+    <strong>Project foundation</strong>
+    <p>Kelaris moved from concept into active production with its visual direction, gameplay pillars, and long-term identity defined.</p>
+  </article>
+  <article class="timeline-item">
+    <div class="date">Update 02</div>
+    <strong>Official website and community launch</strong>
+    <p>The public site and Discord are now live, establishing a central hub for updates, community growth, and future launch visibility.</p>
+  </article>
+  <article class="timeline-item">
+    <div class="date">Update 03</div>
+    <strong>Core systems development</strong>
+    <p>Work continues on the foundations that power the colony, world simulation, progression flow, and the long-form survival loop.</p>
+  </article>
+  <article class="timeline-item">
+    <div class="date">Update 04</div>
+    <strong>Interface and player experience</strong>
+    <p>UI and front-end presentation are being shaped to support readability, clarity, and a strong first impression across both game and website.</p>
+  </article>
+  <article class="timeline-item">
+    <div class="date">Update 05</div>
+    <strong>Public-facing structure is in place</strong>
+    <p>The site is now organized into dedicated pages for the game, media, links, and devlog, creating a cleaner foundation for future content drops.</p>
+  </article>
+</section>
+
+<section class="section-block">
+  <div class="section-heading">
+    <div class="section-kicker">Current focus</div>
+    <h2>What Kelaris is building toward</h2>
+  </div>
+  <div class="grid-3">
+    <article class="info-card"><strong>World and expansion flow</strong><p>Developing a world that supports discovery, territory pressure, and strategic growth over time.</p></article>
+    <article class="info-card"><strong>Colony and automation systems</strong><p>Strengthening the systems that let the colony scale from fragile survival to reliable industrial momentum.</p></article>
+    <article class="info-card"><strong>Defense, UI, and polish</strong><p>Improving the player-facing experience so the game reads clearly and feels more professional as systems become visible.</p></article>
+  </div>
+</section>
+
+  </main>
+  
+<footer>
+  <div class="wrap">
+    <div class="footer-card">
+      <div class="footer-copy">
+        <h3>Follow Kelaris</h3>
+        <p>
+          Kelaris is an in-development PC colony survival game focused on growth, logistics, and pressure.
+          Use these pages to follow development, join the community, and keep up with future public launches.
+        </p>
+      </div>
+
+      <div class="footer-actions">
+        <a class="button primary" href="steam.html">Steam</a>
+        <a class="button discord" href="https://discord.gg/9HEBafkKgs" target="_blank" rel="noopener noreferrer">Join Discord</a>
+        <a class="button" href="youtube.html">YouTube</a>
+        <a class="button" href="contact.html">Contact</a>
+        <a class="button" href="auth.html">Account</a>
+        <a class="button signed-in-only hidden" href="members.html">Members</a>
+      </div>
+    </div>
+
+    <div class="footnote">© <span data-year></span> Kelaris. All rights reserved.</div>
+  </div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="account.js"></script>
+  <script src="site.js"></script>
+</body>
+</html>
