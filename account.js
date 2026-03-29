@@ -13,6 +13,8 @@ const supabaseClient = window.supabase.createClient(
   }
 );
 
+const SITE_ORIGIN = window.location.origin && window.location.origin.startsWith("http") ? window.location.origin : "https://kelaris.io";
+
 const messageEl = document.getElementById("message");
 
 const signupForm = document.getElementById("signup-form");
@@ -298,7 +300,7 @@ signupForm?.addEventListener("submit", async (e) => {
     email,
     password,
     options: {
-      emailRedirectTo: "https://kelaris.io/auth.html"
+      emailRedirectTo: `${SITE_ORIGIN}/auth.html`
     }
   });
 
@@ -361,7 +363,7 @@ resetForm?.addEventListener("submit", async (e) => {
   }
 
   const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-    redirectTo: "https://kelaris.io/auth.html"
+    redirectTo: `${SITE_ORIGIN}/auth.html`
   });
 
   if (error) {
