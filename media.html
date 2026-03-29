@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelaris Media | Official Website</title>
+  <meta name="description" content="Media page for Kelaris with a professional structure ready for screenshots, trailers, key art, and future press assets." />
+  <meta name="theme-color" content="#050816" />
+  <link rel="stylesheet" href="site.css" />
+</head>
+<body data-page="media">
+  <div class="stars"></div>
+  
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="Kelaris home">
+      <span class="brand-mark"></span>
+      <span>Kelaris</span>
+    </a>
+
+    <div class="header-right">
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="index.html" data-nav="home">Home</a>
+        <a href="about.html" data-nav="about">About</a>
+        <a href="features.html" data-nav="features">Features</a>
+        <a href="game.html" data-nav="game">Game</a>
+        <a href="media.html" data-nav="media">Media</a>
+        <a href="devlog.html" data-nav="devlog">Devlog</a>
+        <a href="links.html" data-nav="links">Links</a>
+        <a href="contact.html" data-nav="contact">Contact</a>
+        <a href="auth.html">Account</a>
+        <a class="signed-in-only hidden" href="members.html">Members</a>
+      </nav>
+
+      <div id="profile-menu" class="profile-menu">
+        <button id="profile-trigger" class="profile-trigger" type="button">
+          <span id="trigger-avatar" class="profile-avatar">U</span>
+          <span id="trigger-label" class="profile-trigger-label">Account ▾</span>
+        </button>
+
+        <div id="profile-dropdown" class="profile-dropdown">
+          <div class="profile-summary">
+            <span id="dropdown-avatar" class="profile-avatar">U</span>
+            <div id="dropdown-email" class="profile-email-row">Signed in</div>
+          </div>
+          <a class="dropdown-link" href="auth.html">Account Page</a>
+          <a class="dropdown-link" href="members.html">Member Area</a>
+          <button id="dropdown-logout" class="dropdown-button" type="button">Log Out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <main class="wrap">
+    
+<section class="page-hero">
+  <div>
+    <div class="eyebrow">Media</div>
+    <h1>A real showcase page ready for screenshots, trailers, and key art.</h1>
+    <p class="lead">
+      This page is structured as an actual media destination now, so you can swap in polished assets as development progresses without having to redesign the whole site later.
+    </p>
+  </div>
+  <div class="page-hero-art">
+    <div class="visual-caption">
+      <small>Coming online</small>
+      <strong>Official visuals hub</strong>
+      <span>Gameplay screens, trailer drops, key art, and media-ready assets can all live here as the game matures.</span>
+    </div>
+  </div>
+</section>
+
+<section class="media-grid section-block">
+  <article class="media-panel">
+    <div class="image-tile">
+      <div class="visual-caption">
+        <small>Featured image</small>
+        <strong>Landing zone key art</strong>
+        <span>Use this slot for the first standout visual that defines the mood of Kelaris.</span>
+      </div>
+    </div>
+  </article>
+  <article class="media-panel">
+    <div class="image-tile">
+      <div class="visual-caption">
+        <small>Gameplay screenshot</small>
+        <strong>Base growth and flow</strong>
+        <span>Swap this for a polished shot showing layout, production, and colony activity in motion.</span>
+      </div>
+    </div>
+  </article>
+  <article class="media-panel">
+    <div class="image-tile">
+      <div class="visual-caption">
+        <small>Combat / pressure</small>
+        <strong>Defense and expansion</strong>
+        <span>Use this area for combat, outer perimeter pressure, or a high-stakes late-game scene.</span>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section class="grid-3 section-block">
+  <article class="info-card"><strong>Gameplay screenshots</strong><p>High-readability shots of the colony at different stages of development, from first foothold to larger industrial operations.</p></article>
+  <article class="info-card"><strong>Trailer and video embeds</strong><p>Official trailers, dev footage, and feature breakdowns can be dropped into this page once public video assets are ready.</p></article>
+  <article class="info-card"><strong>Press-ready assets</strong><p>Logos, capsule art, and selected images can be organized here later without needing to rebuild the structure.</p></article>
+</section>
+
+  </main>
+  
+<footer>
+  <div class="wrap">
+    <div class="footer-card">
+      <div class="footer-copy">
+        <h3>Follow Kelaris</h3>
+        <p>
+          Kelaris is an in-development PC colony survival game focused on growth, logistics, and pressure.
+          Use these pages to follow development, join the community, and keep up with future public launches.
+        </p>
+      </div>
+
+      <div class="footer-actions">
+        <a class="button primary" href="steam.html">Steam</a>
+        <a class="button discord" href="https://discord.gg/9HEBafkKgs" target="_blank" rel="noopener noreferrer">Join Discord</a>
+        <a class="button" href="youtube.html">YouTube</a>
+        <a class="button" href="contact.html">Contact</a>
+        <a class="button" href="auth.html">Account</a>
+        <a class="button signed-in-only hidden" href="members.html">Members</a>
+      </div>
+    </div>
+
+    <div class="footnote">© <span data-year></span> Kelaris. All rights reserved.</div>
+  </div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="account.js"></script>
+  <script src="site.js"></script>
+</body>
+</html>
