@@ -1,0 +1,34 @@
+---
+import { footerLinks } from '../data/navigation';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer>
+  <div class="wrap">
+    <div class="footer-card">
+      <div class="footer-copy">
+        <h3>Follow Kelaris</h3>
+        <p>
+          Kelaris is an in-development PC colony survival game focused on growth, logistics, and pressure.
+          Use these pages to follow development, join the community, and keep up with future public launches.
+        </p>
+      </div>
+
+      <div class="footer-actions">
+        {footerLinks.map((item) => (
+          <a
+            class:list={['button', item.label === 'Steam' && 'primary', item.label === 'Join Discord' && 'discord']}
+            href={item.href}
+            target={item.href.startsWith('http') ? '_blank' : undefined}
+            rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div class="footnote">© {currentYear} Kelaris. All rights reserved.</div>
+  </div>
+</footer>
