@@ -1,0 +1,27 @@
+---
+import { navigationItems } from '../data/navigation';
+
+const { activePage = '' } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kelaris home">
+      <span class="brand-mark"></span>
+      <span>Kelaris</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary navigation">
+      {navigationItems.map((item) => (
+        <a
+          href={item.href}
+          class:list={[item.key === activePage && 'active']}
+          aria-current={item.key === activePage ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+      <a href="/auth/">Account</a>
+    </nav>
+  </div>
+</header>

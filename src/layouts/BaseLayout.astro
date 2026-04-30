@@ -1,0 +1,42 @@
+---
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import '../styles/site.css';
+
+interface Props {
+  title: string;
+  description: string;
+  activePage?: string;
+}
+
+const {
+  title,
+  description,
+  activePage = ''
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#050816" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="stars" aria-hidden="true"></div>
+    <SiteHeader activePage={activePage} />
+    <main id="main-content" class="wrap">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>

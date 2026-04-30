@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageStub from '../components/PageStub.astro';
+---
+
+<BaseLayout title="Kelaris Members | Official Website" description="Kelaris member area foundation for future tester and gated community features.">
+  <PageStub
+    eyebrow="Members"
+    title="Future tester and member dashboard foundation."
+    lead="The member area is prepared for closed testing, private development notes, feedback routes, and build access instructions when those systems are ready."
+    cards={[
+      { title: 'Closed testing', body: 'A future dashboard can show build status, test focus, known issues, and feedback links.' },
+      { title: 'Private updates', body: 'Member-only posts can eventually sit beside the public devlog without mixing audiences.' },
+      { title: 'Controlled growth', body: 'The member route stays separate from the public marketing site so gated features can grow safely.' }
+    ]}
+  />
+</BaseLayout>

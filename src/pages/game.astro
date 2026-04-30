@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageStub from '../components/PageStub.astro';
+---
+
+<BaseLayout title="Kelaris Game Overview | Official Website" description="A store-style overview of Kelaris, the in-development PC colony survival game." activePage="game">
+  <PageStub
+    eyebrow="Game"
+    title="Build the machine. Hold the line."
+    lead="Kelaris is a PC colony survival game about production, logistics, exploration, and defense in a hostile sci-fi world."
+    cards={[
+      { title: 'About this game', body: 'Turn a fragile landing zone into a functioning colony through construction, automation, and strategic planning.' },
+      { title: 'Player fantasy', body: 'Survive long enough to build something larger than survival itself: an industrial machine that can endure.' },
+      { title: 'Future store page ready', body: 'This route is prepared for screenshots, trailer embeds, platform links, and polished store copy.' }
+    ]}
+  />
+</BaseLayout>

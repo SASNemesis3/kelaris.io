@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageStub from '../components/PageStub.astro';
+---
+
+<BaseLayout title="Contact Kelaris | Official Website" description="Contact and official communication routes for Kelaris." activePage="contact">
+  <PageStub
+    eyebrow="Contact"
+    title="Official contact routes for Kelaris."
+    lead="This page is ready for press, business, creator, tester, and community contact information as the project grows."
+    cards={[
+      { title: 'Press and creators', body: 'A dedicated press contact can be added when the press kit and public media pack are ready.' },
+      { title: 'Community', body: 'Discord remains the main public community path while the game is in development.' },
+      { title: 'Studio communication', body: 'The contact page keeps official communication separate from public roadmap and devlog content.' }
+    ]}
+  />
+</BaseLayout>

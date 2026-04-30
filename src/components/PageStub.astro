@@ -1,0 +1,31 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  cards?: Array<{ title: string; body: string }>;
+}
+
+const { eyebrow, title, lead, cards = [] } = Astro.props;
+---
+
+<section class="page-hero compact">
+  <div>
+    <div class="eyebrow">{eyebrow}</div>
+    <h1>{title}</h1>
+    <p class="lead">{lead}</p>
+  </div>
+</section>
+
+{cards.length > 0 && (
+  <section class="section-block">
+    <div class="info-grid">
+      {cards.map((card) => (
+        <article class="info-card">
+          <strong>{card.title}</strong>
+          <p>{card.body}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+)}

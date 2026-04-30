@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageStub from '../components/PageStub.astro';
+---
+
+<BaseLayout title="Kelaris Features | Official Website" description="Explore the core gameplay pillars behind Kelaris: colony growth, automation, exploration, and defense." activePage="features">
+  <PageStub
+    eyebrow="Features"
+    title="Colony systems, automation, expansion, and defense."
+    lead="Kelaris is designed around connected systems that turn a small landing zone into a functioning industrial colony under rising pressure."
+    cards={[
+      { title: 'Colony growth', body: 'Build a base that supports survival, production, logistics, and expansion.' },
+      { title: 'Automation momentum', body: 'Move from manual survival to layered systems that keep the colony operating.' },
+      { title: 'Pressure and defense', body: 'Expansion creates opportunity, but also increases the risk of collapse if defenses and planning fall behind.' }
+    ]}
+  />
+</BaseLayout>
