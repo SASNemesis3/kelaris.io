@@ -10,22 +10,86 @@
     </div>
 
     <div class="splash-status">
-      <span>Initializing colony systems</span>
-      <span>100%</span>
+      <span id="splash-status-text">Initializing colony systems</span>
+      <span id="splash-status-percent">0%</span>
     </div>
   </div>
 </div>
 
 <script is:inline>
   const splash = document.getElementById('splash-screen');
+  const splashStatusText = document.getElementById('splash-status-text');
+  const splashStatusPercent = document.getElementById('splash-status-percent');
 
   if (splash) {
-    window.setTimeout(() => {
-      splash.classList.add('is-leaving');
-    }, 2600);
+    const minimumVisibleMs = 1100;
+    const maximumVisibleMs = 5000;
+    const startedAt = performance.now();
+    let hasClosed = false;
+    let visualProgress = 0;
+    let pageReady = document.readyState === 'complete';
 
-    window.setTimeout(() => {
-      splash.remove();
-    }, 3400);
+    const loadingMessages = [
+      'Initializing colony systems',
+      'Loading production grid',
+      'Calibrating orbital telemetry',
+      'Warming Glass Anvil systems',
+      'Preparing Kelaris interface'
+    ];
+
+    const progressTimer = window.setInterval(() => {
+      const target = pageReady ? 100 : 88;
+      visualProgress += Math.max(1, Math.round((target - visualProgress) * 0.12));
+      visualProgress = Math.min(visualProgress, target);
+
+      if (splashStatusPercent) {
+        splashStatusPercent.textContent = `${visualProgress}%`;
+      }
+
+      if (splashStatusText) {
+        const messageIndex = Math.min(
+          loadingMessages.length - 1,
+          Math.floor((visualProgress / 100) * loadingMessages.length)
+        );
+        splashStatusText.textContent = loadingMessages[messageIndex];
+      }
+    }, 80);
+
+    const closeSplash = () => {
+      if (hasClosed) return;
+      hasClosed = true;
+      window.clearInterval(progressTimer);
+
+      if (splashStatusPercent) {
+        splashStatusPercent.textContent = '100%';
+      }
+
+      if (splashStatusText) {
+        splashStatusText.textContent = 'Kelaris ready';
+      }
+
+      splash.classList.add('is-leaving');
+
+      window.setTimeout(() => {
+        splash.remove();
+      }, 700);
+    };
+
+    const scheduleClose = () => {
+      pageReady = true;
+      visualProgress = Math.max(visualProgress, 96);
+
+      const elapsed = performance.now() - startedAt;
+      const remainingMinimumTime = Math.max(0, minimumVisibleMs - elapsed);
+      window.setTimeout(closeSplash, remainingMinimumTime);
+    };
+
+    if (document.readyState === 'complete') {
+      scheduleClose();
+    } else {
+      window.addEventListener('load', scheduleClose, { once: true });
+    }
+
+    window.setTimeout(closeSplash, maximumVisibleMs);
   }
 </script>
