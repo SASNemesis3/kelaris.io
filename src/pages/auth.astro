@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageStub from '../components/PageStub.astro';
+---
+
+<BaseLayout title="Kelaris Account | Official Website" description="Kelaris account access route for future tester and member features.">
+  <PageStub
+    eyebrow="Account"
+    title="Account access foundation."
+    lead="This modular route keeps account access available while the next phase rebuilds the Supabase auth UI into reusable components."
+    cards={[
+      { title: 'Current purpose', body: 'Prepare a clean route for login, sign up, reset, and future tester access.' },
+      { title: 'Next phase', body: 'Move the existing Supabase auth flow into modular components without changing the public identity.' },
+      { title: 'Future use', body: 'Tester dashboards, private updates, and closed-alpha access can build from this route.' }
+    ]}
+  />
+</BaseLayout>
