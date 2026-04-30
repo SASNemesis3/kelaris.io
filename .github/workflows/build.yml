@@ -9,13 +9,18 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 concurrency:
-  group: website-build-${{ github.ref }}
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
-    name: Astro build
+    name: Build Astro site
     runs-on: ubuntu-latest
 
     steps:
@@ -32,3 +37,23 @@ jobs:
 
       - name: Build website
         run: npm run build
+
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
