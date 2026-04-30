@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { pressAssets, pressFacts } from '../data/pressKit';
+---
+
+<BaseLayout title="Kelaris Press Kit | Official Website" description="Press kit foundation for Kelaris, including facts, descriptions, and future asset groups." activePage="press">
+  <section class="page-hero compact">
+    <div>
+      <div class="eyebrow">Press Kit</div>
+      <h1>Official facts and future media assets for Kelaris.</h1>
+      <p class="lead">
+        This page gives creators, press, and future partners a clear source of truth for describing Kelaris as the project grows toward public launch visibility.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div class="section-kicker">Factsheet</div>
+      <h2>Project basics</h2>
+    </div>
+    <div class="stat-grid">
+      {pressFacts.map((fact) => (
+        <div class="stat-card">
+          <span>{fact.label}</span>
+          <strong>{fact.value}</strong>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div class="section-kicker">Description</div>
+      <h2>Short description</h2>
+    </div>
+    <article class="card">
+      <p class="body-copy">
+        Kelaris is an in-development sci-fi colony survival game for PC about turning a fragile landing zone into a self-sustaining industrial stronghold.
+      </p>
+    </article>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div class="section-kicker">Assets</div>
+      <h2>Media asset groups</h2>
+    </div>
+    <div class="info-grid">
+      {pressAssets.map((asset) => (
+        <article class="info-card">
+          <div class="section-kicker">{asset.status}</div>
+          <strong>{asset.title}</strong>
+          <p>{asset.description}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
