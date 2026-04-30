@@ -1,0 +1,39 @@
+<div class="splash-screen" id="splash-screen" aria-label="Kelaris loading screen">
+  <div class="splash-shell">
+    <div class="splash-orbit" aria-hidden="true"></div>
+    <div class="splash-kicker">Glass Anvil Studio Presents</div>
+    <div class="splash-title">Kelaris</div>
+
+    <div class="splash-loader" aria-hidden="true">
+      <div class="splash-loader-fill"></div>
+      <div class="splash-loader-glow"></div>
+    </div>
+
+    <div class="splash-status">
+      <span>Initializing colony systems</span>
+      <span>100%</span>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  const splash = document.getElementById('splash-screen');
+
+  if (splash) {
+    const alreadyShown = sessionStorage.getItem('kelarisSplashShown') === 'true';
+
+    if (alreadyShown) {
+      splash.remove();
+    } else {
+      sessionStorage.setItem('kelarisSplashShown', 'true');
+
+      window.setTimeout(() => {
+        splash.classList.add('is-leaving');
+      }, 2600);
+
+      window.setTimeout(() => {
+        splash.remove();
+      }, 3400);
+    }
+  }
+</script>
