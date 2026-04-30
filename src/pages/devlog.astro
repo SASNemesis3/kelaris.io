@@ -1,28 +1,39 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const updates = [
-  ['Update 01', 'Project foundation', 'Kelaris moved from concept into active production with its visual direction, gameplay pillars, and long-term identity defined.'],
-  ['Update 02', 'Official website and community launch', 'The public site and Discord are live, establishing a hub for updates, community growth, and future launch visibility.'],
-  ['Update 03', 'Core systems development', 'Work continues on the foundations that power the colony, world simulation, progression flow, and long-form survival loop.']
-];
+const posts = (await getCollection('devlog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const formatDate = (date: Date) => new Intl.DateTimeFormat('en', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric'
+}).format(date);
 ---
 
 <BaseLayout title="Kelaris Devlog | Official Website" description="Read development updates and public progress notes for Kelaris." activePage="devlog">
   <section class="page-hero compact">
     <div>
       <div class="eyebrow">Devlog</div>
-      <h1>Public development updates for Kelaris.</h1>
-      <p class="lead">This modular devlog foundation keeps the update trail professional now and prepares the site for Markdown-powered posts later.</p>
+      <h1>Transmission logs from Kelaris development.</h1>
+      <p class="lead">Public development updates are now powered by Markdown so the devlog can grow without rewriting page layouts.</p>
     </div>
   </section>
 
-  <section class="timeline section-block">
-    {updates.map(([date, title, body]) => (
+  <section class="timeline section-block" aria-label="Kelaris development updates">
+    {posts.map((post) => (
       <article class="timeline-item">
-        <div class="date">{date}</div>
-        <strong>{title}</strong>
-        <p>{body}</p>
+        <div class="date">{formatDate(post.data.date)}</div>
+        <strong><a href={`/devlog/${post.slug}/`}>{post.data.title}</a></strong>
+        <p>{post.data.summary}</p>
+        {post.data.tags.length > 0 && (
+          <p class="body-copy">{post.data.tags.join(' · ')}</p>
+        )}
+        <div class="link-actions">
+          <a class="button" href={`/devlog/${post.slug}/`}>Read transmission</a>
+        </div>
       </article>
     ))}
   </section>
