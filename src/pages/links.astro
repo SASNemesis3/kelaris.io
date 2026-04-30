@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageStub from '../components/PageStub.astro';
+---
+
+<BaseLayout title="Kelaris Links | Official Website" description="Official links for Kelaris, including Discord, future store pages, and community destinations." activePage="links">
+  <PageStub
+    eyebrow="Links"
+    title="The official Kelaris follow and community hub."
+    lead="This page centralizes public destinations so future Steam, YouTube, press, and community links can be updated from one place."
+    cards={[
+      { title: 'Discord', body: 'The current live community destination for Kelaris updates and discussion.' },
+      { title: 'Future store links', body: 'Steam and other platform links can be added here when public pages are ready.' },
+      { title: 'Official channels', body: 'Keep community, media, and contact routes organized under one hub.' }
+    ]}
+  />
+</BaseLayout>
