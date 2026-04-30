@@ -7,9 +7,15 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+concurrency:
+  group: website-build-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
+    name: Astro build
     runs-on: ubuntu-latest
 
     steps:
