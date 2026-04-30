@@ -1,0 +1,48 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('devlog')).filter((post) => !post.data.draft);
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post }
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'devlog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const formattedDate = new Intl.DateTimeFormat('en', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric'
+}).format(post.data.date);
+---
+
+<BaseLayout title={`${post.data.title} | Kelaris Devlog`} description={post.data.summary} activePage="devlog">
+  <article class="page-hero compact">
+    <div>
+      <div class="eyebrow">Transmission Log · {formattedDate}</div>
+      <h1>{post.data.title}</h1>
+      <p class="lead">{post.data.summary}</p>
+      {post.data.tags.length > 0 && (
+        <p class="body-copy">{post.data.tags.join(' · ')}</p>
+      )}
+    </div>
+  </article>
+
+  <section class="section-block">
+    <article class="card devlog-post">
+      <Content />
+      <div class="link-actions">
+        <a class="button" href="/devlog/">Back to devlog</a>
+      </div>
+    </article>
+  </section>
+</BaseLayout>
