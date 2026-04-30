@@ -37,10 +37,6 @@
     animation: splashEnter 0.45s ease-out both;
   }
 
-  .splash-screen.is-hidden {
-    display: none;
-  }
-
   .splash-screen.is-leaving {
     pointer-events: none;
     animation: splashExit 0.8s ease-in forwards;
@@ -134,6 +130,7 @@
   }
 
   .splash-loader {
+    position: relative;
     height: 16px;
     margin-top: 36px;
     overflow: hidden;
@@ -216,15 +213,26 @@
 
     if (!splash) return;
 
-    const storageKey = 'kelarisSplashSeenThisSession';
-    const shouldSkip = window.sessionStorage.getItem(storageKey) === 'true';
+    const storageKey = 'kelarisSplashLastSeenDate';
+    const todayKey = new Date().toLocaleDateString('en-CA');
+    let lastSeenDate = null;
 
-    if (shouldSkip) {
+    try {
+      lastSeenDate = window.localStorage.getItem(storageKey);
+    } catch (error) {
+      lastSeenDate = null;
+    }
+
+    if (lastSeenDate === todayKey) {
       splash.remove();
       return;
     }
 
-    window.sessionStorage.setItem(storageKey, 'true');
+    try {
+      window.localStorage.setItem(storageKey, todayKey);
+    } catch (error) {
+      // If localStorage is unavailable, fall through and show the splash.
+    }
 
     const fullAnimationMs = 4200;
     const fadeOutMs = 800;
