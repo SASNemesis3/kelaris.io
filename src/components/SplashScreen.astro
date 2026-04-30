@@ -1,15 +1,39 @@
-<div class="splash-v2" id="splash-screen" aria-label="Kelaris loading screen" role="status" aria-live="polite">
-  <div class="splash-v2-bg" aria-hidden="true" style="background-image:url('/images/splash-v3.svg'); background-size:cover; background-position:center;">
-    <div class="splash-v2-storm"></div>
-    <div class="splash-v2-mountains splash-v2-mountains-back"></div>
-    <div class="splash-v2-mountains splash-v2-mountains-front"></div>
-    <div class="splash-v2-ground"></div>
-  </div>
-
-  <div class="splash-v2-ring" aria-hidden="true"></div>
-  <div class="splash-v2-shockwave" aria-hidden="true"></div>
-
-  <div class="splash-v2-stage">
-    <!-- rest unchanged -->
+<div class="splash-screen" id="splash-screen" aria-label="Kelaris loading screen" role="status">
+  <div class="splash-bg" aria-hidden="true"></div>
+  <div class="splash-card">
+    <div class="studio">Glass Anvil Studio Presents</div>
+    <div class="anvil" aria-hidden="true"><span></span><span></span><span></span></div>
+    <h1>Kelaris</h1>
+    <div class="loader"><div id="splash-loader-fill"></div></div>
+    <div class="status"><span id="splash-status-text">Forging identity</span><span id="splash-status-percent">0%</span></div>
   </div>
 </div>
+
+<style>
+  .splash-screen{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;overflow:hidden;background:#02040a;color:#f6fbff}.splash-screen.is-leaving{animation:leave .8s ease-in forwards}.splash-bg{position:absolute;inset:-4%;background:url('/images/splash-v3.svg') center/cover no-repeat;filter:saturate(1.25) contrast(1.12) brightness(.78);animation:bg 6.4s ease both}.splash-bg:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(255,255,255,.14),transparent 18%),radial-gradient(circle at 50% 75%,rgba(255,50,50,.28),transparent 34%),linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.72))}.splash-card{position:relative;width:min(900px,calc(100vw - 32px));min-height:min(620px,calc(100vh - 32px));display:grid;place-items:center;text-align:center}.studio{position:absolute;top:48px;text-transform:uppercase;letter-spacing:.22em;font-weight:950;color:#eaf7ff;text-shadow:0 0 28px rgba(136,168,255,.55);animation:studio 6.4s ease both}.anvil{position:absolute;width:260px;height:150px;filter:drop-shadow(0 0 34px rgba(190,220,255,.6));animation:anvil 6.4s ease both}.anvil span{position:absolute;display:block;background:linear-gradient(135deg,#fff,rgba(150,205,255,.35),rgba(255,255,255,.75));border:1px solid rgba(255,255,255,.75)}.anvil span:nth-child(1){left:30px;top:20px;width:185px;height:38px;border-radius:8px;transform:skewX(-12deg)}.anvil span:nth-child(2){left:200px;top:27px;width:70px;height:30px;clip-path:polygon(0 0,100% 50%,0 100%)}.anvil span:nth-child(3){left:65px;top:115px;width:160px;height:30px;border-radius:8px}h1{position:absolute;margin:0;text-transform:uppercase;font-size:clamp(4rem,13vw,10rem);letter-spacing:.06em;text-shadow:0 0 18px #fff,0 0 48px rgba(136,168,255,.65),0 0 96px rgba(255,70,70,.35);opacity:0;animation:title 6.4s ease both}.loader{position:absolute;bottom:82px;width:min(560px,calc(100vw - 64px));height:12px;overflow:hidden;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08)}#splash-loader-fill{height:100%;width:100%;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,#ff4a4a,#fff,#7df0d2)}.status{position:absolute;bottom:48px;width:min(560px,calc(100vw - 64px));display:flex;justify-content:space-between;text-transform:uppercase;letter-spacing:.12em;font-weight:900;font-size:.82rem}@keyframes bg{from{transform:scale(1.14)}to{transform:scale(1.04)}}@keyframes studio{0%{opacity:0;transform:translateY(18px)}14%,42%{opacity:1;transform:translateY(0)}55%,100%{opacity:0;transform:translateY(-22px)}}@keyframes anvil{0%,12%{opacity:0;transform:translateY(26px) scale(.8)}24%,55%{opacity:1;transform:translateY(0) scale(1)}62%{opacity:1;transform:scale(1.08);filter:drop-shadow(0 0 70px rgba(255,80,80,.8))}70%,100%{opacity:0;transform:scale(1.6) rotate(4deg);filter:blur(14px)}}@keyframes title{0%,62%{opacity:0;transform:translateY(42px) scale(.86);filter:blur(16px)}74%,100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}@keyframes leave{to{opacity:0;transform:scale(1.03);filter:blur(12px)}}
+</style>
+
+<script is:inline>
+  const splash=document.getElementById('splash-screen');
+  const fill=document.getElementById('splash-loader-fill');
+  const text=document.getElementById('splash-status-text');
+  const pct=document.getElementById('splash-status-percent');
+  if(splash){
+    const key='kelarisSplashLastSeenDate';
+    const today=new Date().toLocaleDateString('en-CA');
+    if(localStorage.getItem(key)===today){splash.remove();}
+    else{
+      localStorage.setItem(key,today);
+      const start=performance.now();
+      const duration=6400;
+      const messages=['Forging identity','Charging glass core','Shattering limits','Revealing Kelaris','Experience ready'];
+      const timer=setInterval(()=>{
+        const p=Math.min(100,((performance.now()-start)/duration)*100);
+        if(fill)fill.style.transform=`scaleX(${p/100})`;
+        if(pct)pct.textContent=`${Math.floor(p)}%`;
+        if(text)text.textContent=messages[Math.min(messages.length-1,Math.floor((p/100)*messages.length))];
+      },50);
+      setTimeout(()=>{clearInterval(timer);if(fill)fill.style.transform='scaleX(1)';if(pct)pct.textContent='100%';splash.classList.add('is-leaving');setTimeout(()=>splash.remove(),900);},duration);
+    }
+  }
+</script>
