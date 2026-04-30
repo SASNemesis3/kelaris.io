@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageStub from '../components/PageStub.astro';
+---
+
+<BaseLayout title="About Kelaris | Official Website" description="Learn what Kelaris is and what kind of colony survival experience it is being built to deliver." activePage="about">
+  <PageStub
+    eyebrow="About"
+    title="A sci-fi colony survival game about building under pressure."
+    lead="Kelaris is built around the tension between growth and survival: a fragile landing zone, expanding infrastructure, hostile terrain, and systems that must keep working when pressure hits."
+    cards={[
+      { title: 'Identity first', body: 'The site keeps the dark space, glass-panel, blue-teal command-center identity that already defines Kelaris.' },
+      { title: 'Systems-driven pitch', body: 'The public message stays focused on colony growth, automation, logistics, defense, and long-term survival.' },
+      { title: 'Built to scale', body: 'This page is now modular so future copy, screenshots, and press-ready sections can be added without duplicating layout code.' }
+    ]}
+  />
+</BaseLayout>
