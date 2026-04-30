@@ -20,20 +20,12 @@
   const splash = document.getElementById('splash-screen');
 
   if (splash) {
-    const alreadyShown = sessionStorage.getItem('kelarisSplashShown') === 'true';
+    window.setTimeout(() => {
+      splash.classList.add('is-leaving');
+    }, 2600);
 
-    if (alreadyShown) {
+    window.setTimeout(() => {
       splash.remove();
-    } else {
-      sessionStorage.setItem('kelarisSplashShown', 'true');
-
-      window.setTimeout(() => {
-        splash.classList.add('is-leaving');
-      }, 2600);
-
-      window.setTimeout(() => {
-        splash.remove();
-      }, 3400);
-    }
+    }, 3400);
   }
 </script>
