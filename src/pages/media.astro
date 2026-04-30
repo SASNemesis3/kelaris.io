@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageStub from '../components/PageStub.astro';
+---
+
+<BaseLayout title="Kelaris Media | Official Website" description="Screenshots, trailers, key art, and future media drops for Kelaris." activePage="media">
+  <PageStub
+    eyebrow="Media"
+    title="A showcase foundation for screenshots, trailers, and key art."
+    lead="The media page is prepared as the public visual hub for Kelaris while keeping the current atmospheric site identity intact."
+    cards={[
+      { title: 'Screenshots', body: 'A future gallery can be driven from a data file instead of hardcoded HTML.' },
+      { title: 'Trailers', body: 'Trailer embeds can live here when the first public gameplay footage is ready.' },
+      { title: 'Press assets', body: 'Key art, logos, and screenshot packs can later connect to a dedicated press kit.' }
+    ]}
+  />
+</BaseLayout>
