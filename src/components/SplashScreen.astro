@@ -1,204 +1,479 @@
-<div class="splash-screen" id="splash-screen" aria-label="Kelaris loading screen" role="status" aria-live="polite">
-  <div class="splash-shell">
-    <div class="splash-orbit" aria-hidden="true"></div>
-    <div class="splash-grid" aria-hidden="true"></div>
+<div class="splash-v2" id="splash-screen" aria-label="Kelaris loading screen" role="status" aria-live="polite">
+  <div class="splash-v2-bg" aria-hidden="true">
+    <div class="splash-v2-storm"></div>
+    <div class="splash-v2-mountains splash-v2-mountains-back"></div>
+    <div class="splash-v2-mountains splash-v2-mountains-front"></div>
+    <div class="splash-v2-ground"></div>
+  </div>
 
-    <div class="splash-kicker">Glass Anvil Studio Presents</div>
-    <div class="splash-title">Kelaris</div>
-    <div class="splash-subtitle">Colony systems online</div>
+  <div class="splash-v2-ring" aria-hidden="true"></div>
+  <div class="splash-v2-shockwave" aria-hidden="true"></div>
 
-    <div class="splash-loader" aria-hidden="true">
-      <div class="splash-loader-fill" id="splash-loader-fill"></div>
-      <div class="splash-loader-glow"></div>
+  <div class="splash-v2-stage">
+    <div class="splash-v2-studio" aria-hidden="true">
+      <span>Glass Anvil Studio</span>
+      <small>Presents</small>
     </div>
 
-    <div class="splash-status">
-      <span id="splash-status-text">Initializing colony systems</span>
+    <div class="splash-v2-anvil-wrap" aria-hidden="true">
+      <div class="splash-v2-anvil">
+        <div class="splash-v2-anvil-top"></div>
+        <div class="splash-v2-anvil-horn"></div>
+        <div class="splash-v2-anvil-body"></div>
+        <div class="splash-v2-anvil-foot"></div>
+      </div>
+      <div class="splash-v2-crack crack-a"></div>
+      <div class="splash-v2-crack crack-b"></div>
+      <div class="splash-v2-crack crack-c"></div>
+    </div>
+
+    <div class="splash-v2-shards" aria-hidden="true">
+      <span style="--x:-340px;--y:-180px;--r:-34deg;--d:0ms"></span>
+      <span style="--x:-250px;--y:130px;--r:22deg;--d:70ms"></span>
+      <span style="--x:-160px;--y:-260px;--r:60deg;--d:120ms"></span>
+      <span style="--x:-70px;--y:210px;--r:-18deg;--d:40ms"></span>
+      <span style="--x:80px;--y:-230px;--r:38deg;--d:90ms"></span>
+      <span style="--x:170px;--y:180px;--r:-52deg;--d:150ms"></span>
+      <span style="--x:260px;--y:-150px;--r:28deg;--d:30ms"></span>
+      <span style="--x:360px;--y:90px;--r:-26deg;--d:110ms"></span>
+      <span style="--x:430px;--y:-280px;--r:48deg;--d:180ms"></span>
+      <span style="--x:-420px;--y:260px;--r:-58deg;--d:190ms"></span>
+    </div>
+
+    <div class="splash-v2-title" aria-hidden="true">
+      <span>K</span><span>E</span><span>L</span><span>A</span><span>R</span><span>I</span><span>S</span>
+    </div>
+    <div class="splash-v2-subtitle" aria-hidden="true">Colony systems online</div>
+
+    <div class="splash-v2-loader" aria-hidden="true">
+      <div class="splash-v2-loader-fill" id="splash-loader-fill"></div>
+      <div class="splash-v2-loader-scan"></div>
+    </div>
+
+    <div class="splash-v2-status">
+      <span id="splash-status-text">Forging identity</span>
       <span id="splash-status-percent">0%</span>
     </div>
   </div>
 </div>
 
 <style>
-  .splash-screen {
+  .splash-v2 {
     position: fixed;
     inset: 0;
     z-index: 99999;
     display: grid;
     place-items: center;
-    padding: 24px;
-    color: #f4f7fb;
-    background:
-      radial-gradient(circle at 50% 28%, rgba(136, 168, 255, 0.24), transparent 28%),
-      radial-gradient(circle at 50% 64%, rgba(125, 240, 210, 0.12), transparent 30%),
-      linear-gradient(180deg, #010307 0%, #050816 54%, #02040a 100%);
-    opacity: 1;
-    pointer-events: all;
-    animation: splashEnter 0.45s ease-out both;
-  }
-
-  .splash-screen.is-leaving {
-    pointer-events: none;
-    animation: splashExit 0.8s ease-in forwards;
-  }
-
-  .splash-shell {
-    position: relative;
-    width: min(760px, 100%);
     overflow: hidden;
-    padding: clamp(30px, 7vw, 62px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 34px;
-    background:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04)),
-      rgba(5, 8, 22, 0.82);
-    box-shadow:
-      0 34px 120px rgba(0, 0, 0, 0.68),
-      inset 0 1px 0 rgba(255, 255, 255, 0.18);
-    text-align: left;
+    color: #f6fbff;
+    background: #02040a;
+    isolation: isolate;
+    pointer-events: all;
+    animation: splashV2Enter 0.35s ease-out both;
   }
 
-  .splash-orbit {
-    position: absolute;
-    width: 360px;
-    height: 360px;
-    right: -130px;
-    top: -150px;
-    border: 1px solid rgba(125, 240, 210, 0.28);
-    border-radius: 999px;
-    box-shadow: 0 0 70px rgba(125, 240, 210, 0.14);
-    animation: splashSpin 5s linear infinite;
+  .splash-v2.is-leaving {
+    pointer-events: none;
+    animation: splashV2Exit 0.9s ease-in forwards;
   }
 
-  .splash-orbit::before,
-  .splash-orbit::after {
-    content: "";
-    position: absolute;
-    border-radius: inherit;
-    border: 1px solid rgba(136, 168, 255, 0.18);
-  }
-
-  .splash-orbit::before { inset: 44px; }
-  .splash-orbit::after { inset: 92px; }
-
-  .splash-grid {
+  .splash-v2-bg,
+  .splash-v2-storm,
+  .splash-v2-mountains,
+  .splash-v2-ground,
+  .splash-v2-ring,
+  .splash-v2-shockwave {
     position: absolute;
     inset: 0;
-    opacity: 0.13;
+    pointer-events: none;
+  }
+
+  .splash-v2-bg {
+    z-index: -4;
+    background:
+      radial-gradient(circle at 50% 34%, rgba(148, 184, 255, 0.22), transparent 24%),
+      radial-gradient(circle at 50% 60%, rgba(255, 70, 70, 0.12), transparent 32%),
+      linear-gradient(180deg, #030710 0%, #07101e 42%, #02040a 100%);
+  }
+
+  .splash-v2-storm {
+    opacity: 0.85;
+    background:
+      radial-gradient(ellipse at 40% 8%, rgba(255,255,255,0.16), transparent 18%),
+      radial-gradient(ellipse at 68% 18%, rgba(120,165,255,0.18), transparent 20%),
+      radial-gradient(ellipse at 25% 60%, rgba(255,55,55,0.08), transparent 30%),
+      repeating-linear-gradient(115deg, transparent 0 28px, rgba(255,255,255,0.025) 29px 30px);
+    filter: blur(0.2px);
+    animation: stormDrift 12s linear infinite;
+  }
+
+  .splash-v2-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
     background-image:
-      linear-gradient(rgba(255,255,255,0.18) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.18) 1px, transparent 1px);
-    background-size: 36px 36px;
-    mask-image: linear-gradient(180deg, transparent, #000 20%, #000 80%, transparent);
+      radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.88) 99%, transparent),
+      radial-gradient(1px 1px at 82% 24%, rgba(255,255,255,0.58) 99%, transparent),
+      radial-gradient(1.5px 1.5px at 44% 12%, rgba(255,255,255,0.76) 99%, transparent),
+      radial-gradient(1px 1px at 66% 72%, rgba(255,255,255,0.40) 99%, transparent);
+    background-size: 360px 360px;
+    opacity: 0.55;
+    animation: starFall 18s linear infinite;
   }
 
-  .splash-kicker,
-  .splash-title,
-  .splash-subtitle,
-  .splash-loader,
-  .splash-status {
+  .splash-v2-mountains {
+    top: auto;
+    bottom: 0;
+    height: 42vh;
+    background: linear-gradient(180deg, rgba(12,19,33,0), #050812 76%);
+    clip-path: polygon(0 100%, 0 72%, 6% 50%, 12% 76%, 18% 34%, 25% 82%, 33% 44%, 39% 72%, 49% 28%, 58% 80%, 67% 36%, 75% 70%, 84% 30%, 93% 74%, 100% 44%, 100% 100%);
+  }
+
+  .splash-v2-mountains-back {
+    opacity: 0.7;
+    filter: blur(2px);
+    transform: scaleX(1.1) translateY(18px);
+  }
+
+  .splash-v2-mountains-front {
+    height: 34vh;
+    opacity: 0.95;
+    background: linear-gradient(180deg, rgba(19,28,46,0), #02040a 72%);
+    clip-path: polygon(0 100%, 0 78%, 7% 42%, 14% 88%, 23% 24%, 31% 82%, 39% 50%, 48% 84%, 56% 18%, 66% 88%, 74% 40%, 82% 82%, 90% 26%, 100% 80%, 100% 100%);
+  }
+
+  .splash-v2-ground {
+    top: auto;
+    height: 22vh;
+    bottom: 0;
+    background:
+      radial-gradient(ellipse at 50% 18%, rgba(255,70,70,0.24), transparent 42%),
+      linear-gradient(180deg, rgba(4,8,16,0), #010205 45%);
+    box-shadow: inset 0 1px 0 rgba(255, 70, 70, 0.16);
+  }
+
+  .splash-v2-ring {
+    z-index: -2;
+    width: min(78vmin, 760px);
+    height: min(78vmin, 760px);
+    margin: auto;
+    border: 1px solid rgba(155, 190, 255, 0.23);
+    border-radius: 999px;
+    box-shadow:
+      0 0 70px rgba(136,168,255,0.18),
+      inset 0 0 80px rgba(255,255,255,0.045);
+    animation: ringCharge 5.6s cubic-bezier(.2,.8,.2,1) both, ringSpin 18s linear infinite;
+  }
+
+  .splash-v2-ring::before,
+  .splash-v2-ring::after {
+    content: "";
+    position: absolute;
+    inset: 7%;
+    border-radius: inherit;
+    border: 1px solid rgba(125, 240, 210, 0.12);
+  }
+
+  .splash-v2-ring::after {
+    inset: 16%;
+    border-color: rgba(255, 75, 75, 0.24);
+    filter: drop-shadow(0 0 12px rgba(255,75,75,0.32));
+  }
+
+  .splash-v2-shockwave {
+    z-index: -1;
+    width: 20vmin;
+    height: 20vmin;
+    margin: auto;
+    border: 1px solid rgba(255,255,255,0.0);
+    border-radius: 999px;
+    animation: shockwave 5.6s ease-out both;
+  }
+
+  .splash-v2-stage {
     position: relative;
-    z-index: 1;
+    width: min(920px, calc(100vw - 32px));
+    min-height: min(640px, calc(100vh - 32px));
+    display: grid;
+    place-items: center;
+    text-align: center;
   }
 
-  .splash-kicker {
-    color: #7df0d2;
-    font-size: 0.86rem;
-    font-weight: 900;
-    letter-spacing: 0.18em;
+  .splash-v2-studio {
+    position: absolute;
+    top: clamp(34px, 8vh, 76px);
+    display: grid;
+    gap: 8px;
     text-transform: uppercase;
+    letter-spacing: 0.2em;
+    animation: studioIntro 5.6s ease both;
   }
 
-  .splash-title {
-    margin-top: 14px;
-    font-size: clamp(4rem, 13vw, 9rem);
-    line-height: 0.86;
+  .splash-v2-studio span {
+    font-size: clamp(0.95rem, 2vw, 1.25rem);
     font-weight: 950;
-    letter-spacing: -0.08em;
+    color: rgba(246, 251, 255, 0.9);
+    text-shadow: 0 0 26px rgba(136,168,255,0.42);
+  }
+
+  .splash-v2-studio small {
+    color: #7df0d2;
+    font-size: 0.72rem;
+    font-weight: 900;
+  }
+
+  .splash-v2-anvil-wrap {
+    position: absolute;
+    width: min(420px, 76vw);
+    height: 260px;
+    display: grid;
+    place-items: center;
+    filter: drop-shadow(0 0 28px rgba(190,220,255,0.45));
+    animation: anvilSequence 5.6s ease both;
+  }
+
+  .splash-v2-anvil {
+    position: relative;
+    width: 320px;
+    height: 170px;
+  }
+
+  .splash-v2-anvil > div {
+    position: absolute;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.92), rgba(150,205,255,0.30) 42%, rgba(255,255,255,0.72));
+    border: 1px solid rgba(255,255,255,0.72);
+    box-shadow:
+      inset 0 0 18px rgba(255,255,255,0.46),
+      0 0 36px rgba(136,168,255,0.25);
+    backdrop-filter: blur(12px);
+  }
+
+  .splash-v2-anvil-top {
+    left: 44px;
+    top: 24px;
+    width: 220px;
+    height: 42px;
+    border-radius: 8px 16px 10px 8px;
+    transform: skewX(-12deg);
+  }
+
+  .splash-v2-anvil-horn {
+    left: 238px;
+    top: 30px;
+    width: 78px;
+    height: 34px;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+  }
+
+  .splash-v2-anvil-body {
+    left: 122px;
+    top: 58px;
+    width: 94px;
+    height: 76px;
+    clip-path: polygon(15% 0, 85% 0, 100% 100%, 0 100%);
+  }
+
+  .splash-v2-anvil-foot {
+    left: 78px;
+    top: 126px;
+    width: 190px;
+    height: 34px;
+    border-radius: 8px;
+  }
+
+  .splash-v2-crack {
+    position: absolute;
+    width: 2px;
+    height: 118px;
+    background: linear-gradient(180deg, transparent, rgba(255,255,255,0.95), rgba(255,70,70,0.8), transparent);
+    opacity: 0;
+    filter: drop-shadow(0 0 10px rgba(255,80,80,0.65));
+    animation: crackFlash 5.6s ease both;
+  }
+
+  .crack-a { transform: rotate(22deg); }
+  .crack-b { transform: translateX(-38px) rotate(-18deg); animation-delay: 0.05s; }
+  .crack-c { transform: translateX(46px) rotate(35deg); animation-delay: 0.1s; }
+
+  .splash-v2-shards {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .splash-v2-shards span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: clamp(20px, 3vw, 42px);
+    height: clamp(32px, 4vw, 64px);
+    opacity: 0;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.95), rgba(125,240,210,0.24) 48%, rgba(136,168,255,0.55));
+    clip-path: polygon(38% 0, 100% 28%, 62% 100%, 0 68%);
+    box-shadow: 0 0 24px rgba(190,220,255,0.42);
+    animation: shardBurst 5.6s cubic-bezier(.12,.84,.18,1) both;
+    animation-delay: var(--d);
+  }
+
+  .splash-v2-title {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    gap: clamp(5px, 1.1vw, 16px);
+    font-size: clamp(4rem, 13vw, 10rem);
+    line-height: 0.9;
+    font-weight: 950;
+    letter-spacing: 0.02em;
+    color: #eaf7ff;
     text-transform: uppercase;
     text-shadow:
-      0 0 26px rgba(136, 168, 255, 0.48),
-      0 0 70px rgba(125, 240, 210, 0.20);
+      0 0 18px rgba(255,255,255,0.70),
+      0 0 44px rgba(136,168,255,0.48),
+      0 0 88px rgba(125,240,210,0.20);
   }
 
-  .splash-subtitle {
-    margin-top: 16px;
-    color: rgba(244, 247, 251, 0.74);
-    font-size: 1rem;
-    letter-spacing: 0.08em;
+  .splash-v2-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(42px) scale(0.86);
+    animation: titleReveal 5.6s cubic-bezier(.2,.8,.2,1) both;
+  }
+
+  .splash-v2-title span:nth-child(1) { animation-delay: 0ms; }
+  .splash-v2-title span:nth-child(2) { animation-delay: 60ms; }
+  .splash-v2-title span:nth-child(3) { animation-delay: 120ms; }
+  .splash-v2-title span:nth-child(4) { animation-delay: 180ms; }
+  .splash-v2-title span:nth-child(5) { animation-delay: 240ms; }
+  .splash-v2-title span:nth-child(6) { animation-delay: 300ms; }
+  .splash-v2-title span:nth-child(7) { animation-delay: 360ms; }
+
+  .splash-v2-subtitle {
+    position: absolute;
+    top: calc(50% + clamp(56px, 10vw, 104px));
+    color: #ff5d5d;
+    font-size: clamp(0.7rem, 1.5vw, 1rem);
+    font-weight: 900;
+    letter-spacing: 0.62em;
     text-transform: uppercase;
+    opacity: 0;
+    animation: subtitleReveal 5.6s ease both;
   }
 
-  .splash-loader {
-    position: relative;
-    height: 16px;
-    margin-top: 36px;
+  .splash-v2-loader {
+    position: absolute;
+    bottom: clamp(62px, 10vh, 96px);
+    width: min(560px, calc(100vw - 64px));
+    height: 12px;
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.20);
     border-radius: 999px;
     background: rgba(255,255,255,0.075);
+    box-shadow: 0 0 24px rgba(255,70,70,0.20);
   }
 
-  .splash-loader-fill {
+  .splash-v2-loader-fill {
     height: 100%;
     width: 100%;
     transform: scaleX(0);
     transform-origin: left;
     border-radius: inherit;
-    background: linear-gradient(90deg, #88a8ff, #7df0d2, #ffffff);
-    box-shadow: 0 0 28px rgba(125, 240, 210, 0.45);
+    background: linear-gradient(90deg, #ff4a4a, #ffffff, #7df0d2);
+    box-shadow: 0 0 28px rgba(255,70,70,0.48);
   }
 
-  .splash-loader-glow {
+  .splash-v2-loader-scan {
     position: absolute;
-    inset: -30px 0;
-    width: 34%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.78), transparent);
-    filter: blur(8px);
-    animation: splashScan 1.25s ease-in-out infinite;
+    inset: -24px 0;
+    width: 26%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.95), transparent);
+    filter: blur(6px);
+    animation: loaderScan 1.15s ease-in-out infinite;
   }
 
-  .splash-status {
+  .splash-v2-status {
+    position: absolute;
+    bottom: clamp(34px, 6vh, 56px);
+    width: min(560px, calc(100vw - 64px));
     display: flex;
     justify-content: space-between;
     gap: 18px;
-    margin-top: 14px;
-    color: rgba(244, 247, 251, 0.82);
-    font-size: 0.86rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
+    color: rgba(246,251,255,0.82);
+    font-size: clamp(0.68rem, 1.4vw, 0.88rem);
+    font-weight: 900;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
   }
 
-  @keyframes splashEnter {
-    from { opacity: 0; transform: scale(1.025); }
-    to { opacity: 1; transform: scale(1); }
+  @keyframes splashV2Enter { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes splashV2Exit { to { opacity: 0; transform: scale(1.025); filter: blur(14px); } }
+  @keyframes stormDrift { to { transform: translate3d(-3%, 2%, 0); } }
+  @keyframes starFall { to { background-position: -160px 520px; } }
+  @keyframes ringSpin { to { transform: rotate(360deg); } }
+  @keyframes ringCharge {
+    0% { opacity: 0; transform: scale(0.72); }
+    30% { opacity: 0.5; transform: scale(0.9); }
+    62% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0.65; transform: scale(1.05); }
   }
-
-  @keyframes splashExit {
-    to { opacity: 0; transform: scale(1.035); filter: blur(12px); }
+  @keyframes shockwave {
+    0%, 58% { opacity: 0; transform: scale(0.15); border-color: rgba(255,255,255,0); }
+    64% { opacity: 1; border-color: rgba(255,255,255,0.75); box-shadow: 0 0 80px rgba(255,80,80,0.55); }
+    100% { opacity: 0; transform: scale(6); border-color: rgba(255,255,255,0); }
   }
-
-  @keyframes splashSpin {
-    to { transform: rotate(360deg); }
+  @keyframes studioIntro {
+    0% { opacity: 0; transform: translateY(18px); filter: blur(8px); }
+    14%, 42% { opacity: 1; transform: translateY(0); filter: blur(0); }
+    54%, 100% { opacity: 0; transform: translateY(-22px) scale(0.96); filter: blur(8px); }
   }
-
-  @keyframes splashScan {
-    from { transform: translateX(-130%); }
-    to { transform: translateX(330%); }
+  @keyframes anvilSequence {
+    0%, 12% { opacity: 0; transform: translateY(26px) scale(0.78); filter: blur(12px) drop-shadow(0 0 0 transparent); }
+    24%, 54% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0) drop-shadow(0 0 28px rgba(190,220,255,0.45)); }
+    60% { opacity: 1; transform: translateY(-3px) scale(1.04); filter: blur(0) drop-shadow(0 0 64px rgba(255,80,80,0.68)); }
+    66%, 100% { opacity: 0; transform: scale(1.45); filter: blur(14px) drop-shadow(0 0 90px rgba(255,80,80,0.4)); }
   }
+  @keyframes crackFlash {
+    0%, 44% { opacity: 0; height: 0; }
+    50%, 60% { opacity: 1; height: 118px; }
+    66%, 100% { opacity: 0; }
+  }
+  @keyframes shardBurst {
+    0%, 57% { opacity: 0; transform: translate(-50%, -50%) scale(0.25) rotate(0); }
+    62% { opacity: 1; }
+    100% { opacity: 0.62; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.12) rotate(var(--r)); }
+  }
+  @keyframes titleReveal {
+    0%, 61% { opacity: 0; transform: translateY(42px) scale(0.86); filter: blur(16px); }
+    72%, 100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  }
+  @keyframes subtitleReveal {
+    0%, 72% { opacity: 0; transform: translateY(14px); }
+    82%, 100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes loaderScan { from { transform: translateX(-140%); } to { transform: translateX(440%); } }
 
-  @media (max-width: 640px) {
-    .splash-shell { padding: 28px; border-radius: 26px; }
-    .splash-title { font-size: clamp(3.35rem, 18vw, 5rem); }
-    .splash-status { font-size: 0.72rem; }
+  @media (max-width: 700px) {
+    .splash-v2-stage { min-height: min(600px, calc(100vh - 20px)); }
+    .splash-v2-title { font-size: clamp(3.2rem, 16vw, 5.2rem); gap: 4px; }
+    .splash-v2-subtitle { letter-spacing: 0.34em; }
+    .splash-v2-anvil { transform: scale(0.78); }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .splash-screen,
-    .splash-screen.is-leaving,
-    .splash-orbit,
-    .splash-loader-glow {
+    .splash-v2,
+    .splash-v2.is-leaving,
+    .splash-v2-storm,
+    .splash-v2-bg::after,
+    .splash-v2-ring,
+    .splash-v2-shockwave,
+    .splash-v2-studio,
+    .splash-v2-anvil-wrap,
+    .splash-v2-crack,
+    .splash-v2-shards span,
+    .splash-v2-title span,
+    .splash-v2-subtitle,
+    .splash-v2-loader-scan {
       animation: none;
     }
   }
@@ -234,9 +509,9 @@
       // If localStorage is unavailable, fall through and show the splash.
     }
 
-    const fullAnimationMs = 4200;
-    const fadeOutMs = 800;
-    const safetyMaxMs = 9000;
+    const fullAnimationMs = 5600;
+    const fadeOutMs = 900;
+    const safetyMaxMs = 11000;
     const startedAt = performance.now();
     let pageReady = document.readyState === 'complete';
     let closed = false;
@@ -244,12 +519,12 @@
     let progressTimer;
 
     const messages = [
-      'Initializing colony systems',
-      'Loading production grid',
-      'Calibrating orbital telemetry',
-      'Warming Glass Anvil systems',
-      'Preparing Kelaris interface',
-      'Kelaris ready'
+      'Forging identity',
+      'Charging glass core',
+      'Stress fracture detected',
+      'Shattering limits',
+      'Revealing Kelaris',
+      'Experience ready'
     ];
 
     const setProgress = (value) => {
@@ -287,7 +562,7 @@
     progressTimer = window.setInterval(() => {
       const elapsed = performance.now() - startedAt;
       const animationProgress = Math.min(99, (elapsed / fullAnimationMs) * 100);
-      const cap = pageReady ? 100 : 94;
+      const cap = pageReady ? 100 : 96;
       setProgress(Math.min(cap, animationProgress));
     }, 50);
 
