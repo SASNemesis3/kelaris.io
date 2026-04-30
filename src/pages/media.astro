@@ -1,17 +1,54 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageStub from '../components/PageStub.astro';
+import { mediaItems } from '../data/media';
 ---
 
 <BaseLayout title="Kelaris Media | Official Website" description="Screenshots, trailers, key art, and future media drops for Kelaris." activePage="media">
-  <PageStub
-    eyebrow="Media"
-    title="A showcase foundation for screenshots, trailers, and key art."
-    lead="The media page is prepared as the public visual hub for Kelaris while keeping the current atmospheric site identity intact."
-    cards={[
-      { title: 'Screenshots', body: 'A future gallery can be driven from a data file instead of hardcoded HTML.' },
-      { title: 'Trailers', body: 'Trailer embeds can live here when the first public gameplay footage is ready.' },
-      { title: 'Press assets', body: 'Key art, logos, and screenshot packs can later connect to a dedicated press kit.' }
-    ]}
-  />
+  <section class="page-hero compact">
+    <div>
+      <div class="eyebrow">Media</div>
+      <h1>A visual showcase foundation for Kelaris.</h1>
+      <p class="lead">
+        The media page is now data-driven so screenshots, trailers, key art, UI shots, and future press assets can be added without rebuilding the page layout.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div class="section-kicker">Gallery</div>
+      <h2>Planned media groups</h2>
+    </div>
+    <div class="media-grid">
+      {mediaItems.map((item) => (
+        <article class="media-panel">
+          <div class="image-tile">
+            <div class="visual-caption">
+              <small>{item.type} · {item.status}</small>
+              <strong>{item.accent}</strong>
+              <span>{item.description}</span>
+            </div>
+          </div>
+          <div class="media-copy">
+            <div class="section-kicker">{item.type}</div>
+            <strong>{item.title}</strong>
+            <p>{item.description}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="cta-band">
+      <div class="section-kicker">Press ready later</div>
+      <h2>Media will connect directly to the press kit as assets become available.</h2>
+      <p class="body-copy">
+        This keeps public screenshots, trailers, key art, and downloadable press material organized under one consistent Kelaris identity.
+      </p>
+      <div class="cta-actions">
+        <a class="button" href="/press/">Open Press Kit</a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
