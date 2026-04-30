@@ -19,6 +19,194 @@
   </div>
 </div>
 
+<style>
+  .splash-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    color: #f4f7fb;
+    background:
+      radial-gradient(circle at 50% 28%, rgba(136, 168, 255, 0.24), transparent 28%),
+      radial-gradient(circle at 50% 64%, rgba(125, 240, 210, 0.12), transparent 30%),
+      linear-gradient(180deg, #010307 0%, #050816 54%, #02040a 100%);
+    opacity: 1;
+    pointer-events: all;
+    animation: splashEnter 0.45s ease-out both;
+  }
+
+  .splash-screen.is-hidden {
+    display: none;
+  }
+
+  .splash-screen.is-leaving {
+    pointer-events: none;
+    animation: splashExit 0.8s ease-in forwards;
+  }
+
+  .splash-shell {
+    position: relative;
+    width: min(760px, 100%);
+    overflow: hidden;
+    padding: clamp(30px, 7vw, 62px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 34px;
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04)),
+      rgba(5, 8, 22, 0.82);
+    box-shadow:
+      0 34px 120px rgba(0, 0, 0, 0.68),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    text-align: left;
+  }
+
+  .splash-orbit {
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    right: -130px;
+    top: -150px;
+    border: 1px solid rgba(125, 240, 210, 0.28);
+    border-radius: 999px;
+    box-shadow: 0 0 70px rgba(125, 240, 210, 0.14);
+    animation: splashSpin 5s linear infinite;
+  }
+
+  .splash-orbit::before,
+  .splash-orbit::after {
+    content: "";
+    position: absolute;
+    border-radius: inherit;
+    border: 1px solid rgba(136, 168, 255, 0.18);
+  }
+
+  .splash-orbit::before { inset: 44px; }
+  .splash-orbit::after { inset: 92px; }
+
+  .splash-grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.13;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.18) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.18) 1px, transparent 1px);
+    background-size: 36px 36px;
+    mask-image: linear-gradient(180deg, transparent, #000 20%, #000 80%, transparent);
+  }
+
+  .splash-kicker,
+  .splash-title,
+  .splash-subtitle,
+  .splash-loader,
+  .splash-status {
+    position: relative;
+    z-index: 1;
+  }
+
+  .splash-kicker {
+    color: #7df0d2;
+    font-size: 0.86rem;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .splash-title {
+    margin-top: 14px;
+    font-size: clamp(4rem, 13vw, 9rem);
+    line-height: 0.86;
+    font-weight: 950;
+    letter-spacing: -0.08em;
+    text-transform: uppercase;
+    text-shadow:
+      0 0 26px rgba(136, 168, 255, 0.48),
+      0 0 70px rgba(125, 240, 210, 0.20);
+  }
+
+  .splash-subtitle {
+    margin-top: 16px;
+    color: rgba(244, 247, 251, 0.74);
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .splash-loader {
+    height: 16px;
+    margin-top: 36px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.075);
+  }
+
+  .splash-loader-fill {
+    height: 100%;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #88a8ff, #7df0d2, #ffffff);
+    box-shadow: 0 0 28px rgba(125, 240, 210, 0.45);
+  }
+
+  .splash-loader-glow {
+    position: absolute;
+    inset: -30px 0;
+    width: 34%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.78), transparent);
+    filter: blur(8px);
+    animation: splashScan 1.25s ease-in-out infinite;
+  }
+
+  .splash-status {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    margin-top: 14px;
+    color: rgba(244, 247, 251, 0.82);
+    font-size: 0.86rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  @keyframes splashEnter {
+    from { opacity: 0; transform: scale(1.025); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes splashExit {
+    to { opacity: 0; transform: scale(1.035); filter: blur(12px); }
+  }
+
+  @keyframes splashSpin {
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes splashScan {
+    from { transform: translateX(-130%); }
+    to { transform: translateX(330%); }
+  }
+
+  @media (max-width: 640px) {
+    .splash-shell { padding: 28px; border-radius: 26px; }
+    .splash-title { font-size: clamp(3.35rem, 18vw, 5rem); }
+    .splash-status { font-size: 0.72rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .splash-screen,
+    .splash-screen.is-leaving,
+    .splash-orbit,
+    .splash-loader-glow {
+      animation: none;
+    }
+  }
+</style>
+
 <script is:inline>
   (() => {
     const splash = document.getElementById('splash-screen');
@@ -28,6 +216,16 @@
 
     if (!splash) return;
 
+    const storageKey = 'kelarisSplashSeenThisSession';
+    const shouldSkip = window.sessionStorage.getItem(storageKey) === 'true';
+
+    if (shouldSkip) {
+      splash.remove();
+      return;
+    }
+
+    window.sessionStorage.setItem(storageKey, 'true');
+
     const fullAnimationMs = 4200;
     const fadeOutMs = 800;
     const safetyMaxMs = 9000;
@@ -35,6 +233,7 @@
     let pageReady = document.readyState === 'complete';
     let closed = false;
     let progress = 0;
+    let progressTimer;
 
     const messages = [
       'Initializing colony systems',
@@ -77,7 +276,7 @@
       window.setTimeout(closeSplash, remaining);
     };
 
-    const progressTimer = window.setInterval(() => {
+    progressTimer = window.setInterval(() => {
       const elapsed = performance.now() - startedAt;
       const animationProgress = Math.min(99, (elapsed / fullAnimationMs) * 100);
       const cap = pageReady ? 100 : 94;
