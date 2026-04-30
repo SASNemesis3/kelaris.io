@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { roadmapGroups } from '../data/roadmap';
+---
+
+<BaseLayout title="Kelaris Roadmap | Official Website" description="A public-facing roadmap for Kelaris development focus areas." activePage="roadmap">
+  <section class="page-hero compact">
+    <div>
+      <div class="eyebrow">Roadmap</div>
+      <h1>Public development direction without overpromising dates.</h1>
+      <p class="lead">
+        This roadmap gives players and followers a clear view of where Kelaris is heading while keeping internal production details separate from public communication.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="info-grid">
+      {roadmapGroups.map((group) => (
+        <article class="info-card">
+          <div class="section-kicker">{group.label}</div>
+          <strong>{group.description}</strong>
+          <ul class="copy-list">
+            {group.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="cta-band">
+      <div class="section-kicker">Note</div>
+      <h2>Roadmap items may shift as the game evolves.</h2>
+      <p class="body-copy">
+        Kelaris is still in development. This page is meant to show direction, not promise exact dates or final feature scope.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
