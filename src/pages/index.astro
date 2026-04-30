@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const stats = [
+  ['Genre', 'Colony Survival Sim'],
+  ['Platform', 'PC'],
+  ['Status', 'In Development'],
+  ['Focus', 'Strategy + Systems']
+];
+
+const storyCards = [
+  ['Build a living colony', 'Lay out structures, manage priorities, and grow from a fragile outpost into a settlement that can support expansion without collapsing under its own complexity.'],
+  ['Scale through automation', 'Turn manual survival into momentum with layered production, logistics, and infrastructure that keep the colony moving even under pressure.'],
+  ['Defend what you create', 'Growth attracts danger. Expansion brings opportunity, but it also pushes your colony closer to the edge if your defenses and planning fall behind.']
+];
+
+const siteCards = [
+  ['About', 'What Kelaris is', 'A clear overview of the game, its tone, and the experience it is built to deliver.', '/about/'],
+  ['Features', 'Gameplay pillars', 'The colony, automation, exploration, and defense systems behind the survival loop.', '/features/'],
+  ['Game', 'Store-style overview', 'A polished About This Game page for future store copy, press kits, and platform listings.', '/game/'],
+  ['Media', 'Visual showcase', 'A destination for screenshots, trailers, key art, and future media drops.', '/media/'],
+  ['Devlog', 'Development updates', 'Public milestones and progress updates as Kelaris evolves.', '/devlog/'],
+  ['Links', 'Community hub', 'Central access for Discord, accounts, future store links, and public channels.', '/links/']
+];
+---
+
+<BaseLayout
+  title="Kelaris | Official Website"
+  description="Kelaris official website — a professional multi-page home for the in-development PC colony survival game."
+  activePage="home"
+>
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">PC colony survival game</div>
+      <h1>Build the machine.<br />Hold the line.</h1>
+      <p class="lead">
+        Kelaris is a sci-fi colony survival game for PC about turning a fragile landing zone into a self-sustaining stronghold.
+        Build production lines, manage a living colony, expand into hostile terrain, and keep everything running when pressure hits from every side.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="/links/">Wishlist / Follow</a>
+        <a class="button discord" href="https://discord.gg/9HEBafkKgs" target="_blank" rel="noopener noreferrer">Join Discord</a>
+        <a class="button" href="/media/">View Media</a>
+        <a class="button" href="/devlog/">Read Devlog</a>
+      </div>
+
+      <div class="stat-grid">
+        {stats.map(([label, value]) => (
+          <div class="stat-card"><span>{label}</span><strong>{value}</strong></div>
+        ))}
+      </div>
+    </div>
+
+    <aside class="hero-card">
+      <div class="hero-visual">
+        <div class="visual-caption">
+          <small>Official site</small>
+          <strong>Kelaris at a glance</strong>
+          <span>The central hub for the project, community, dev updates, media, and future public launch pages.</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div class="section-kicker">The pitch</div>
+      <h2>From emergency landing to industrial survival</h2>
+    </div>
+    <div class="story-grid">
+      {storyCards.map(([title, body]) => (
+        <article class="story-card"><strong>{title}</strong><p>{body}</p></article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <div class="section-kicker">Explore the site</div>
+      <h2>Dedicated pages instead of placeholders</h2>
+    </div>
+    <div class="link-grid">
+      {siteCards.map(([label, title, body, href]) => (
+        <article class="link-card">
+          <div class="label">{label}</div>
+          <strong>{title}</strong>
+          <p>{body}</p>
+          <div class="link-actions"><a class="button" href={href}>Open {label}</a></div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="cta-band">
+      <div class="section-kicker">Member access</div>
+      <h2>Accounts, tester pages, and future gated content</h2>
+      <p class="body-copy">
+        The account and member flow remains part of the website roadmap so protected tester pages and closed-alpha features can grow without reshaping the public site.
+      </p>
+      <div class="cta-actions">
+        <a class="button primary" href="/auth/">Manage Account</a>
+        <a class="button" href="/members/">Open Member Area</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
