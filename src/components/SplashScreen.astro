@@ -22,25 +22,29 @@
   const splashStatusPercent = document.getElementById('splash-status-percent');
 
   if (splash) {
-    const minimumVisibleMs = 1100;
-    const maximumVisibleMs = 5000;
+    const fullAnimationMs = 3600;
+    const fadeOutMs = 700;
+    const safetyMaxMs = 7000;
     const startedAt = performance.now();
     let hasClosed = false;
-    let visualProgress = 0;
     let pageReady = document.readyState === 'complete';
+    let visualProgress = 0;
 
     const loadingMessages = [
       'Initializing colony systems',
       'Loading production grid',
       'Calibrating orbital telemetry',
       'Warming Glass Anvil systems',
-      'Preparing Kelaris interface'
+      'Preparing Kelaris interface',
+      'Kelaris ready'
     ];
 
     const progressTimer = window.setInterval(() => {
-      const target = pageReady ? 100 : 88;
-      visualProgress += Math.max(1, Math.round((target - visualProgress) * 0.12));
-      visualProgress = Math.min(visualProgress, target);
+      const elapsed = performance.now() - startedAt;
+      const animationProgress = Math.min(99, Math.floor((elapsed / fullAnimationMs) * 100));
+      const loadCap = pageReady ? 100 : 92;
+
+      visualProgress = Math.min(loadCap, Math.max(visualProgress, animationProgress));
 
       if (splashStatusPercent) {
         splashStatusPercent.textContent = `${visualProgress}%`;
@@ -72,24 +76,25 @@
 
       window.setTimeout(() => {
         splash.remove();
-      }, 700);
+      }, fadeOutMs);
     };
 
-    const scheduleClose = () => {
+    const tryCloseAfterReady = () => {
       pageReady = true;
-      visualProgress = Math.max(visualProgress, 96);
-
       const elapsed = performance.now() - startedAt;
-      const remainingMinimumTime = Math.max(0, minimumVisibleMs - elapsed);
-      window.setTimeout(closeSplash, remainingMinimumTime);
+      const remainingAnimationTime = Math.max(0, fullAnimationMs - elapsed);
+      window.setTimeout(closeSplash, remainingAnimationTime);
     };
 
     if (document.readyState === 'complete') {
-      scheduleClose();
+      tryCloseAfterReady();
     } else {
-      window.addEventListener('load', scheduleClose, { once: true });
+      window.addEventListener('load', tryCloseAfterReady, { once: true });
     }
 
-    window.setTimeout(closeSplash, maximumVisibleMs);
+    window.setTimeout(() => {
+      pageReady = true;
+      closeSplash();
+    }, safetyMaxMs);
   }
 </script>
