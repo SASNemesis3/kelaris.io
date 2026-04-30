@@ -1,11 +1,14 @@
-<div class="splash-screen" id="splash-screen" aria-label="Kelaris loading screen">
+<div class="splash-screen" id="splash-screen" aria-label="Kelaris loading screen" role="status" aria-live="polite">
   <div class="splash-shell">
     <div class="splash-orbit" aria-hidden="true"></div>
+    <div class="splash-grid" aria-hidden="true"></div>
+
     <div class="splash-kicker">Glass Anvil Studio Presents</div>
     <div class="splash-title">Kelaris</div>
+    <div class="splash-subtitle">Colony systems online</div>
 
     <div class="splash-loader" aria-hidden="true">
-      <div class="splash-loader-fill"></div>
+      <div class="splash-loader-fill" id="splash-loader-fill"></div>
       <div class="splash-loader-glow"></div>
     </div>
 
@@ -17,20 +20,23 @@
 </div>
 
 <script is:inline>
-  const splash = document.getElementById('splash-screen');
-  const splashStatusText = document.getElementById('splash-status-text');
-  const splashStatusPercent = document.getElementById('splash-status-percent');
+  (() => {
+    const splash = document.getElementById('splash-screen');
+    const statusText = document.getElementById('splash-status-text');
+    const statusPercent = document.getElementById('splash-status-percent');
+    const loaderFill = document.getElementById('splash-loader-fill');
 
-  if (splash) {
-    const fullAnimationMs = 3600;
-    const fadeOutMs = 700;
-    const safetyMaxMs = 7000;
+    if (!splash) return;
+
+    const fullAnimationMs = 4200;
+    const fadeOutMs = 800;
+    const safetyMaxMs = 9000;
     const startedAt = performance.now();
-    let hasClosed = false;
     let pageReady = document.readyState === 'complete';
-    let visualProgress = 0;
+    let closed = false;
+    let progress = 0;
 
-    const loadingMessages = [
+    const messages = [
       'Initializing colony systems',
       'Loading production grid',
       'Calibrating orbital telemetry',
@@ -39,39 +45,24 @@
       'Kelaris ready'
     ];
 
-    const progressTimer = window.setInterval(() => {
-      const elapsed = performance.now() - startedAt;
-      const animationProgress = Math.min(99, Math.floor((elapsed / fullAnimationMs) * 100));
-      const loadCap = pageReady ? 100 : 92;
+    const setProgress = (value) => {
+      progress = Math.max(progress, Math.min(100, value));
+      const rounded = Math.floor(progress);
 
-      visualProgress = Math.min(loadCap, Math.max(visualProgress, animationProgress));
+      if (statusPercent) statusPercent.textContent = `${rounded}%`;
+      if (loaderFill) loaderFill.style.transform = `scaleX(${progress / 100})`;
 
-      if (splashStatusPercent) {
-        splashStatusPercent.textContent = `${visualProgress}%`;
+      if (statusText) {
+        const index = Math.min(messages.length - 1, Math.floor((rounded / 100) * messages.length));
+        statusText.textContent = messages[index];
       }
-
-      if (splashStatusText) {
-        const messageIndex = Math.min(
-          loadingMessages.length - 1,
-          Math.floor((visualProgress / 100) * loadingMessages.length)
-        );
-        splashStatusText.textContent = loadingMessages[messageIndex];
-      }
-    }, 80);
+    };
 
     const closeSplash = () => {
-      if (hasClosed) return;
-      hasClosed = true;
+      if (closed) return;
+      closed = true;
       window.clearInterval(progressTimer);
-
-      if (splashStatusPercent) {
-        splashStatusPercent.textContent = '100%';
-      }
-
-      if (splashStatusText) {
-        splashStatusText.textContent = 'Kelaris ready';
-      }
-
+      setProgress(100);
       splash.classList.add('is-leaving');
 
       window.setTimeout(() => {
@@ -79,22 +70,31 @@
       }, fadeOutMs);
     };
 
-    const tryCloseAfterReady = () => {
+    const tryFinish = () => {
       pageReady = true;
       const elapsed = performance.now() - startedAt;
-      const remainingAnimationTime = Math.max(0, fullAnimationMs - elapsed);
-      window.setTimeout(closeSplash, remainingAnimationTime);
+      const remaining = Math.max(0, fullAnimationMs - elapsed);
+      window.setTimeout(closeSplash, remaining);
     };
 
+    const progressTimer = window.setInterval(() => {
+      const elapsed = performance.now() - startedAt;
+      const animationProgress = Math.min(99, (elapsed / fullAnimationMs) * 100);
+      const cap = pageReady ? 100 : 94;
+      setProgress(Math.min(cap, animationProgress));
+    }, 50);
+
+    setProgress(0);
+
     if (document.readyState === 'complete') {
-      tryCloseAfterReady();
+      tryFinish();
     } else {
-      window.addEventListener('load', tryCloseAfterReady, { once: true });
+      window.addEventListener('load', tryFinish, { once: true });
     }
 
     window.setTimeout(() => {
       pageReady = true;
       closeSplash();
     }, safetyMaxMs);
-  }
+  })();
 </script>
