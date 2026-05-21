@@ -1,0 +1,145 @@
+I am developing an indie survival automation game called Kelaris in C# using MonoGame with a fully custom-built 2D engine.
+
+Kelaris is heavily inspired by Factorio in terms of:
+
+* procedural world generation,
+* automation systems,
+* chunk streaming,
+* simulation architecture,
+* ECS-driven systems,
+* and long-term scalability.
+
+However, Kelaris has unique mechanics including a “noise decibel” system that replaces pollution and influences gameplay systems.
+
+I want you to act as a principal-level game engine and procedural generation software engineer specializing in:
+
+* scalable simulation architecture,
+* ECS architecture,
+* procedural world generation,
+* deterministic systems,
+* MonoGame/C# optimization,
+* data-oriented design,
+* modular engine architecture,
+* chunk streaming systems,
+* YAML/YML prototype-driven entity systems,
+* and long-term maintainable game-engine architecture.
+
+Your task is to review my uploaded codebase and refactor it toward a production-quality architecture suitable for a long-term indie automation/survival game.
+
+Current project details:
+
+* Custom 2D engine built entirely from scratch
+* C# with MonoGame
+* Tile-based procedural world
+* Current tile size is 128x128
+* Current chunk size is 32x32 tiles
+* No save/load system exists yet
+* Heavy automation and simulation systems planned
+* Large scalable world intended
+* Current generation works but does not structurally resemble Factorio’s world generation quality or streaming architecture
+* Current code contains boilerplate-style naming, unclear long method names, weak organization, and inconsistent architecture
+* The architecture is not yet properly ECS structured
+* The game must eventually support scalable content through YAML/YML-driven prototypes similar to Factorio/SS14-style data definitions
+
+Core architectural goals:
+
+1. ECS-first architecture
+2. Modular subsystem separation
+3. Long-term scalability and maintainability
+4. Factorio-quality chunk/world architecture
+5. Deterministic procedural generation
+6. Simulation scalability for automation systems
+7. Prototype-driven content architecture using YAML/YML
+8. Efficient rendering and chunk streaming
+9. Clean naming conventions and subsystem boundaries
+10. Minimal GC pressure and future-proof performance
+11. Readable and extensible architecture
+12. Stable save/load architecture planning
+
+ECS requirements:
+
+* Use a clean Entity-Component-System structure
+* Components should remain lightweight and data-oriented
+* Systems should own logic execution
+* Avoid putting logic inside entities/components unnecessarily
+* Support future scalability for thousands of active entities
+* Architect for automation-heavy gameplay and large simulations
+* Reduce coupling between systems
+* Prioritize cache-friendly patterns where practical
+* Avoid overengineered ECS abstractions
+
+Prototype/YML requirements:
+
+* Entities, items, structures, recipes, resources, and machines should eventually be prototype-driven
+* Use YAML/YML for data definitions
+* Separate data from logic cleanly
+* Support future moddability and content expansion
+* Prototype loading should be deterministic and maintainable
+* Prototype architecture should scale cleanly long-term
+* Recommend proper folder organization and loading pipelines
+
+Technical expectations:
+
+* Refactor incrementally rather than blindly rewriting everything
+* Avoid enterprise overengineering
+* Prefer practical game-engine architecture
+* Use modern high-level C# practices where appropriate
+* Use data-oriented approaches where beneficial
+* Optimize for long-term indie game development
+* Explain architectural decisions and tradeoffs
+* Preserve existing gameplay functionality unless improvements are justified
+* Recommend better tile sizing/chunk architecture if current choices are problematic
+
+When reviewing the code:
+
+* Identify architectural weaknesses
+* Identify poor naming conventions
+* Identify coupling issues
+* Identify dangerous patterns
+* Identify scaling limitations
+* Evaluate rendering architecture
+* Evaluate ECS structure
+* Evaluate world generation structure
+* Evaluate chunk management
+* Evaluate memory allocation patterns
+* Evaluate threading safety if relevant
+* Suggest future save/load architecture
+* Suggest deterministic worldgen strategies
+* Suggest scalable automation architecture
+* Suggest modular content pipelines
+* Suggest YML prototype structures and loading systems
+
+For each subsystem:
+
+1. Summarize current architecture
+2. Identify weaknesses
+3. Explain why the issues matter long-term
+4. Recommend improvements
+5. Provide refactored code where appropriate
+6. Explain performance implications
+7. Explain maintainability implications
+8. Suggest future-proof subsystem boundaries
+
+Code style requirements:
+
+* Short, readable, professional method names
+* Clear subsystem ownership
+* Clean file organization
+* Avoid generic boilerplate architecture
+* Avoid meaningless abstractions
+* Prioritize clarity and maintainability
+* Architecture should feel professional and production-ready
+* Naming should resemble professional game-engine standards
+
+World generation goals:
+
+* World generation should structurally resemble Factorio-quality terrain generation and chunk streaming
+* Generation must support future biome expansion
+* Chunk loading/unloading should be scalable
+* Terrain/resource generation should be deterministic
+* World simulation should remain stable at scale
+* Rendering architecture should cleanly separate simulation from visual representation
+
+Important:
+Do not generate generic beginner code.
+Treat this as a serious long-term indie game engine and simulation architecture review similar to a professional internal engineering review for a shipping automation game.
