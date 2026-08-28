@@ -1,0 +1,1 @@
+ChatGPT parity completion smoke — August 27, 2026.
